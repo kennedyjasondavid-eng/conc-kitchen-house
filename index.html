@@ -288,11 +288,15 @@
             <div class="card__desc">Intake, Active Menu, Plating Sheets, and Reporting</div>
         </div>
 
-        <a href="https://kennedyjasondavid-eng.github.io/conc-recipe-hub/"
-           class="card" target="_blank" rel="noopener">
+        <div class="card" id="codex-card" role="button" tabindex="0" aria-label="Open CODEX (PIN required)">
+            <svg class="card__lock" id="codex-lock-icon" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                <path id="codex-lock-shackle" d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
             <div class="card__name">CODEX</div>
             <div class="card__desc">Recipe Library and Creation Engine</div>
-        </a>
+        </div>
 
         <a href="https://kennedyjasondavid-eng.github.io/conc-kitchen-hub/"
            class="card" target="_blank" rel="noopener">
@@ -368,6 +372,15 @@
             sessionKey: 'house_door_auth',
             pinHash:    '0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c',
             title:      'DOOR ACCESS'
+        },
+        {
+            cardId:     'codex-card',
+            url:        'https://kennedyjasondavid-eng.github.io/conc-recipe-hub/',
+            lockIconId: 'codex-lock-icon',
+            shackleId:  'codex-lock-shackle',
+            sessionKey: 'house_codex_auth',
+            pinHash:    'edee29f882543b956620b26d0ee0e7e950399b1c4222f5de05e06425b4c995e9',
+            title:      'CODEX ACCESS'
         }
     ];
 
