@@ -2,7 +2,7 @@
 
 > **Status: DRAFT v0.1 (2026-06-22) — for architect review.** This is Phase 0 of `HACCP_INTEGRATION_PLAN.md`. It is a *written plan*, not a certified HACCP study. Items needing a real-world value or a sign-off are marked **▢ CONFIRM** and collected in §13.
 >
-> **This plan must be reviewed and signed off by the person responsible for food safety at CONC, and should be checked against current Toronto Public Health / Ontario *Food Premises Regulation* (O. Reg. 493/17) guidance before it is relied on.** The temperatures below are the standard Health Canada / Ontario figures, but the named owner confirms them for this operation.
+> **This plan must be reviewed and signed off by the person responsible for food safety at CONC before it is relied on.** The temperatures below were verified on 2026-06-22 against City of Toronto / Toronto Public Health, Ontario *Food Premises Regulation* (O. Reg. 493/17) guidance, and Health Canada (sources in §14). The Food Safety Lead confirms they fit this operation.
 
 ---
 
@@ -66,11 +66,11 @@ Most food is **cook–chill**: cooked in advance, rapidly chilled, held cold (so
 
 A **CCP** is a step where control is *essential* and where loss of control would likely cause harm. The critical limit is the measurable line between safe and unsafe.
 
-| # | CCP | Critical limit (standard Health Canada / Ontario figures) ▢ CONFIRM | Records in v1? |
+| # | CCP | Critical limit (Toronto Public Health / Ontario / Health Canada — verified 2026-06-22, §14) | Records in v1? |
 |---|---|---|---|
 | **CCP-1** | **Cold storage** (fridges, walk-ins) | ≤ **4 °C** | ✅ **Yes — this plan** |
 | **CCP-2** | **Frozen storage** (freezers) | ≤ **−18 °C** | ✅ **Yes — this plan** |
-| CCP-3 | **Cooking** | Internal ≥ **74 °C** (poultry/eggs/reheated; ground meat ≥ 71 °C; whole-muscle cuts per Health Canada) held ≥ 15 s | Phase 2 |
+| CCP-3 | **Cooking** (internal temp) | Whole poultry ≥ **82 °C**; poultry pieces/ground ≥ **74 °C**; ground meat ≥ **71 °C**; beef/pork cuts ≥ **71 °C**; fish ≥ **70 °C**; egg dishes & food mixtures ≥ **74 °C** | Phase 2 |
 | CCP-4 | **Cooling** (cook → chill) | **60 → 20 °C within 2 h**, then **20 → 4 °C within 4 h** (≤ 6 h total) | Phase 2 *(EXPO already enforces the cold-hold timing model today)* |
 | CCP-5 | **Reheating** for hot holding | Internal ≥ **74 °C** within 2 h | Phase 2 |
 | CCP-6 | **Hot holding** | ≥ **60 °C** | Phase 2 |
@@ -174,7 +174,18 @@ This plan is reviewed **at least annually**, and whenever: the menu or process c
 3. **Names** — Food Safety Lead + site supervisors (§2).
 4. **Check frequency** — twice daily assumed (§6); confirm.
 5. **Retention periods** — paper, PDFs, calibration (§9).
-6. **Critical-limit confirmation** — the standard figures in §5, confirmed for this operation / against current Toronto Public Health guidance.
+6. **Critical-limit sign-off** — the figures in §5 are now verified against Toronto Public Health / Ontario / Health Canada (§14); the Food Safety Lead signs off that they fit this operation.
 7. **Prerequisite programs** — which already have written procedures (§11).
 
-*None of these block starting: paper logs can begin against the standard limits today, and the values fold in as they are confirmed.*
+*None of these block starting: paper logs can begin against the verified limits today, and the site-specific values (unit list, names) fold in as they are confirmed.*
+
+---
+
+## 14. Sources for the temperature figures (verified 2026-06-22)
+
+- **City of Toronto — "Eight Steps to a PASS" (Toronto Public Health):** cold food ≤ 4 °C (40 °F); hot food ≥ 60 °C (140 °F); accurate indicating thermometers required in all temperature-controlled units (refrigerators, freezers, hot-holding). Danger zone 4–60 °C; max 2 hours in the zone. — https://www.toronto.ca/community-people/health-wellness-care/health-programs-advice/food-safety/food-safety-for-businesses/eight-steps-to-a-pass/
+- **Ontario *Food Premises Regulation*, O. Reg. 493/17** (and provincial public-health guidance): two-stage cooling — 60 °C → 20 °C within 2 hours, then 20 °C → 4 °C within 4 hours. — https://www.ontario.ca/laws/regulation/170493
+- **Health Canada — Safe internal cooking temperatures:** whole poultry 82 °C; poultry pieces / ground poultry 74 °C; ground meat (beef/pork/veal/lamb) 71 °C; beef/pork pieces & cuts 71 °C; fish 70 °C; egg dishes & food mixtures/casseroles 74 °C; leftovers / reheated food 74 °C. — https://www.canada.ca/en/health-canada/services/general-food-safety-tips/safe-internal-cooking-temperatures.html
+- **Frozen storage ≤ −18 °C** — Health Canada / standard Canadian cold-storage practice.
+
+> These are the published public-health figures, not legal advice. CONC's Food Safety Lead confirms applicability and any operation-specific tightening (e.g. a single blanket "cook everything to ≥ 74 °C" rule is common in institutional cook–chill catering and is stricter than several of the cuts above).
