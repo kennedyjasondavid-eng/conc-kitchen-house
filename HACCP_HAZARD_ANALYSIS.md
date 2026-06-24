@@ -146,7 +146,7 @@ Per CCP, with basis. **Framing rule** (validated 2026-06-24 — full citations i
 | 4 | **"?d" + 27 d / 10 d holds** | Classify each; assign definite limits | Coordinator |
 | 5 | **Monitoring/records layer** | Build temp + time capture on COOK/COOL/HEAT/SEND (Principles 4 & 7); **2-year** retention + 7-day retained food sample | Systems owner |
 | 6 | ✓ **Food handler — Ch. 545 IN PLACE** | Certified supervisory handler per area confirmed; **confirm an approved certification provider** (City program suspended) | Coordinator |
-| 7 | **Recipe-hub ground-poultry temp** *(Jason-gated)* | Verify whether `conc-recipe-hub` encodes a ground-poultry cook temp at 71 °C; if so correct to 74 °C + re-baseline. **Architect's call.** | Jason |
+| 7 | ✓ **Ground-poultry cook temp — DONE** | Verified: no wrong 71 °C was encoded (the shared ground-meat step was texture-only, "until browned"). Added an explicit **71 °C/160 °F (74 °C/165 °F for poultry) — verify with thermometer** target to `COOK_GROUND` on 2026-06-24 (9 ground-meat dishes incl. Pad Krapow; re-baselined). | — |
 | 8 | **Citation second-pass** | Re-check the `HACCP_REGULATORY_FINDINGS.md` quotes against primary sources before final sign-off (findings §8) | Coordinator |
 | 9 | **s. 34 — FUTURE process (cure/smoke/ferment)** | Planned, not current. Before launch: build the process's hazards + critical limits (nitrite / pH / aw / time-temp) as an **MOH/PHI-approved written procedure (binding)** and produce only once approved | Coordinator + PHI |
 
