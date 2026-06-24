@@ -3,13 +3,13 @@
 **Operation:** Christie Ossington Neighbourhood Centre (CONC) shelter catering — Bloor + Rexdale kitchens serving the Bloor, Rexdale & Lansdowne shelter sites.
 **Date:** 2026-06-24
 **Document status:** Pre-validation **sketch**. Proposed temperatures/times are standard Health Canada / Ontario Reg. 493/17 / Toronto Public Health references **to be confirmed with the local public health unit and validated on-site** — they are *not* yet CONC-specific critical limits.
-**Provenance:** Grounded in the live HOUSE apps as of this date — DOOR (resident/dietary/allergen routing), HUB (production board: chips, FRIDGE, MOVES, van routes), MISE/CODEX (224 recipes, allergen feed). No thermal data exists in any app today; that gap is this plan's central finding.
+**Provenance:** Grounded in the live HOUSE apps as of this date — DOOR (resident/dietary/allergen routing), HUB (production board: chips, FRIDGE, MOVES, van routes), MISE/CODEX (224 recipes, allergen feed). HACCP-correct thermal *procedures* already exist as MISE cook-card method text (two-stage blast-chill, reheat-to-74 °C-once, cut-specific cook temps, ROP "use-by" labelling); what's absent is any thermal *data field, log, or monitoring record* — the gap between a written procedure and verifiable HACCP. **Full hazard analysis, CCP determination & critical limits (Principles 1–3): see the companion annex `HACCP_HAZARD_ANALYSIS.md`.**
 
 ---
 
 ## A note on framework and scope of this draft
 
-HACCP is built in the **Codex 12-step logic sequence** = 5 *preliminary steps* (1–5) + the 7 *principles* (steps 6–12). This draft completes **preliminary Steps 1–3 in depth** (HACCP team · product description · intended use & consumers), then sketches **Step 4 (flow diagrams)** with explicit start/end points and **previews Principle 1/2 (hazard analysis → CCPs)** so the trajectory is visible. Steps 5–12 require on-site verification and public-health validation (see final section).
+HACCP is built in the **Codex 12-step logic sequence** = 5 *preliminary steps* (1–5) + the 7 *principles* (steps 6–12). This draft completes **preliminary Steps 1–3 in depth** (HACCP team · product description · intended use & consumers) and sketches **Step 4 (flow diagrams)** with explicit start/end points. **Principles 1–3 (hazard analysis → CCP determination → critical limits) are worked out in full in the companion annex `HACCP_HAZARD_ANALYSIS.md`.** Step 5 and the remaining principles (4–7: monitoring, corrective actions, verification, records) require on-site verification and public-health validation (see final section).
 
 Because CONC runs **224 recipes**, one-plan-per-recipe is impossible. This uses the **Process Approach** (FDA/Codex foodservice model): every menu item falls into one of three process categories defined by *how many times the food passes through the temperature danger zone* (4 °C–60 °C). That maps almost perfectly onto CONC's existing HUB chip vocabulary.
 
@@ -66,7 +66,7 @@ Under the process approach we describe the **meal output as food groups** rather
 | **Allergens present** | Full **Health Canada priority** set in the menu: wheat/gluten (69 recipes), soy (30), milk (22+), egg (24+), fish/Basa (4), sesame (3), peanut (2), tree nut/**coconut**, sulphites (20), mustard (6), oats (7). CONC-tracked extensions: **nightshades (53), spicy (30)** |
 | **Packaging** | Vacuum-seal (`vac`), cambro, bins, hotel pans — varies by process leg |
 | **Storage & distribution** | Cold cook-chill (refrigerated), frozen stock (PULL/thaw chains), and hot same-day transport — by **van between sites** (Bloor↔Rex↔LAN), on scheduled **AM/PM runs** |
-| **Shelf life / hold** | Same-day to a documented **8-day** cold hold (e.g., the Vegan Chilli "MON Lunch (8d)"). ⚠ **8 days exceeds the common ≤5-day cook-chill and FDA 7-day RTE-at-≤4 °C defaults — flag as a critical-limit question for validation.** |
+| **Shelf life / hold** | Scheduled chilled holds run **5 d (37 items), 6 d (22), 7 d (2), 8 d (4, e.g. Vegan Chilli)** under a MISE vac-bag label of **"use by 2 weeks @ ≤41 °F."** ⚠ **For Reduced-Oxygen Packaging (53 vac recipes) at ≤4 °C without a botulinum barrier, 14 days is too long — recommended critical limit ≤7 d (annex CCP-3).** Frozen holds (e.g. 11 d "Shape & Freeze" patties) are a separate regime; a 27 d "Shakshuka" + 9 ambiguous "?d" holds need classifying. |
 | **Where consumed** | On-site at the three shelters; no retail sale |
 
 ---
@@ -123,28 +123,31 @@ Walk each diagram against reality at **Bloor**, at **Rex**, and on a **live van 
 
 ---
 
-## Preview ▸ Principle 1 & 2 — Hazard Analysis → Likely CCPs
+## Principles 1–3 ▸ Hazard Analysis → CCPs → Critical Limits *(full worksheet in `HACCP_HAZARD_ANALYSIS.md`)*
 
-Grounded in the P3 flow, the **probable Critical Control Points** (to be confirmed via a CCP decision tree in the full plan):
+The full step-by-step hazard analysis, Codex decision-tree CCP determination, and critical-limit table now live in the companion annex. Summary of the result — **six CCPs**, with limits anchored to Ontario Reg. 493/17 / Health Canada / FDA / FSA (all pending TPH validation):
 
-| # | CCP candidate | Step | Proposed critical limit *(validate w/ TPH)* | Hazard controlled |
+| # | CCP | Step | Critical limit *(validate w/ TPH)* | Primary hazard |
 |---|---|---|---|---|
-| **CCP-1** | **Cooking** | COOK | Internal **74 °C** poultry/egg/reheat-mixed; **71 °C** ground; **70 °C** fish; held ≥15 s | Salmonella, *E. coli* O157, *Campylobacter* |
-| **CCP-2** | **Cooling** (cook-chill) | COOL | **60 °C→20 °C ≤2 h, then 20 °C→4 °C ≤4 h** (≤6 h total) | *C. perfringens*, *B. cereus* (cooked rice/stews) |
-| **CCP-3** | **Cold hold + transport** | FRIDGE / SEND | **≤4 °C continuous**; max hold-life **(8-day item flagged)**; cold chain unbroken on van | *Listeria*, general pathogen growth |
-| **CCP-4** | **Reheating** | HEAT | **≥74 °C within 2 h**, once, before service | Recontamination / survivor outgrowth |
-| **CCP-5** | **Allergen / anaphylactic control** | PREP + Plate | Verified separation + correct DOOR routing; anaphylactic red-flag acknowledged pre-service | Allergen cross-contact (chemical hazard) |
+| **CCP-1** | **Cooking** | COOK | ≥**74 °C** poultry/mixed/egg; **71 °C** ground & whole-muscle (ON); **70 °C** fish (⚠ cook card uses 155 °F) | Salmonella, *E. coli* O157, Campylobacter |
+| **CCP-2** | **Cooling** | COOL | **60→20 °C ≤2 h, 20→4 °C ≤4 h** (≤6 h); reheat-restart once | *C. perfringens*, *B. cereus* (spore-formers) |
+| **CCP-3** | **Chilled/ROP hold + transport** | PREP/FRIDGE/SEND | **≤4 °C**; **ROP use-by ≤7 d** (was 14 d); insulated transport + arrival probe | *Listeria*, **non-proteolytic *C. botulinum*** toxin |
+| **CCP-4** | **Reheating** | HEAT | ≥**74 °C** core within 2 h, **once only** | Recontamination / survivor outgrowth |
+| **CCP-5** | **Hot-holding & service window** | hot-send / post-reheat | **≥60 °C**, or time-as-control **≤4 h** then discard | *C. perfringens*, *S. aureus* toxin |
+| **CCP-6** | **Allergen / anaphylactic** | PREP + Plate | **Zero cross-contact to a flagged resident; 100 % anaphylactic plates verified** pre-service | Allergen / anaphylaxis (chemical) |
 
-Likely managed as **Prerequisite Programs (PRPs)** rather than CCPs: supplier approval & receiving checks, cold/frozen storage, **thaw/PULL** control, cleaning & sanitation, pest control, personal hygiene / no-bare-hand-contact, potable water, **thermometer calibration**, and allergen-segregation housekeeping.
+**Two findings that reshaped the first sketch:** (1) the thermal controls *exist* as MISE cook-card text but are **not monitored or recorded** — that's the build, not the procedure; (2) a **documented-vs-practice cooling conflict** ("blast-chill" cook card vs "cooled overnight" schedule note) is the #1 on-site verification item. See annex §0 and §5.
+
+**Managed as Prerequisite Programs (PRPs):** supplier approval & receiving temp checks, cold/frozen storage + **Bloor capacity fix**, **thaw/PULL** control, cleaning & sanitation, pest control, personal hygiene / no-bare-hand-contact, potable water, **thermometer calibration**, allergen-segregation housekeeping.
 
 ---
 
 ## The CONC-specific recommendation (where this becomes real)
 
-CONC's standout asset is that **traceability already exists in software** — DOOR knows who eats what and which allergens apply; HUB knows what's cooked, where it moves, and how many days it's held; EXPO schedules it; MISE owns recipes/allergens. The **one missing layer is thermal**. The highest-value HACCP build is therefore to **extend the existing backbone to capture temperature + time at the ★ steps**:
+CONC's standout asset is that **traceability already exists in software** — DOOR knows who eats what and which allergens apply; HUB knows what's cooked, where it moves, and how many days it's held; EXPO schedules it; MISE owns recipes/allergens — and MISE cook cards even carry the correct thermal *procedures*. The **one missing layer is thermal *records***: nothing captures the actual probe readings, so a correct procedure can't be proven. The highest-value HACCP build is therefore to **extend the existing backbone to capture temperature + time at the ★ steps**:
 
 1. **Temp/time fields on COOK, COOL, HEAT, and SEND** (final cook temp; cooling start/2 h/6 h checkpoints; reheat temp; van depart/arrive fridge temps) — turning HUB's chips into a monitoring log (Principle 4) and an audit record (Principle 7).
-2. **Promote FRIDGE colour-coding & MOVES `holdClass`** from logistics hints into **enforced cold-hold-life limits** — and resolve the **8-day** vs. ≤5–7-day question.
+2. **Promote FRIDGE colour-coding & MOVES `holdClass`** from logistics hints into **enforced cold-hold-life limits** — and bring the vac-bag use-by from 14 d to the **≤7 d** ROP limit (annex CCP-3).
 3. **Wire the built-but-dormant `computeDoorComplianceDiagnostics` / Gate-9** as the home for an allergen+thermal pre-service gate.
 4. Address the **chronically over-capacity Bloor fridge (35u/22u)** — a cold-chain risk that a CCP-3 limit would surface immediately.
 
@@ -152,7 +155,7 @@ CONC's standout asset is that **traceability already exists in software** — DO
 
 ## What's needed to finish Steps 5–12
 
-On-site flow verification at both kitchens + a live van run; confirmation of the proposed critical limits with **Toronto Public Health**; the actual equipment list (combi/blast-chiller capability drives whether the 6 h cooling limit is even achievable); and a decision on the 8-day hold. From there: full hazard analysis (Principle 1), CCP decision-tree confirmation (2), and critical limits / monitoring / corrective-actions / verification / records (Principles 3–7).
+Principles 1–3 are drafted (see annex). Remaining: on-site flow verification at both kitchens + a live van run (Step 5); confirmation of the annex's critical limits with **Toronto Public Health** (incl. the ROP use-by and the fish cook temp); the actual equipment list (combi/blast-chiller capability drives whether the 6 h cooling limit is achievable); and resolution of the cooling procedure-vs-practice conflict. From there, build **Principles 4–7**: monitoring, corrective actions, verification, and the records the system does not yet capture.
 
 ---
 
