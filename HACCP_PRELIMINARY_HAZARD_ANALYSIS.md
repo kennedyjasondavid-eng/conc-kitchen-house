@@ -1,7 +1,7 @@
 # CONC HACCP — Preliminary Hazard Analysis (Executive Summary)
 
 **Read-first front sheet.** A one-page orientation to CONC's food-safety hazard analysis — what the hazards are, why they matter, and the controls that hold them. The full worksheets live in the documents listed at the foot.
-**Date:** 2026-06-24 · **Status: WORKING DRAFT.** Critical limits **validated 2026-06-24 against Health Canada / O. Reg. 493/17 / FDA Food Code / UK FSA-ACMSF** (established standards — a live regulatory-source fetch was blocked this session, so reconfirm against the cited sources). **Not yet a live plan:** the open items are direct TPH sign-off (especially the **ROP special-process / variance** question) and on-site flow confirmation.
+**Date:** 2026-06-24 · **Status: WORKING DRAFT.** Critical limits **validated against `HACCP_REGULATORY_FINDINGS.md`** (2026-06-24; Health Canada / O. Reg. 493/17 / MOH / TPH / FDA / FSA). **This is a *voluntary* HACCP plan** — a contract-differentiation asset, not a regulatory mandate; CONC is subject only to standard O. Reg. 493/17 inspection, with **no TPH special-process review for ROP** (architect-confirmed). **Open:** a citation second-pass (findings §8) + on-site flow confirmation.
 
 ---
 
@@ -26,7 +26,7 @@ Four hazard families account for nearly all the risk:
 |---|---|---|
 | **1 — Cooking** | COOK | Core ≥**74 °C** poultry incl. ground poultry/mixed/egg · ≥**71 °C** ground beef-pork & whole-muscle · ≥**70 °C** fish |
 | **2 — Cooling** | COOL | **60→20 °C ≤2 h, 20→4 °C ≤4 h** (≤6 h); blast chiller |
-| **3 — Chilled/ROP hold + transport** | PREP/FRIDGE/SEND | general cold ≤**4 °C [binding s.27]** · **ROP product < 3 °C** · **ROP use-by ≤7 d** (Listeria Cat 1) · transit ≤4 °C [binding] |
+| **3 — Chilled/ROP hold + transport** | PREP/FRIDGE/SEND | cold ≤**4 °C [binding s.27]** · **ROP ≤4 °C + validated barrier** (≥90 °C/10-min cook, or pH/aw/salt) · **use-by ≤7 d** (Listeria Cat 1) · transit ≤4 °C [binding] |
 | **4 — Reheating** | HEAT | ≥**74 °C** core within 2 h, **once only** |
 | **5 — Hot-hold & service** | service | ≥**60 °C**, or time-as-control **≤4 h** then discard |
 | **6 — Allergen / anaphylactic** | PREP + plate | **Zero cross-contact to a flagged resident; 100 % of anaphylactic plates verified** pre-service |
@@ -43,7 +43,7 @@ HACCP sits on a base of prerequisite programs (sanitation, pest control, supplie
 
 ## What makes this "preliminary" — the gates to a live plan
 1. **Step 5 — on-site flow verification** (walk Bloor + Rex + a live van run; time-stamp every hold/cool/transport leg).
-2. **TPH sign-off** — limits are validated against the standards; the open regulatory question is whether the vacuum/ROP special process needs a **special-process approval / variance** (confirm directly with TPH — web sources were blocked this session).
+2. **Voluntary plan** — no TPH special-process approval is required for ROP (architect-confirmed); CONC runs standard O. Reg. 493/17 inspection, and the plan is a contract-differentiation asset. *(Future: cure/smoke/ferment would trigger a binding s. 34 MOH/PHI-approved written procedure.)*
 3. **Equipment-under-load** — confirm the blast chiller hits the 2 h / 6 h targets at full batch size.
 4. **Build the monitoring + records layer** — the temperature-capture design that turns correct procedures into provable records.
 
@@ -58,4 +58,4 @@ HACCP sits on a base of prerequisite programs (sanitation, pest control, supplie
 | `HACCP_MONITORING_RECORDS.md` | Principles 4–7 — monitoring, corrective actions, verification, records + the capture schema |
 | `HACCP_CCP_DECISION_TREE.md` | Per-dish CCP-vs-CP determinations across the live menu (generated from MISE) |
 
-*Working draft. Limits validated 2026-06-24 against Health Canada / O. Reg. 493/17 / FDA / FSA-ACMSF (established standards; reconfirm against the cited sources). Open TPH item: ROP special-process approval / variance.*
+*Working draft — **voluntary** HACCP plan (contract-differentiation; standard inspection only). Limits validated 2026-06-24 (see `HACCP_REGULATORY_FINDINGS.md`). Open: citation second-pass (findings §8).*

@@ -8,7 +8,7 @@
 
 ## 1. HACCP Master Plan — the integrated table (Principles 3→7 per CCP)
 
-Critical limits recapped from `HACCP_HAZARD_ANALYSIS.md` §4. **Validated 2026-06-24 against Health Canada / O. Reg. 493/17 / FDA / FSA; ROP special-process status to confirm with TPH.**
+Critical limits recapped from `HACCP_HAZARD_ANALYSIS.md` §4. **Validated 2026-06-24 (see `HACCP_REGULATORY_FINDINGS.md`). Voluntary plan — standard inspection only; no TPH ROP review.**
 
 ### CCP-1 — Cooking
 | | |
@@ -31,7 +31,7 @@ Critical limits recapped from `HACCP_HAZARD_ANALYSIS.md` §4. **Validated 2026-0
 ### CCP-3 — Chilled / ROP hold + cold transport
 | | |
 |---|---|
-| **Critical limit** | general cold ≤**4 °C continuous [BINDING s.27]**; **ROP product < 3 °C**; **ROP use-by ≤7 d from cook day** (Listeria Cat 1); transport ≤4 °C in transit **[BINDING]** (depart/arrive probe); raw segregated from RTE |
+| **Critical limit** | cold ≤**4 °C continuous [BINDING s.27]**; **ROP ≤4 °C + validated botulinum barrier** (≥90 °C/10-min cook, or pH<5.0/aw<0.97/salt); **ROP use-by ≤7 d from cook day** (Listeria Cat 1); transit ≤4 °C **[BINDING]** (validated equipment; no per-leg log); raw segregated from RTE |
 | **Monitoring** | *What:* (a) fridge temp each unit; (b) ROP label correct + use-by dated from cook day; (c) van depart & arrive temps · *How:* min/max thermometer; label check; probe · *Freq:* fridges **2×/day**, label **every bag**, transport **every van leg** · *Who:* kitchen lead / driver |
 | **Corrective action** | Fridge out-of-temp → assess exposure, repair/move stock, discard if abused; over-7 d / mis-dated → **discard**; transport breach → assess or discard; log |
 | **Verification** | Daily temp-log review; **automated schedule check: (serve − cook) ≤ use-by for every ROP batch** (see §4); calibration; periodic *Listeria* swab if extending shelf life |
@@ -107,7 +107,7 @@ Scheduling cooks to stay inside the hold limit is an operational matter EXPO can
 5. **DOOR allergen/anaphylactic records** — plating sheets, anaphylactic list, H&W acknowledgements *(already generated)*.
 6. **Verification records** — record-review sign-offs, schedule-check flags, reassessment minutes.
 
-**Integrity & retention:** each entry dated + initialled (staff ID), tamper-evident (append-only log; corrections are new entries, not overwrites). Retain cook/cool/reheat/hold logs **≥1 year** (confirm with TPH); calibration & verification records longer. localStorage holds the live copy; the published `haccp_log.json` is the durable record (mirrors how DOOR/MISE publish their JSON artifacts).
+**Integrity & retention:** each entry dated + initialled (staff ID), tamper-evident (append-only log; corrections are new entries, not overwrites). Retain all CCP monitoring logs **2 years** (CONC's voluntary commitment; the statutory floor is ≥1 yr). localStorage holds the live copy; the published `haccp_log.json` is the durable record (mirrors how DOOR/MISE publish their JSON artifacts).
 
 ---
 
@@ -156,10 +156,10 @@ Scheduling cooks to stay inside the hold limit is an operational matter EXPO can
 ## 8. Open decisions (for the architect / TPH)
 
 1. **Capture placement** — recommended split above (capture in HUB, record+gate in DOOR). The one new surface is a small write/publish path in HUB; everything else reuses existing machinery. *Confirm this split before building.*
-2. **ROP use-by = 7 d** — ratify with TPH (and whether the vacuum/ROP special process needs a TPH variance at all).
+2. **ROP use-by = 7 d at ≤4 °C** — justified by the validated botulinum barrier (≥90 °C/10-min cook, or pH/aw/salt); no TPH variance required (voluntary plan).
 3. **Retention period** — confirm ≥1 year against TPH guidance.
 4. **Probe hardware** — do the kitchens have enough calibrated digital probes / an in-chiller logging probe for per-batch capture? (Drives Phase A feasibility.)
 
 ---
 
-*Working draft. Software shapes are a design proposal. Limits validated 2026-06-24 against Health Canada / O. Reg. 493/17 / FDA / FSA-ACMSF (established standards; reconfirm against the cited sources). Open TPH item: ROP special-process approval / variance.*
+*Working draft — **voluntary** HACCP plan. Software shapes are a design proposal. Limits validated 2026-06-24 (see `HACCP_REGULATORY_FINDINGS.md`). Open: citation second-pass (findings §8).*
