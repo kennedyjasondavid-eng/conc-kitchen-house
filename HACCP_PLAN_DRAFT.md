@@ -9,7 +9,7 @@
 
 ## A note on framework and scope of this draft
 
-HACCP is built in the **Codex 12-step logic sequence** = 5 *preliminary steps* (1–5) + the 7 *principles* (steps 6–12). This draft completes **preliminary Steps 1–3 in depth** (HACCP team · product description · intended use & consumers) and sketches **Step 4 (flow diagrams)** with explicit start/end points. **Principles 1–3 (hazard analysis → CCP determination → critical limits) are worked out in full in the companion annex `HACCP_HAZARD_ANALYSIS.md`.** Step 5 and the remaining principles (4–7: monitoring, corrective actions, verification, records) require on-site verification and public-health validation (see final section).
+HACCP is built in the **Codex 12-step logic sequence** = 5 *preliminary steps* (1–5) + the 7 *principles* (steps 6–12). This draft completes **preliminary Steps 1–3 in depth** (HACCP team · product description · intended use & consumers) and sketches **Step 4 (flow diagrams)** with explicit start/end points. The seven principles are then worked out in two companion annexes: **Principles 1–3** (hazard analysis → CCP determination → critical limits) in **`HACCP_HAZARD_ANALYSIS.md`**, and **Principles 4–7** (monitoring → corrective actions → verification → records, plus the temperature-capture schema) in **`HACCP_MONITORING_RECORDS.md`**. What remains is execution: Step 5 on-site flow verification and public-health validation (see final section).
 
 Because CONC runs **224 recipes**, one-plan-per-recipe is impossible. This uses the **Process Approach** (FDA/Codex foodservice model): every menu item falls into one of three process categories defined by *how many times the food passes through the temperature danger zone* (4 °C–60 °C). That maps almost perfectly onto CONC's existing HUB chip vocabulary.
 
@@ -154,7 +154,7 @@ CONC's standout asset is that **traceability already exists in software** — DO
 
 ## What's needed to finish Steps 5–12
 
-Principles 1–3 are drafted (see annex). Remaining: on-site flow verification at both kitchens + a live van run (Step 5); confirmation of the annex's critical limits with **Toronto Public Health** (incl. the ROP use-by and the fish cook temp); and the actual equipment list (does the blast chiller hold the 2 h / 6 h targets under full load?). From there, build **Principles 4–7**: monitoring, corrective actions, verification, and the records the system does not yet capture.
+**Principles 1–7 are now drafted** across the two annexes. What remains is execution, not design: on-site flow verification at both kitchens + a live van run (Step 5); **Toronto Public Health** validation of the limits (incl. the ROP use-by and the fish cook temp) and whether the vacuum/ROP special process needs a variance; the equipment list (does the blast chiller hold the 2 h / 6 h targets under full load?); and the **staged build of the temperature-capture layer** (`HACCP_MONITORING_RECORDS.md` §7, Phases A→C) that turns these correct procedures into provable records.
 
 ---
 
