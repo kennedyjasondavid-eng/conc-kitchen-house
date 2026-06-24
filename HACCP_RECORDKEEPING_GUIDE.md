@@ -28,15 +28,17 @@ Six active logs + the plan + the review trail. Most are one line per batch or tw
 |---|---|---|---|---|---|---|---|
 | 1 | **Cook / Cool / Reheat batch log** | CCP-1, 2, 4 | item · date · cook °C · cool@2h °C · cool@6h °C · reheat °C · initials | per batch | cook | HUB chip-tap → log | ≥1 yr* |
 | 2 | **Fridge / cold-hold log** | CCP-3 | unit · temp · time · initials | **2×/day** per unit | lead | HUB / paper | ≥1 yr* |
-| 3 | **Vac-bag label** *(is the record)* | CCP-3 dating | item · cook date · use-by (auto = cook +N d) | every bag | cook | printed label | with batch |
+| 3 | **Vac-bag / ROP label** *(is the record)* | CCP-3 dating | product identity · cook **date + time** · **discard-by date** (cook + ≤7 d) | every bag | cook | printed label | with batch |
 | 4 | **Transport log** | CCP-3 cold chain | route · depart °C · arrive °C · time · initials | per van leg | driver | HUB / paper | ≥1 yr* |
 | 5 | **Thermometer calibration log** | verification | probe · ice-point check · pass/adjust · initials | **daily** | each cook | paper / HUB | ≥1 yr* |
 | 6 | **Corrective-action log** | Principle 5 | what failed · when · action · disposition (use/discard) · who | only on a deviation | whoever finds it | HUB / paper | ≥1 yr* |
+| 7 | **Retained food sample (7-day)** | TPH Centralized-Kitchen rule | dated, sealed sample of **every RTE item produced** | each RTE item, daily | lead | labelled sample fridge | **7 days** |
 | — | **Allergen / anaphylactic records** | CCP-6 | *DOOR already generates these* — plating sheets + auto anaphylactic list + H&W acknowledgement | every meal | H&W / lead | **DOOR (existing)** | ≥1 yr* |
 | — | **Receiving + cleaning** (PRPs) | foundation | receiving: supplier · temp · accept/reject · initials · cleaning: tick per shift | per delivery / per shift | receiver / staff | paper | ≥1 yr* |
-| — | **The HACCP plan + review sign-offs** | the system exists & is live | the 5 plan docs + weekly coordinator review signature | standing | coordinator | binder / repo | current + superseded |
+| — | **Food-handler certification** | competency | cert on file per handler; **a certified supervisory handler in *each area* at all times** (Toronto Ch. 545, above the provincial s. 32 floor) | standing | coordinator | binder | current |
+| — | **The HACCP plan + review sign-offs** | the system exists & is live | the HACCP plan docs + weekly coordinator review signature | standing | coordinator | binder / repo | current + superseded |
 
-*\*Retention ≥1 year is the working assumption — **the in-flight research will confirm the TPH/CFIA requirement.**
+*\*Retention floor **≥1 year** — the statutory minimum for purchase + pest-control records (O. Reg. 493/17 s. 29(2) / s. 13(2)). There is **no binding retention period for temperature logs**, but keep all monitoring logs ≥1 yr (confirm 1 vs 2 yr for the special-process logs with TPH). Validated 2026-06-24 — `HACCP_REGULATORY_FINDINGS.md`.*
 
 **The big simplicity win:** allergen control (CCP-6) needs **no new paperwork** — DOOR already produces the plating sheets, the anaphylactic list, and the H&W acknowledgement. Those *are* the CCP-6 records. Don't recreate them.
 
@@ -45,11 +47,11 @@ Six active logs + the plan + the review trail. Most are one line per batch or tw
 ## The combinations — hazard → CCP → limit → control → monitor → record → fix
 One row per CCP. *(Limit values validated against HC / O. Reg. 493/17 / FDA / FSA — single source is §4 of the hazard analysis.)*
 
-| CCP / step | Hazard | Critical limit *(draft)* | Control measure | Monitor (what · freq · who) | Record | Corrective action |
+| CCP / step | Hazard | Critical limit *(validated — single source §4)* | Control measure | Monitor (what · freq · who) | Record | Corrective action |
 |---|---|---|---|---|---|---|
-| **CCP-1 Cooking** | Salmonella, *E. coli* O157, Campylobacter | poultry/mixed/egg ≥**74 °C** · ground ≥**71 °C** · fish ≥**70 °C** core | cook to temp; probe slowest point | core temp · **every batch** · cook | Log 1 | keep cooking → re-probe; record |
+| **CCP-1 Cooking** | Salmonella, *E. coli* O157, Campylobacter | poultry incl. **ground poultry**/mixed/egg ≥**74 °C** · ground beef-pork ≥**71 °C** · fish ≥**70 °C** core | cook to temp; probe slowest point | core temp · **every batch** · cook | Log 1 | keep cooking → re-probe; record |
 | **CCP-2 Cooling** | *C. perfringens*, *B. cereus* outgrowth | **60→20 °C ≤2 h, 20→4 °C ≤4 h** (≤6 h); blast chiller | rapid two-stage chill | core temp at **2 h** + end · every cooked-to-chill batch · cook | Log 1 | not ≤20 °C by 2 h → reheat 74 °C + recool **once**, else **discard** |
-| **CCP-3 Chilled/ROP hold + transport** | *Listeria*; *C. botulinum* toxin over time | ≤**4 °C** · ROP use-by **≤7 d from cook day** · transport ≤4 °C | cold chain + dated label | fridge **2×/day** · label **every bag** · van **arrival temp** · lead/driver | Logs 2, 3, 4 | over-temp/over-date → **discard**; repair/relocate stock |
+| **CCP-3 Chilled/ROP hold + transport** | *Listeria*; *C. botulinum* toxin over time | general cold ≤**4 °C [BINDING]** · **ROP product < 3 °C** · ROP use-by **≤7 d** (Listeria Cat 1) · transit ≤4 °C **[BINDING]** | cold chain + dated discard-by label | fridge **2×/day** · label **every bag** · van **arrival temp** · lead/driver | Logs 2, 3, 4, 7 | over-temp/over-date → **discard**; repair/relocate |
 | **CCP-4 Reheating** | survival / recontamination | ≥**74 °C** core within 2 h, **once** | reheat to temp, once only | core temp before service · every reheat · Rex cook | Log 1 | keep heating; 2nd reheat or >2 h → **discard** |
 | **CCP-5 Hot-hold & service** | *C. perfringens*, *S. aureus* toxin | ≥**60 °C**, or time-as-control **≤4 h** then discard | hot-hold or timed service | hold temp at service + hourly · per service · server | Service line of Log 1 | <60 °C & <2 h → reheat 74 °C; else **discard** |
 | **CCP-6 Allergen / anaphylactic** | allergen cross-contact / anaphylaxis | **zero cross-contact; 100 % anaphylactic plates verified** pre-service | DOOR routing + prep segregation + H&W ack | DOOR generate + visual prep check + ack · **every meal** · H&W/lead | **DOOR records (existing)** | re-route / separate alternative; **block service until verified** |

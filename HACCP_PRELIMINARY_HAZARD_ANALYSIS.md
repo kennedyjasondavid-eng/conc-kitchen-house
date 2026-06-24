@@ -24,9 +24,9 @@ Four hazard families account for nearly all the risk:
 ## The six Critical Control Points (at a glance)
 | CCP | Step | Critical limit *(validated vs HC / O. Reg. 493/17 / FDA / FSA)* |
 |---|---|---|
-| **1 — Cooking** | COOK | Core ≥**74 °C** poultry/mixed/egg · ≥**71 °C** ground & whole-muscle · ≥**70 °C** fish |
+| **1 — Cooking** | COOK | Core ≥**74 °C** poultry incl. ground poultry/mixed/egg · ≥**71 °C** ground beef-pork & whole-muscle · ≥**70 °C** fish |
 | **2 — Cooling** | COOL | **60→20 °C ≤2 h, 20→4 °C ≤4 h** (≤6 h); blast chiller |
-| **3 — Chilled/ROP hold + transport** | PREP/FRIDGE/SEND | ≤**4 °C** continuous · **ROP use-by ≤7 d from cook day** · cold chain unbroken on the van |
+| **3 — Chilled/ROP hold + transport** | PREP/FRIDGE/SEND | general cold ≤**4 °C [binding s.27]** · **ROP product < 3 °C** · **ROP use-by ≤7 d** (Listeria Cat 1) · transit ≤4 °C [binding] |
 | **4 — Reheating** | HEAT | ≥**74 °C** core within 2 h, **once only** |
 | **5 — Hot-hold & service** | service | ≥**60 °C**, or time-as-control **≤4 h** then discard |
 | **6 — Allergen / anaphylactic** | PREP + plate | **Zero cross-contact to a flagged resident; 100 % of anaphylactic plates verified** pre-service |

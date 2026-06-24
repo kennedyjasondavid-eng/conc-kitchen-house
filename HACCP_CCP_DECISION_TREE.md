@@ -23,7 +23,7 @@ Applied to each significant hazard at each step:
 | Cooking | Y | Y | — | — | **CCP-1** | The kill step — internal-temp limit |
 | Cooling (cook-chill) | Y | Y | Y | N — heat-stable toxins | **CCP-2** | Two-stage ≤6 h blast-chill |
 | Portioning / vacuum-pack (ROP) | Y | N | Y | feeds CCP-3 | CP / PRP | Hygiene; pack already-chilled; labelling |
-| Chilled / ROP hold | Y | N | Y | N — reheat ≠ toxin removal | **CCP-3** | ≤4 °C; ROP use-by ≤7 d from cook day |
+| Chilled / ROP hold | Y | N | Y | N — reheat ≠ toxin removal | **CCP-3** | ≤4 °C [BINDING s.27]; ROP product < 3 °C; use-by ≤7 d (Listeria Cat 1) |
 | Transport (cold chain) | Y | N | Y | N | **CCP-3*** | Insulated/refrigerated; arrival probe (sub-limit of CCP-3) |
 | Reheating | Y | Y | — | — | **CCP-4** | The last kill step — ≥74 °C within 2 h, once |
 | Hot-holding & service | Y | N | Y | N — service is next | **CCP-5** | ≥60 °C, or time-as-control ≤4 h |

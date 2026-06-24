@@ -1,7 +1,7 @@
 # CONC HACCP — Hazard Analysis & CCP Determination (Principles 1–3)
 
 **Companion annex to `HACCP_PLAN_DRAFT.md`.**
-**Date:** 2026-06-24 · **Status:** Working draft. Critical limits **validated 2026-06-24 against Health Canada Safe Internal Cooking Temperatures, O. Reg. 493/17, the FDA Food Code, and UK FSA/ACMSF guidance** (from established standards — a live regulatory-source fetch was blocked by this environment's network policy, so reconfirm against the cited sources). **The one item still needing direct Toronto Public Health confirmation is whether the ROP / vacuum cook-chill process requires a special-process approval or variance.**
+**Date:** 2026-06-24 · **Status:** Working draft. Critical limits **validated against `HACCP_REGULATORY_FINDINGS.md`** (local-session research, 2026-06-24, quoting Health Canada / O. Reg. 493/17 / MOH 2019 / TPH / FDA / FSA). **Framing:** only cold ≤4 °C / hot ≥60 °C / in-transit ≤4 °C are binding (s. 27); every other limit is CONC's evidence-based standard under the **s. 26(2) performance requirement** (see §4). **Open:** TPH sign-off on the ROP special process + a citation second-pass (findings §8).
 **Grounding:** Built from the live HOUSE apps — MISE/CODEX recipe data + generated cook-card methods (`SEQUENCE_TEMPLATES`), HUB production schedule (`hub_schedule.json`, FRIDGE/MOVES), DOOR routing/allergen logic. Direct quotes from those sources are marked.
 
 ---
@@ -90,7 +90,7 @@ Applied to each **significant** hazard. **Q1** Control measure exists? · **Q2**
 
 ## 4. Principle 3 — Critical Limits
 
-Per CCP, with basis. **Validated 2026-06-24 against Health Canada / O. Reg. 493/17 / FDA / FSA (see the status note); the ROP special-process status is the one item still to confirm with TPH.** Temperatures given in °C (Ontario/Health Canada) with °F (FDA / CONC cook cards) in parentheses.
+Per CCP, with basis. **Framing rule** (validated 2026-06-24 — full citations in `HACCP_REGULATORY_FINDINGS.md`): **O. Reg. 493/17 binds only three numbers — cold-hold ≤4 °C, hot-hold ≥60 °C, and in-transit ≤4 °C (s. 27)**, marked **[BINDING s.27]** below. **Every other limit (cooking, cooling, reheating, shelf-life, ROP) is CONC's evidence-based standard adopted to satisfy the s. 26(2) performance requirement** — *"food processed in a manner that makes the food safe to eat"* — drawn from Health Canada / MOH 2019 / TPH / FDA / FSA. State them that way for audit (**not** "the regulation requires"). Ontario's defined term is **potentially hazardous food (PHF)**. Temperatures in °C with °F in parentheses; the ROP special-process status is the one item still to confirm directly with TPH.
 
 ### CCP-1 — Cooking (internal core temperature, held ≥15 s)
 | Food | Critical limit | Basis / note |
@@ -106,25 +106,26 @@ Per CCP, with basis. **Validated 2026-06-24 against Health Canada / O. Reg. 493/
 - **Workflow confirmed (§0.2):** blast-chilled to <4 °C within 2 h, then refrigerated overnight, bagged next morning — compliant. Remaining CCP-2 work is to **record** the 2 h / 6 h checkpoint temperatures (Principle 4) and verify the blast chiller meets the targets under full load.
 
 ### CCP-3 — Chilled / ROP storage + cold transport
-- **Cold-hold temperature:** **≤4 °C continuous** (O. Reg. 493/17). *Tightens CONC's current "≤41 °F/5 °C" label by 1 °C.*
-- **ROP (vacuum-pack) refrigerated shelf life — the bagged-holding decision:** **≤7 days, cook/production day = day 1 (not the next-morning bagging day), at ≤4 °C, with no additional barrier.**
-  - *Basis:* FDA Food Code RTE date-marking caps in-house RTE TCS at 7 d @ ≤5 °C; the UK FSA/ACMSF botulinum rule caps vacuum/MAP chilled food at ~10 d without an additional control; non-proteolytic *C. botulinum* grows down to ~3.3 °C. 7 d @ ≤4 °C sits safely inside both and suits an HSP.
-  - *Effect:* **replaces the current 14-day label**; brings the 8-day Vegan Chilli to within limit (move serve −1 day, or validate a barrier).
-  - *To hold longer than 7 d:* requires a **validated botulinum barrier** (guaranteed cold chain ≤3.3 °C, **or** pH ≤5.0 / aw ≤0.97 / a validated ≥90 °C·10 min heat step) **and** a **TPH ROP special-process sign-off / variance**.
-- **Frozen hold:** ≤−18 °C; thaw under refrigeration (covers the 11-day "Shape & Freeze" patties — a *frozen*, not chilled, regime).
-- **Transport:** closed/insulated or refrigerated; depart ≤4 °C; **arrival probe ≤4 °C** (transient ≤6 °C triggers corrective action); raw segregated from RTE.
-- **⚠ Items to reconcile:** the **27-day "Chickpea Shakshuka"** and **10-day "Green Seasoning/Epis"** holds (verify whether frozen, high-acid sauce, or a 4-week cycle-projection artifact — a genuine 27-day chilled RTE hold is a critical deviation); the **9 ambiguous "?d"** salad holds (assign a definite ≤-day limit).
+- **General cold-hold:** **≤4 °C continuous — [BINDING s. 27].**
+- **ROP (vacuum-packed) product cold storage:** **< 3 °C** — *tighter than the general ≤4 °C* (TPH sous-vide / cook-chill guidance; controls non-proteolytic *C. botulinum*, which grows down to ~3.3 °C). [best-practice]
+- **ROP / RTE use-by:** **≤ 7 days from the cook day (prep day = Day 1), stored < 3 °C, treated as *Listeria* Category 1** (the >5-day RTE line). Longer **only** with a validated barrier — a ≥90 °C·10 min-equivalent cook, **or** pH < 5.0 / aw < 0.97 / NaCl > 3.5%. (Basis: TPH / FDA §3-501.17 / FSA-ACMSF.) Replaces the old 14-day label; brings the 8-day Vegan Chilli within limit (move serve −1 day or validate a barrier). [best-practice]
+- **ROP label (this *is* the CCP-3 dating record):** cook **date + time**, **discard-by date**, product identity. [TPH]
+- **Frozen hold:** ≤ −18 °C; thaw under refrigeration (covers the 11-day "Shape & Freeze" patties — a *frozen*, not chilled, regime).
+- **Transport (van):** **≤ 4 °C in transit — [BINDING s. 27]** (s. 27 names "transported"). Depart ≤4 °C; **arrival probe** ≤4 °C; raw segregated from RTE.
+- **TPH review:** there is **no approval form**, but a PHI can require CONC to demonstrate a **documented, validated cook-chill / ROP plan** under s. 26 — confirm directly (see §5 + the TPH questions in `HACCP_REGULATORY_FINDINGS.md`).
+- **⚠ Items to reconcile:** the **27-day "Chickpea Shakshuka"** and **10-day "Green Seasoning/Epis"** holds (verify whether frozen, high-acid sauce, or a 4-week cycle-projection artifact); the **9 ambiguous "?d"** salad holds (assign a definite ≤-day limit).
 
 ### CCP-4 — Reheating (for hot service)
-- **Critical limit:** **≥74 °C (165 °F) core within 2 h, reheated once only.** Matches CONC `HACCP_REHEAT` ("Combi steam 350 °F… 165 °F core within 2 hours… never reheat more than once"). Probe before service.
+- **Critical limit:** **≥74 °C (165 °F) core within 2 h, reheated once only.** [best-practice — Ontario silent; HC / MOH / FDA §3-403.11.] Matches CONC `HACCP_REHEAT` ("Combi steam 350 °F… 165 °F core within 2 hours… never reheat more than once"). Probe before service.
 
 ### CCP-5 — Hot-holding & service window
-- **Critical limit:** hot food held **≥60 °C (140 °F)**; **or** time-as-public-health-control **≤4 h cumulative** in the danger zone then discard. P2 "hot-send" cook→service window must fit inside this (define clock times for AM/PM van runs — currently only "~2:00 / AM / PM").
+- **Critical limit:** hot food held **≥60 °C (140 °F) — [BINDING s. 27]**; **or** time-as-public-health-control **≤4 h cumulative** then discard. **Danger zone 4–60 °C; the only lawful excursion is the ≤2 h prep window (s. 27(2)(a)).** P2 "hot-send" cook→service must fit inside this (define clock times for the AM/PM van runs — currently only "~2:00 / AM / PM").
 
 ### CCP-6 — Allergen / anaphylactic control
 - **Critical limit (zero-tolerance):** **no allergen cross-contact reaches a flagged resident; 100 % of anaphylactic plates verified against the DOOR anaphylactic list before service.**
 - Enforced by: DOOR exclude-array routing (resident allergen tags vs meal flags); anaphylactic residents + roommates co-routed to the separate Anaphylactic Alternative; red flag + **explicit H&W acknowledgement before generation/service**; dedicated allergen-free prep (separate utensils/surfaces/sequencing); no last-minute substitution without re-running the check.
 - This is CONC's most mature existing control — it is largely **built in DOOR already**; the HACCP step is to *formalise it as a CCP with monitoring and records.*
+- **Highly-susceptible-population foods-to-avoid (Health Canada, immunocompromised — Mar 2025):** no non-dried deli meats unless reheated to steaming; hot dogs cooked to 74 °C; no raw/undercooked egg or meat; no raw sprouts; no unpasteurized dairy/juice; avoid soft & blue cheeses (even pasteurized); no refrigerated pâté / smoked seafood. Screen the menu against this list. [best-practice]
 
 ---
 
@@ -132,14 +133,19 @@ Per CCP, with basis. **Validated 2026-06-24 against Health Canada / O. Reg. 493/
 
 *Resolved during drafting: the cooling "blast-chill vs cooled overnight" question (§0.2) — compliant workflow confirmed by the architect. Fridge-capacity is out of scope for this pass at the architect's direction.*
 
+*Regulatory validation (2026-06-24, local research → `HACCP_REGULATORY_FINDINGS.md`): limits validated; **only ≤4 °C / ≥60 °C / in-transit ≤4 °C are binding (s. 27)** — the rest are CONC's s. 26(2) evidence-based standards. Corrections applied: ground poultry 74 °C (was blanket 71); **ROP product cold storage < 3 °C** + Listeria Cat 1 + barrier conditions; ROP label fields; the s. 27(2)(a) 2 h prep excursion; HSP foods-to-avoid (CCP-6). **Caveat:** the research's adversarial citation second-pass did not run (API limits) — re-check quotes before final sign-off (findings §8).*
+
 | # | Item | Action | Owner |
 |---|---|---|---|
-| 1 | **ROP: shelf-life 14 d → 7 d + special-process status** | Re-label (date from cook day); reschedule the 8-day Chilli. **Confirm directly with TPH whether ROP needs a special-process approval / variance** — the one open regulatory item (web sources were blocked this session). | Coordinator + TPH |
-| 2 | ✓ **Fish cook temp — DONE** | Raised `COOK_FISH` step text + basa prose from 155 °F to **158 °F (70 °C)** (Health Canada) on 2026-06-24 | — |
-| 3 | **Transport temperature spec** | Insulated/refrigerated transport + arrival probe log | Logistics |
+| 1 | **ROP special-process status** | Re-label (cook date/time + discard-by); reschedule the 8-day Chilli to ≤7 d. **Confirm with TPH** whether ROP/cook-chill needs pre-approval/variance or review-on-request, and the binding cold-storage target (< 3 °C vs ≤ 4 °C) — see the 7 TPH questions in `HACCP_REGULATORY_FINDINGS.md`. | Coordinator + TPH |
+| 2 | ✓ **Fish cook temp — DONE** | Raised `COOK_FISH` step text + basa prose 155 → 158 °F (70 °C) on 2026-06-24 | — |
+| 3 | **Transport temperature spec** | Insulated/refrigerated transport (≤4 °C in transit = binding s. 27) + arrival-probe log; confirm whether TPH expects in-transit logging | Logistics + TPH |
 | 4 | **"?d" + 27 d / 10 d holds** | Classify each; assign definite limits | Coordinator |
-| 5 | **No monitoring/records layer** | Build temperature + time capture on COOK/COOL/HEAT/SEND (Principles 4 & 7) — extend the existing HUB/DOOR backbone | Systems owner |
-| 6 | **Final TPH sign-off** | §4 limits validated against Health Canada / O. Reg. 493/17 / FDA / FSA (2026-06-24); obtain TPH sign-off on the plan, especially the ROP special process | TPH |
+| 5 | **No monitoring/records layer** | Build temp + time capture on COOK/COOL/HEAT/SEND (Principles 4 & 7); retention ≥1 yr + 7-day retained food sample (see record-keeping guide) | Systems owner |
+| 6 | **Food handler — Toronto Ch. 545** | Add the City rule (certified supervisory handler in *each area* at all times) above the provincial s. 32 floor; confirm Ch. 545 §545-5G(17) still in force + an approved provider | Coordinator + TPH |
+| 7 | **Recipe-hub ground-poultry temp** *(Jason-gated)* | Verify whether `conc-recipe-hub` encodes a ground-poultry cook temp at 71 °C; if so correct to 74 °C + re-baseline. **Do not auto-apply — architect's call.** | Jason |
+| 8 | **Citation second-pass** | The research's adversarial-verification layer didn't run (API limits); re-check the `HACCP_REGULATORY_FINDINGS.md` quotes against primary sources before final sign-off (findings §8) | Coordinator |
+| 9 | **Final TPH sign-off** | Obtain TPH sign-off on the plan, especially the ROP special process; carry the 7 questions in `HACCP_REGULATORY_FINDINGS.md` | TPH |
 
 ---
 

@@ -129,9 +129,9 @@ The full step-by-step hazard analysis, Codex decision-tree CCP determination, an
 
 | # | CCP | Step | Critical limit *(validate w/ TPH)* | Primary hazard |
 |---|---|---|---|---|
-| **CCP-1** | **Cooking** | COOK | ≥**74 °C** poultry/mixed/egg (whole birds 82 °C); **71 °C** ground & whole-muscle (ON); **70 °C** fish (cook card raised 155→158 °F) | Salmonella, *E. coli* O157, Campylobacter |
+| **CCP-1** | **Cooking** | COOK | ≥**74 °C** poultry/mixed/egg (whole birds 82 °C); **71 °C** ground beef-pork & whole-muscle (**ground poultry 74 °C**); **70 °C** fish (cook card raised 155→158 °F) | Salmonella, *E. coli* O157, Campylobacter |
 | **CCP-2** | **Cooling** | COOL | **60→20 °C ≤2 h, 20→4 °C ≤4 h** (≤6 h); reheat-restart once | *C. perfringens*, *B. cereus* (spore-formers) |
-| **CCP-3** | **Chilled/ROP hold + transport** | PREP/FRIDGE/SEND | **≤4 °C**; **ROP use-by ≤7 d** (was 14 d); insulated transport + arrival probe | *Listeria*, **non-proteolytic *C. botulinum*** toxin |
+| **CCP-3** | **Chilled/ROP hold + transport** | PREP/FRIDGE/SEND | ≤**4 °C** (ROP product **< 3 °C**); **ROP use-by ≤7 d** (Listeria Cat 1, was 14 d); transit ≤4 °C [binding s.27] + arrival probe | *Listeria*, **non-proteolytic *C. botulinum*** toxin |
 | **CCP-4** | **Reheating** | HEAT | ≥**74 °C** core within 2 h, **once only** | Recontamination / survivor outgrowth |
 | **CCP-5** | **Hot-holding & service window** | hot-send / post-reheat | **≥60 °C**, or time-as-control **≤4 h** then discard | *C. perfringens*, *S. aureus* toxin |
 | **CCP-6** | **Allergen / anaphylactic** | PREP + Plate | **Zero cross-contact to a flagged resident; 100 % anaphylactic plates verified** pre-service | Allergen / anaphylaxis (chemical) |

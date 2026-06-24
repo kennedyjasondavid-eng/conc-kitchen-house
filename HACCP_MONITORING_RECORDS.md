@@ -13,7 +13,7 @@ Critical limits recapped from `HACCP_HAZARD_ANALYSIS.md` §4. **Validated 2026-0
 ### CCP-1 — Cooking
 | | |
 |---|---|
-| **Critical limit** | Poultry/mixed/egg ≥**74 °C** (whole birds 82 °C); ground & whole-muscle ≥**71 °C** (ON); fish ≥**70 °C** (158 °F) — core, ≥15 s |
+| **Critical limit** | Poultry incl. ground poultry/mixed/egg ≥**74 °C** (whole birds 82 °C); ground beef-pork & whole-muscle ≥**71 °C**; fish ≥**70 °C** (158 °F) — core, ≥15 s |
 | **Monitoring** | *What:* core temp at the thickest/slowest point of each cooked batch · *How:* calibrated probe thermometer · *Freq:* **every batch**, at end of cook · *Who:* cook |
 | **Corrective action** | Keep cooking → re-probe until limit met; if equipment fault, hold ≤4 °C or discard; log the deviation + disposition |
 | **Verification** | Daily probe calibration (ice-point); supervisor reviews cook log daily; quarterly observation of practice |
@@ -31,7 +31,7 @@ Critical limits recapped from `HACCP_HAZARD_ANALYSIS.md` §4. **Validated 2026-0
 ### CCP-3 — Chilled / ROP hold + cold transport
 | | |
 |---|---|
-| **Critical limit** | ≤**4 °C** continuous; **ROP use-by ≤7 d from cook day**; transport depart ≤4 °C / arrive ≤4 °C; raw segregated from RTE |
+| **Critical limit** | general cold ≤**4 °C continuous [BINDING s.27]**; **ROP product < 3 °C**; **ROP use-by ≤7 d from cook day** (Listeria Cat 1); transport ≤4 °C in transit **[BINDING]** (depart/arrive probe); raw segregated from RTE |
 | **Monitoring** | *What:* (a) fridge temp each unit; (b) ROP label correct + use-by dated from cook day; (c) van depart & arrive temps · *How:* min/max thermometer; label check; probe · *Freq:* fridges **2×/day**, label **every bag**, transport **every van leg** · *Who:* kitchen lead / driver |
 | **Corrective action** | Fridge out-of-temp → assess exposure, repair/move stock, discard if abused; over-7 d / mis-dated → **discard**; transport breach → assess or discard; log |
 | **Verification** | Daily temp-log review; **automated schedule check: (serve − cook) ≤ use-by for every ROP batch** (see §4); calibration; periodic *Listeria* swab if extending shelf life |
