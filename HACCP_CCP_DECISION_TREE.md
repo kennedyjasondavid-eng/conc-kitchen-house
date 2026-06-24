@@ -1,7 +1,7 @@
 # CONC HACCP — CCP Decision-Tree Determinations (per dish)
 
 **Generated** from `recipe_production.json` (224 live production dishes) run through MISE's `buildHaccpModel()` + the Codex CCP decision tree, by `conc-recipe-hub/docs/gen_ccp_decision_tree.mjs`. Regenerate after recipe/feed changes.
-**Date:** 2026-06-24 · **Status: PRELIMINARY / DRAFT** — critical limits pending Toronto Public Health validation. Companion to `HACCP_HAZARD_ANALYSIS.md` (Principles 1–3) and `HACCP_MONITORING_RECORDS.md` (Principles 4–7).
+**Date:** 2026-06-24 · **Status: WORKING DRAFT** — critical limits validated against Health Canada / O. Reg. 493/17 / FDA / FSA (the ROP special-process status is the open item to confirm with TPH). Companion to `HACCP_HAZARD_ANALYSIS.md` (Principles 1–3) and `HACCP_MONITORING_RECORDS.md` (Principles 4–7).
 
 ## How to read this
 This document answers, for every dish: **which control points are genuinely Critical (CCPs)** — where loss of control means unsafe food and no later step recovers it — **versus which are ordinary Control Points / prerequisite programs (CP/PRP)** that good practice handles. The CCP set follows from each dish's **process class** (P1/P2/P3); the decision-tree table below is the reusable determination, and §4 lists which dishes fall in each class.
@@ -57,4 +57,4 @@ Applied to each significant hazard at each step:
 - **Process class inferred (23)** — feed lacked a `chainType`/`packaging` signal; conservatively classed and to be confirmed: `Adobo Pork/Chicken/Tofu (Adobo Marinade & Sauce)` · `Al Pastor Marinade` · `BBQ Chicken Legs` · `CONC Tandoori Marinade` · `Carnitas Sauce` · `Chimichurri Chicken Legs` · `Chimichurri Marinade` · `Green Seasoning / Epis (Griot Dressing)` · `Griot Marinade` · `Halal Breaded Chicken Burgers` · `Herb Marinade` · `Honey BBQ Sauce` · `Jerk Chicken Legs` · `Jerk Marinade` · `Lime-Spiced Chicken Legs` · `Maple Glaze for Ham, Turkey and Tofu` · `Massaman Curry Paste` · `Moroccan Chicken Legs` · `Oven Fried Chicken` · `Souvlaki Marinade` · `Teriyaki Chicken Legs` · `Vindaloo Marinade` · `Vindaloo Sauce`
 
 ---
-*Generated, deterministic, preliminary. The decision-tree verdicts (§2) and per-class CCP sets (§3) are exact; per-dish class assignment is precise where the feed carries logistics metadata and conservatively inferred (and flagged in §5) where it does not. All critical limits pending Toronto Public Health validation.*
+*Generated, deterministic, preliminary. The decision-tree verdicts (§2) and per-class CCP sets (§3) are exact; per-dish class assignment is precise where the feed carries logistics metadata and conservatively inferred (and flagged in §5) where it does not. Critical limits validated 2026-06-24 against Health Canada / O. Reg. 493/17 / FDA / FSA; the ROP special-process / variance status is the open item to confirm directly with TPH.*

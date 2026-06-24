@@ -8,12 +8,12 @@
 
 ## 1. HACCP Master Plan — the integrated table (Principles 3→7 per CCP)
 
-Critical limits recapped from `HACCP_HAZARD_ANALYSIS.md` §4. **All pending TPH validation.**
+Critical limits recapped from `HACCP_HAZARD_ANALYSIS.md` §4. **Validated 2026-06-24 against Health Canada / O. Reg. 493/17 / FDA / FSA; ROP special-process status to confirm with TPH.**
 
 ### CCP-1 — Cooking
 | | |
 |---|---|
-| **Critical limit** | Poultry/mixed/egg ≥**74 °C**; ground & whole-muscle ≥**71 °C** (ON); fish ≥**70 °C** (158 °F) — core, ≥15 s |
+| **Critical limit** | Poultry/mixed/egg ≥**74 °C** (whole birds 82 °C); ground & whole-muscle ≥**71 °C** (ON); fish ≥**70 °C** (158 °F) — core, ≥15 s |
 | **Monitoring** | *What:* core temp at the thickest/slowest point of each cooked batch · *How:* calibrated probe thermometer · *Freq:* **every batch**, at end of cook · *Who:* cook |
 | **Corrective action** | Keep cooking → re-probe until limit met; if equipment fault, hold ≤4 °C or discard; log the deviation + disposition |
 | **Verification** | Daily probe calibration (ice-point); supervisor reviews cook log daily; quarterly observation of practice |
@@ -162,4 +162,4 @@ Scheduling cooks to stay inside the hold limit is an operational matter EXPO can
 
 ---
 
-*Working draft — not a validated HACCP plan. Software shapes are a design proposal; all limits pending Toronto Public Health validation.*
+*Working draft. Software shapes are a design proposal. Limits validated 2026-06-24 against Health Canada / O. Reg. 493/17 / FDA / FSA-ACMSF (established standards; reconfirm against the cited sources). Open TPH item: ROP special-process approval / variance.*

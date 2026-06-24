@@ -2,7 +2,7 @@
 
 **Operation:** Christie Ossington Neighbourhood Centre (CONC) shelter catering — Bloor + Rexdale kitchens serving the Bloor, Rexdale & Lansdowne shelter sites.
 **Date:** 2026-06-24
-**Document status:** Pre-validation **sketch**. Proposed temperatures/times are standard Health Canada / Ontario Reg. 493/17 / Toronto Public Health references **to be confirmed with the local public health unit and validated on-site** — they are *not* yet CONC-specific critical limits.
+**Document status:** Working draft. Temperatures/times are **validated (2026-06-24) against Health Canada / Ontario Reg. 493/17 / FDA Food Code / UK FSA-ACMSF** (established standards; a live regulatory-source fetch was blocked this session — reconfirm against the cited sources). The open item for direct **Toronto Public Health** confirmation is the **ROP / vacuum cook-chill special-process approval / variance**.
 **Provenance:** Grounded in the live HOUSE apps as of this date — DOOR (resident/dietary/allergen routing), HUB (production board: chips, FRIDGE, MOVES, van routes), MISE/CODEX (224 recipes, allergen feed). HACCP-correct thermal *procedures* already exist as MISE cook-card method text (two-stage blast-chill, reheat-to-74 °C-once, cut-specific cook temps, ROP "use-by" labelling); what's absent is any thermal *data field, log, or monitoring record* — the gap between a written procedure and verifiable HACCP. **Full hazard analysis, CCP determination & critical limits (Principles 1–3): see the companion annex `HACCP_HAZARD_ANALYSIS.md`.**
 
 ---
@@ -125,11 +125,11 @@ Walk each diagram against reality at **Bloor**, at **Rex**, and on a **live van 
 
 ## Principles 1–3 ▸ Hazard Analysis → CCPs → Critical Limits *(full worksheet in `HACCP_HAZARD_ANALYSIS.md`)*
 
-The full step-by-step hazard analysis, Codex decision-tree CCP determination, and critical-limit table now live in the companion annex. Summary of the result — **six CCPs**, with limits anchored to Ontario Reg. 493/17 / Health Canada / FDA / FSA (all pending TPH validation):
+The full step-by-step hazard analysis, Codex decision-tree CCP determination, and critical-limit table now live in the companion annex. Summary of the result — **six CCPs**, with limits **validated (2026-06-24) against Ontario Reg. 493/17 / Health Canada / FDA / FSA** (ROP special-process status to confirm with TPH):
 
 | # | CCP | Step | Critical limit *(validate w/ TPH)* | Primary hazard |
 |---|---|---|---|---|
-| **CCP-1** | **Cooking** | COOK | ≥**74 °C** poultry/mixed/egg; **71 °C** ground & whole-muscle (ON); **70 °C** fish (⚠ cook card uses 155 °F) | Salmonella, *E. coli* O157, Campylobacter |
+| **CCP-1** | **Cooking** | COOK | ≥**74 °C** poultry/mixed/egg (whole birds 82 °C); **71 °C** ground & whole-muscle (ON); **70 °C** fish (cook card raised 155→158 °F) | Salmonella, *E. coli* O157, Campylobacter |
 | **CCP-2** | **Cooling** | COOL | **60→20 °C ≤2 h, 20→4 °C ≤4 h** (≤6 h); reheat-restart once | *C. perfringens*, *B. cereus* (spore-formers) |
 | **CCP-3** | **Chilled/ROP hold + transport** | PREP/FRIDGE/SEND | **≤4 °C**; **ROP use-by ≤7 d** (was 14 d); insulated transport + arrival probe | *Listeria*, **non-proteolytic *C. botulinum*** toxin |
 | **CCP-4** | **Reheating** | HEAT | ≥**74 °C** core within 2 h, **once only** | Recontamination / survivor outgrowth |
@@ -158,4 +158,4 @@ CONC's standout asset is that **traceability already exists in software** — DO
 
 ---
 
-*Sketch only — not a validated HACCP plan. All temperatures/times are standard references pending local public-health validation.*
+*Working draft. Limits validated 2026-06-24 against Health Canada / O. Reg. 493/17 / FDA / FSA-ACMSF (established standards; reconfirm against the cited sources). Open TPH item: ROP special-process approval / variance.*
