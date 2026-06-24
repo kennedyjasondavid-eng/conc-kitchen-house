@@ -113,7 +113,7 @@ This step sets the **risk tier**, and for CONC it sets it **high**.
    → SERVE → [Discard unserved]◀END
 ```
 
-★ = danger-zone-crossing steps → the CCP candidates below. Note CONC's existing proto-monitoring: the HUB **FRIDGE** snapshot already colour-codes hold age (🟠/🟢) and tracks capacity (Bloor running **over** at 35u/22u), and **MOVES** carries a `holdClass` (g/y/r) and hold-day count — these are the natural hooks for real temperature/time monitoring.
+★ = danger-zone-crossing steps → the CCP candidates below. Note CONC's existing proto-monitoring: the HUB **FRIDGE** snapshot already colour-codes hold age (🟠/🟢) and **MOVES** carries a `holdClass` (g/y/r) and hold-day count — these are the natural hooks for real temperature/time monitoring.
 
 ---
 
@@ -136,9 +136,9 @@ The full step-by-step hazard analysis, Codex decision-tree CCP determination, an
 | **CCP-5** | **Hot-holding & service window** | hot-send / post-reheat | **≥60 °C**, or time-as-control **≤4 h** then discard | *C. perfringens*, *S. aureus* toxin |
 | **CCP-6** | **Allergen / anaphylactic** | PREP + Plate | **Zero cross-contact to a flagged resident; 100 % anaphylactic plates verified** pre-service | Allergen / anaphylaxis (chemical) |
 
-**Two findings that reshaped the first sketch:** (1) the thermal controls *exist* as MISE cook-card text but are **not monitored or recorded** — that's the build, not the procedure; (2) a **documented-vs-practice cooling conflict** ("blast-chill" cook card vs "cooled overnight" schedule note) is the #1 on-site verification item. See annex §0 and §5.
+**Two findings that reshaped the first sketch:** (1) the thermal controls *exist* as MISE cook-card text but are **not monitored or recorded** — that's the build, not the procedure; (2) the cooling "blast-chill vs cooled overnight" question is **resolved** — the stew is blast-chilled to <4 °C within 2 h, then held refrigerated overnight and bagged the next morning (compliant); the remaining CCP-2 work is just to *record* the checkpoint temperatures. See annex §0 and §5.
 
-**Managed as Prerequisite Programs (PRPs):** supplier approval & receiving temp checks, cold/frozen storage + **Bloor capacity fix**, **thaw/PULL** control, cleaning & sanitation, pest control, personal hygiene / no-bare-hand-contact, potable water, **thermometer calibration**, allergen-segregation housekeeping.
+**Managed as Prerequisite Programs (PRPs):** supplier approval & receiving temp checks, cold/frozen storage, **thaw/PULL** control, cleaning & sanitation, pest control, personal hygiene / no-bare-hand-contact, potable water, **thermometer calibration**, allergen-segregation housekeeping.
 
 ---
 
@@ -149,13 +149,12 @@ CONC's standout asset is that **traceability already exists in software** — DO
 1. **Temp/time fields on COOK, COOL, HEAT, and SEND** (final cook temp; cooling start/2 h/6 h checkpoints; reheat temp; van depart/arrive fridge temps) — turning HUB's chips into a monitoring log (Principle 4) and an audit record (Principle 7).
 2. **Promote FRIDGE colour-coding & MOVES `holdClass`** from logistics hints into **enforced cold-hold-life limits** — and bring the vac-bag use-by from 14 d to the **≤7 d** ROP limit (annex CCP-3).
 3. **Wire the built-but-dormant `computeDoorComplianceDiagnostics` / Gate-9** as the home for an allergen+thermal pre-service gate.
-4. Address the **chronically over-capacity Bloor fridge (35u/22u)** — a cold-chain risk that a CCP-3 limit would surface immediately.
 
 ---
 
 ## What's needed to finish Steps 5–12
 
-Principles 1–3 are drafted (see annex). Remaining: on-site flow verification at both kitchens + a live van run (Step 5); confirmation of the annex's critical limits with **Toronto Public Health** (incl. the ROP use-by and the fish cook temp); the actual equipment list (combi/blast-chiller capability drives whether the 6 h cooling limit is achievable); and resolution of the cooling procedure-vs-practice conflict. From there, build **Principles 4–7**: monitoring, corrective actions, verification, and the records the system does not yet capture.
+Principles 1–3 are drafted (see annex). Remaining: on-site flow verification at both kitchens + a live van run (Step 5); confirmation of the annex's critical limits with **Toronto Public Health** (incl. the ROP use-by and the fish cook temp); and the actual equipment list (does the blast chiller hold the 2 h / 6 h targets under full load?). From there, build **Principles 4–7**: monitoring, corrective actions, verification, and the records the system does not yet capture.
 
 ---
 

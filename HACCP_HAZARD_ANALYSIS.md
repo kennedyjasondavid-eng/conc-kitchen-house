@@ -10,16 +10,14 @@
 
 1. **The thermal controls already exist — as cook-card instructions, not as records.** MISE generates HACCP-correct method text: two-stage blast-chill with a corrective action, reheat-to-74 °C-once, cut-specific cook temps, and an ROP use-by label. **What's missing is the *monitoring and record* layer** — no probe readings are captured, no cooling-checkpoint log exists, no temperature is stored in any data field. That is the gap between "we have a procedure" and "we have HACCP" (Principles 4 & 7).
 
-2. **⚠ Cooling: documented procedure conflicts with scheduled practice — must verify on-site.**
+2. **✓ Cooling: resolved (architect-confirmed workflow) — not a deviation.** The apparent gap between the cook-card "blast chill" and the schedule note "cooled overnight, vac seal morning" is terminology, not practice.
    - *Documented (MISE `HACCP_CHILL_BLAST`):* "Blast chill to below 40°F. Two-stage: 135→70°F in 2 hr, 70→41°F in 4 hr. Max 6 hr total. If not at 70°F by 2 hr mark — reheat to 165°F and restart." (+ `HACCP_CHILL_ICEBATH` fallback.)
-   - *Scheduled (HUB `hub_schedule.json` notes):* "Next-day bag (stew — **cooled overnight**, vac seal morning)."
-   - These cannot both be the literal truth for the same item. Either "cooled overnight" means *blast-chilled to ≤4 °C, then held chilled overnight and bagged in the morning* (compliant), or it means *left to cool passively overnight then bagged* (a critical 6 h-limit failure → spore-former outgrowth). **The difference is the entire cooling CCP.** No blast-chiller is referenced anywhere in HUB. Resolve at Step 5 (on-site flow verification); until then, treat as a potential critical deviation and design CCP-2 monitoring to catch exactly this.
+   - **Actual workflow (confirmed):** a stew is cooked over a few hours, **blast-chilled to <40 °F (<4 °C) within 2 h**, then **held at fridge temperature (≤4 °C) overnight** and **vacuum-bagged the next morning.** This is compliant with CCP-2 — "overnight" is *refrigerated holding before the bagging step*, not passive ambient cooling; a blast chiller **is** in use (it simply isn't named in the HUB schedule text).
+   - *Follows from the cook-day/bag-day split:* **date the ROP "use-by" from the cook/production day** (when the food became a TCS hazard), not the next-morning bagging day. The remaining CCP-2 work is purely to *record* the 2 h / 6 h checkpoint temperatures (Principle 4).
 
 3. **⚠ ROP shelf-life is too long. This resolves your "bagged holding" question.** 53 recipes (24 %) are vacuum-sealed (`packaging:"vac"`) = Reduced-Oxygen Packaging. The system's current label (MISE `HACCP_BAG_LABEL`) is **"Use by 2 weeks… store at 41°F or below."** For ROP held at ≤4 °C **without a validated botulinum barrier**, 14 days exceeds the safe ceiling (see §4, CCP-3). **Recommended limit: ≤7 days at ≤4 °C** (production day = day 1) — see the decision and basis in §4. This brings the 14-day label and the 8-day Vegan Chilli hold into line.
 
-4. **Cold-chain capacity is a live risk.** Bloor's fridge runs **134–159 % over its 22u capacity** in the schedule. An over-packed refrigerator cannot hold ≤4 °C or cool product on schedule — this directly threatens CCP-2 and CCP-3 and is an immediate corrective-action trigger.
-
-5. **Transport has no temperature spec.** Cold/hot/raw van legs (AM/PM runs, "no return leg") carry no documented cold-pack, insulation, or arrival-temperature check. Folded into CCP-3.
+4. **Transport has no temperature spec.** Cold/hot/raw van legs (AM/PM runs, "no return leg") carry no documented cold-pack, insulation, or arrival-temperature check. Folded into CCP-3.
 
 ---
 
@@ -45,16 +43,16 @@ Hazard classes: **B** = biological, **C** = chemical (incl. allergens), **P** = 
 | 1 | **Receiving** (raw meat/poultry/fish, produce, dairy, dry, frozen) | B | Pathogens already on raw proteins (Salmonella, Campylobacter, *E. coli* O157, *Listeria*); temperature-abused delivery | **Y** | High severity; raw animal proteins are expected carriers | Approved-supplier program; check delivery ≤4 °C (frozen solid); reject abused/damaged; logged | PRP (cook step CCP-1 covers survival for cooked streams) |
 | 1 |  | C | Histamine/scombrotoxin on mishandled fish (heat-stable — cooking won't remove); undeclared allergen in a supplied ingredient | **Y** | Heat-stable → no downstream kill; allergen → HSP/anaphylaxis | Spec sheets + Certificates; cold-chain at receipt; supplier allergen statements | PRP + CCP-6 (allergen) |
 | 1 |  | P | Bone fragments, packaging, metal, stones | N* | Low likelihood w/ specs | Supplier specs; visual check at receipt | PRP |
-| 2 | **Dry / cold / frozen storage** | B | Growth from temp abuse; raw→RTE cross-contamination (*Listeria*); over-capacity defeating ≤4 °C (**Bloor 134–159 % over**) | **Y** | *Listeria* grows at ≤4 °C; HSP; over-capacity is observed, not hypothetical | ≤4 °C / ≤−18 °C frozen; raw stored below RTE; FIFO; **fix Bloor capacity**; thermometers | PRP (capacity feeds CCP-3) |
+| 2 | **Dry / cold / frozen storage** | B | Growth from temp abuse; raw→RTE cross-contamination (*Listeria*) | **Y** | *Listeria* grows at ≤4 °C; HSP | ≤4 °C / ≤−18 °C frozen; raw stored below RTE; FIFO; thermometers | PRP |
 | 2 |  | C | Cleaning-chemical contamination; allergen cross-contact in shared storage | Y | HSP/anaphylaxis | Segregated/labelled chemicals; sealed + separated allergens | PRP + CCP-6 |
 | 3 | **Thawing** (PULL — frozen → thaw) | B | Surface pathogen growth if thawed in the danger zone (ambient) | **Y** | Schedule shows "thaw" pulls; ambient thaw is a common failure | Thaw under refrigeration ≤4 °C, or cook from frozen; never ambient | PRP (cook step CCP-1 covers survival) |
 | 4 | **Cold prep / assembly** — P1 no-cook (salads, slaw, tofu, dressings; 66 `coldPrep`) | B | Growth + hand/board contamination during prep — **no downstream kill step** | **Y** | P1 has no cook; HSP; mayo/protein salads (Coronation, Ranch, Tuna) are TCS | Minimise danger-zone time; ≤4 °C; hand hygiene + **no bare-hand contact** with RTE; washed produce; clean/sanitised boards | PRP + CCP-3 (cold hold) |
 | 4 |  | C | Allergen cross-contact during shared assembly | **Y** | HSP/anaphylaxis | Dedicated allergen-free prep zone/utensils; sequencing | CCP-6 |
 | 5 | **Cooking** (COOK) — P2/P3 | B | Survival of vegetative pathogens (Salmonella, *E. coli* O157, Campylobacter, *Listeria*) if undercooked | **Y** | The primary kill step; high-severity organisms | Cook to internal-temp limits (§4 CCP-1); probe verify | **CCP-1** |
-| 6 | **Cooling** (COOL / blast-chill) — P3 (`stew`, `beefStew`, `vegan`, `pork`, `bonelessChicken`, `tofu`…) | B | Germination & outgrowth of spore-formers surviving the cook — ***C. perfringens***, ***B. cereus*** — and toxin formation if cooling is slow | **Y** | Spores survive cooking; toxins (B. cereus emetic) are heat-stable → reheat won't save it; HSP. **Procedure-vs-practice conflict (see §0.2)** | Two-stage ≤6 h blast-chill (§4 CCP-2); documented corrective action exists; **monitoring/records to be added** | **CCP-2** |
+| 6 | **Cooling** (COOL / blast-chill) — P3 (`stew`, `beefStew`, `vegan`, `pork`, `bonelessChicken`, `tofu`…) | B | Germination & outgrowth of spore-formers surviving the cook — ***C. perfringens***, ***B. cereus*** — and toxin formation if cooling is slow | **Y** | Spores survive cooking; toxins (B. cereus emetic) are heat-stable → reheat won't save it; HSP | Two-stage ≤6 h blast-chill (§4 CCP-2) — workflow confirmed (§0.2); documented corrective action exists; **monitoring/records to be added** | **CCP-2** |
 | 7 | **Portioning & vacuum-packing** (PREP / ROP) — 53 `vac` recipes | B | Handling contamination into an **anaerobic** pack favouring **non-proteolytic *C. botulinum*** & *Listeria*; toxin over shelf life | **Y** | Botulinum toxin life-threatening + heat-stable; ROP is a recognised special process | Hygiene; pack already-chilled product; ≤4 °C; validated shelf-life + label (feeds CCP-3) | CCP-3 |
 | 7 |  | P | Plastic/film fragments from bagging | N* | Low | Equipment checks; visual | PRP |
-| 8 | **Chilled storage / hold** (FRIDGE) — P1 cold, P3 ROP | B | *Listeria* growth at refrigeration temps; **non-proteolytic *C. botulinum* toxin over an over-long ROP shelf life**; general growth if >4 °C | **Y** | Reheating does **not** destroy preformed toxins → no downstream control; HSP; **14-day label too long** | ≤4 °C continuous; **ROP use-by ≤7 d** (§4 CCP-3); FIFO; date-mark; capacity control | **CCP-3** |
+| 8 | **Chilled storage / hold** (FRIDGE) — P1 cold, P3 ROP | B | *Listeria* growth at refrigeration temps; **non-proteolytic *C. botulinum* toxin over an over-long ROP shelf life**; general growth if >4 °C | **Y** | Reheating does **not** destroy preformed toxins → no downstream control; HSP; **14-day label too long** | ≤4 °C continuous; **ROP use-by ≤7 d** (§4 CCP-3); FIFO; date-mark | **CCP-3** |
 | 9 | **Loading & transport** (SEND — cold/hot/raw van legs) | B | Cold-chain break (cold loads) or hot-hold break (hot loads) → growth; cross-contamination raw↔RTE in shared van | **Y** | No transit-temp spec today; HSP | Insulated/refrigerated transport; depart ≤4 °C / ≥60 °C; **arrival probe check**; segregate raw | CCP-3 (cold) / CCP-5 (hot) |
 | 10 | **Receipt at destination + cold hold** (Rex/LAN) | B | Growth if not promptly returned to ≤4 °C | **Y** | HSP; arrival is an unmonitored handoff | Probe on arrival; into ≤4 °C immediately; log | CCP-3 |
 | 11 | **Reheating** (HEAT) — P3 | B | Survival of vegetative pathogens picked up during cold chain/handling; outgrowth if reheated slowly/partially | **Y** | Last kill step before service; HSP | Reheat ≥74 °C core within 2 h, **once only** (§4 CCP-4); probe verify | **CCP-4** |
@@ -81,7 +79,7 @@ Applied to each **significant** hazard. **Q1** Control measure exists? · **Q2**
 | Allergen / anaphylactic routing | Y | **Y** | Y | **No** (consumer is next) | **CCP-6** |
 | Receiving (pathogens, cooked streams) | Y | N | Y | Yes — cooking (CCP-1) | PRP |
 | Thawing | Y | N | Y | Yes — cooking (CCP-1) | PRP |
-| Storage / cross-contamination / capacity | Y | N | Y | Partly (cook for P3; **not** for P1 RTE) | PRP (P1 leans on CCP-3) |
+| Storage / cross-contamination | Y | N | Y | Partly (cook for P3; **not** for P1 RTE) | PRP (P1 leans on CCP-3) |
 | Histamine on fish | Y | N | Y | **No** (heat-stable) | PRP (supplier + cold chain) — verify w/ TPH whether CCP |
 
 **Final CCP set (6):** CCP-1 Cooking · CCP-2 Cooling · CCP-3 Cold/ROP storage + transport · CCP-4 Reheating · CCP-5 Hot-holding & service window · CCP-6 Allergen/anaphylactic control.
@@ -105,17 +103,17 @@ Per CCP, with basis. **All pending TPH validation.** Temperatures given in °C (
 ### CCP-2 — Cooling (cook-chill, two-stage)
 - **Critical limit:** **60 °C → 20 °C within 2 h, then 20 °C → 4 °C within the next 4 h (≤6 h total).** Matches O. Reg. 493/17 and CONC's `HACCP_CHILL_BLAST` (135→70→41 °F).
 - **Documented corrective action (already in the cook card):** not at 20 °C/70 °F by 2 h → reheat to 74 °C/165 °F and re-cool **once**; second failure → discard.
-- **⚠ Validation gate:** confirm a **blast chiller (or validated ice-bath)** actually achieves this — and resolve the "cooled overnight" schedule note (§0.2). Passive/ambient overnight cooling **fails** this limit.
+- **Workflow confirmed (§0.2):** blast-chilled to <4 °C within 2 h, then refrigerated overnight, bagged next morning — compliant. Remaining CCP-2 work is to **record** the 2 h / 6 h checkpoint temperatures (Principle 4) and verify the blast chiller meets the targets under full load.
 
 ### CCP-3 — Chilled / ROP storage + cold transport
 - **Cold-hold temperature:** **≤4 °C continuous** (O. Reg. 493/17). *Tightens CONC's current "≤41 °F/5 °C" label by 1 °C.*
-- **ROP (vacuum-pack) refrigerated shelf life — the bagged-holding decision:** **≤7 days, production day = day 1, at ≤4 °C, with no additional barrier.**
+- **ROP (vacuum-pack) refrigerated shelf life — the bagged-holding decision:** **≤7 days, cook/production day = day 1 (not the next-morning bagging day), at ≤4 °C, with no additional barrier.**
   - *Basis:* FDA Food Code RTE date-marking caps in-house RTE TCS at 7 d @ ≤5 °C; the UK FSA/ACMSF botulinum rule caps vacuum/MAP chilled food at ~10 d without an additional control; non-proteolytic *C. botulinum* grows down to ~3.3 °C. 7 d @ ≤4 °C sits safely inside both and suits an HSP.
   - *Effect:* **replaces the current 14-day label**; brings the 8-day Vegan Chilli to within limit (move serve −1 day, or validate a barrier).
   - *To hold longer than 7 d:* requires a **validated botulinum barrier** (guaranteed cold chain ≤3.3 °C, **or** pH ≤5.0 / aw ≤0.97 / a validated ≥90 °C·10 min heat step) **and** a **TPH ROP special-process sign-off / variance**.
 - **Frozen hold:** ≤−18 °C; thaw under refrigeration (covers the 11-day "Shape & Freeze" patties — a *frozen*, not chilled, regime).
 - **Transport:** closed/insulated or refrigerated; depart ≤4 °C; **arrival probe ≤4 °C** (transient ≤6 °C triggers corrective action); raw segregated from RTE.
-- **⚠ Items to reconcile:** the **27-day "Chickpea Shakshuka"** and **10-day "Green Seasoning/Epis"** holds (verify whether frozen, high-acid sauce, or a 4-week cycle-projection artifact — a genuine 27-day chilled RTE hold is a critical deviation); the **9 ambiguous "?d"** salad holds (assign a definite ≤-day limit); **Bloor over-capacity** (cannot guarantee ≤4 °C while 134–159 % full).
+- **⚠ Items to reconcile:** the **27-day "Chickpea Shakshuka"** and **10-day "Green Seasoning/Epis"** holds (verify whether frozen, high-acid sauce, or a 4-week cycle-projection artifact — a genuine 27-day chilled RTE hold is a critical deviation); the **9 ambiguous "?d"** salad holds (assign a definite ≤-day limit).
 
 ### CCP-4 — Reheating (for hot service)
 - **Critical limit:** **≥74 °C (165 °F) core within 2 h, reheated once only.** Matches CONC `HACCP_REHEAT` ("Combi steam 350 °F… 165 °F core within 2 hours… never reheat more than once"). Probe before service.
@@ -132,16 +130,16 @@ Per CCP, with basis. **All pending TPH validation.** Temperatures given in °C (
 
 ## 5. Open deviations & validation to-do (before go-live)
 
+*Resolved during drafting: the cooling "blast-chill vs cooled overnight" question (§0.2) — compliant workflow confirmed by the architect. Fridge-capacity is out of scope for this pass at the architect's direction.*
+
 | # | Item | Action | Owner |
 |---|---|---|---|
-| 1 | **Cooling: "blast-chill" vs "cooled overnight"** | Walk the Bloor cook→cool→bag flow; confirm equipment + actual checkpoint times (Step 5) | Bloor lead + Coordinator |
-| 2 | **ROP shelf-life 14 d → 7 d** | Re-label; reschedule the 8-day Chilli; decide barrier+variance path if longer holds needed | Coordinator + TPH |
-| 3 | **Bloor fridge 134–159 % over capacity** | Capacity/throughput fix — a cold-chain CCP-3 risk now | Coordinator |
-| 4 | **Fish cook temp 155 °F vs 158 °F** | Raise to Health Canada 158 °F or document FDA 145 °F basis | Coordinator + TPH |
-| 5 | **Transport temperature spec** | Insulated/refrigerated transport + arrival probe log | Logistics |
-| 6 | **"?d" + 27 d / 10 d holds** | Classify each; assign definite limits | Coordinator |
-| 7 | **No monitoring/records layer** | Build temperature + time capture on COOK/COOL/HEAT/SEND (Principles 4 & 7) — extend the existing HUB/DOOR backbone | Systems owner |
-| 8 | **Confirm all critical limits** | Validate the whole §4 table against current TPH guidance | TPH |
+| 1 | **ROP shelf-life 14 d → 7 d** | Re-label (date from cook day); reschedule the 8-day Chilli; decide barrier+variance path if longer holds needed | Coordinator + TPH |
+| 2 | **Fish cook temp 155 °F vs 158 °F** | Raise to Health Canada 158 °F or document FDA 145 °F basis | Coordinator + TPH |
+| 3 | **Transport temperature spec** | Insulated/refrigerated transport + arrival probe log | Logistics |
+| 4 | **"?d" + 27 d / 10 d holds** | Classify each; assign definite limits | Coordinator |
+| 5 | **No monitoring/records layer** | Build temperature + time capture on COOK/COOL/HEAT/SEND (Principles 4 & 7) — extend the existing HUB/DOOR backbone | Systems owner |
+| 6 | **Confirm all critical limits** | Validate the whole §4 table against current TPH guidance | TPH |
 
 ---
 
