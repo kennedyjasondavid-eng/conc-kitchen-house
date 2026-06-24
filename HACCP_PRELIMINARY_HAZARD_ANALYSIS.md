@@ -56,5 +56,6 @@ HACCP sits on a base of prerequisite programs (sanitation, pest control, supplie
 | `HACCP_PLAN_DRAFT.md` | The plan spine — preliminary steps 1–5, flow diagrams, scope/start-end points |
 | `HACCP_HAZARD_ANALYSIS.md` | Principles 1–3 — full hazard worksheet, CCP determination, critical limits |
 | `HACCP_MONITORING_RECORDS.md` | Principles 4–7 — monitoring, corrective actions, verification, records + the capture schema |
+| `HACCP_CCP_DECISION_TREE.md` | Per-dish CCP-vs-CP determinations across the live menu (generated from MISE) |
 
 *Preliminary working draft — not a validated HACCP plan. All limits pending Toronto Public Health validation.*
