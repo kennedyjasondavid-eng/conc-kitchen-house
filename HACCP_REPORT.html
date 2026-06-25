@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a14">
+<title>HACCP — CONC Food-Safety System</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#16191d; --bg-2:#11141a; --card-bg:#1c2026; --card-hover:#2a3038;
+    --text:#e8e8ed; --text-dim:#6e7681; --line:rgba(255,255,255,.08);
+    --green:#4ade80; --green-bright:#86efac; --green-dim:#22c55e; --green-glow:rgba(74,222,128,.12);
+    --amber:#e0a82e; --amber-glow:rgba(224,168,46,.12);
+    --red:#ff7a7a;
+    --radius:14px;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    background:radial-gradient(1200px 700px at 50% -10%, #1b2129 0%, var(--bg) 55%) fixed;
+    color:var(--text); line-height:1.6; -webkit-font-smoothing:antialiased;
+    padding:0 1.25rem 5rem;
+  }
+  .wrap{max-width:1000px;margin:0 auto}
+
+  /* ---- Header ---- */
+  header{text-align:center;padding:4rem 0 2.5rem;border-bottom:1px solid var(--line);margin-bottom:3rem}
+  .conc-mark{font-size:.72rem;letter-spacing:.45em;font-weight:600;color:var(--green);opacity:.65;margin-bottom:.7rem;padding-right:.45em}
+  header h1{font-size:clamp(2.8rem,11vw,4.6rem);letter-spacing:.3em;font-weight:900;color:#fff;padding-right:.3em;line-height:1}
+  header .tagline{font-size:.74rem;color:var(--text-dim);letter-spacing:.18em;text-transform:uppercase;margin-top:.9rem}
+  .statusline{margin-top:1.6rem;display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
+
+  /* ---- Pills ---- */
+  .pill{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:.32rem .7rem;border-radius:999px;white-space:nowrap}
+  .pill.green{color:var(--green);background:var(--green-glow);border:1px solid rgba(74,222,128,.3)}
+  .pill.amber{color:var(--amber);background:var(--amber-glow);border:1px solid rgba(224,168,46,.3)}
+  .pill.dim{color:var(--text-dim);background:rgba(255,255,255,.04);border:1px solid var(--line)}
+
+  /* ---- Section ---- */
+  section{margin-bottom:3.5rem}
+  .eyebrow{font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:.6rem;opacity:.85}
+  h2{font-size:clamp(1.5rem,4vw,2rem);letter-spacing:.04em;font-weight:800;color:#fff;margin-bottom:1rem}
+  h2 .num{color:var(--text-dim);font-weight:600;margin-right:.5rem}
+  p{margin-bottom:1rem;color:#d4d6db}
+  p.lead{font-size:1.08rem;color:var(--text)}
+  strong{color:#fff;font-weight:700}
+  a{color:var(--green)}
+  code{font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;font-size:.86em;background:rgba(255,255,255,.05);padding:.08em .4em;border-radius:5px;color:var(--green-bright)}
+
+  /* ---- Why callout ---- */
+  .why{border-left:3px solid var(--green);background:rgba(74,222,128,.05);border-radius:0 8px 8px 0;padding:.8rem 1.1rem;margin:1rem 0;font-size:.96rem}
+  .why::before{content:'WHY';font-size:.6rem;letter-spacing:.2em;font-weight:800;color:var(--green);display:block;margin-bottom:.25rem;opacity:.8}
+
+  /* ---- CCP strip ---- */
+  .ccp-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.7rem;margin-top:1.2rem}
+  .ccp{background:var(--card-bg);border:1px solid var(--line);border-radius:10px;padding:.85rem .9rem}
+  .ccp b{display:block;color:var(--green);font-size:.82rem;letter-spacing:.04em;margin-bottom:.2rem}
+  .ccp span{font-size:.78rem;color:var(--text-dim)}
+
+  /* ---- Component cards ---- */
+  .comp{background:var(--card-bg);border-radius:var(--radius);border-left:4px solid var(--green);padding:1.6rem 1.6rem 1.4rem;margin-bottom:1.2rem;transition:background .2s,box-shadow .25s,transform .2s}
+  .comp:hover{background:var(--card-hover);box-shadow:0 8px 32px var(--green-glow);transform:translateY(-2px)}
+  .comp.future{border-left-color:var(--amber)}
+  .comp.future:hover{box-shadow:0 8px 32px var(--amber-glow)}
+  .comp-head{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;margin-bottom:.2rem}
+  .comp-head h3{font-size:1.15rem;font-weight:800;color:#fff;letter-spacing:.02em}
+  .comp-file{font-size:.7rem;color:var(--text-dim);font-family:'SF Mono',ui-monospace,monospace}
+  .comp .what{font-size:.93rem;color:#c8cbd1;margin:.5rem 0 .2rem}
+  .roadmap{margin-top:.9rem;border-top:1px solid var(--line);padding-top:.8rem;font-size:.86rem}
+  .roadmap .rl{display:flex;gap:.55rem;margin-bottom:.3rem;align-items:flex-start}
+  .roadmap .mark{flex:none;font-weight:800;width:1.1em}
+  .roadmap .done .mark{color:var(--green)}
+  .roadmap .next .mark{color:var(--amber)}
+  .roadmap .rl span{color:var(--text-dim)}
+  .roadmap .done span b,.roadmap .next span b{color:#d4d6db}
+
+  /* ---- Quadrant chart ---- */
+  .chart-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:1.8rem;align-items:start}
+  @media(max-width:760px){.chart-wrap{grid-template-columns:1fr}}
+  .plot{position:relative;width:100%;aspect-ratio:1/1;background:var(--bg-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .plot .quad-label{position:absolute;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--text-dim);opacity:.55;padding:.5rem .6rem}
+  .ql-tl{top:0;left:0;color:var(--green)} .ql-tr{top:0;right:0;text-align:right;color:var(--green-bright)}
+  .ql-bl{bottom:0;left:0} .ql-br{bottom:0;right:0;text-align:right}
+  .plot .divider{position:absolute;background:var(--line)} .div-v{left:50%;top:0;bottom:0;width:1px} .div-h{top:50%;left:0;right:0;height:1px}
+  .axis{position:absolute;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);font-weight:700}
+  .axis.x{bottom:-1.5rem;left:50%;transform:translateX(-50%)}
+  .axis.y{top:50%;left:-1.5rem;transform:translateY(-50%) rotate(-90deg);transform-origin:center}
+  .axis.x .a-lo{position:absolute;left:calc(-50% + 1.4rem);white-space:nowrap;opacity:.6}
+  .dot{position:absolute;width:26px;height:26px;border-radius:50%;transform:translate(-50%,50%);display:flex;align-items:center;justify-content:center;font-size:.66rem;font-weight:800;border:2px solid;cursor:default}
+  .dot.done{background:var(--green);border-color:var(--green-bright);color:#0a1410}
+  .dot.todo{background:rgba(224,168,46,.16);border-color:var(--amber);color:var(--amber)}
+  .dot:hover{z-index:5;box-shadow:0 0 0 4px rgba(255,255,255,.06)}
+
+  .legend{font-size:.82rem}
+  .legend h4{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);margin:0 0 .7rem;font-weight:700}
+  .leg{display:flex;gap:.6rem;margin-bottom:.55rem;align-items:flex-start}
+  .leg .n{flex:none;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:800;border:2px solid}
+  .leg.done .n{background:var(--green);border-color:var(--green-bright);color:#0a1410}
+  .leg.todo .n{background:rgba(224,168,46,.16);border-color:var(--amber);color:var(--amber)}
+  .leg .t{line-height:1.35}
+  .leg .t b{color:#e8e8ed} .leg .t .di{color:var(--text-dim);font-size:.72rem;letter-spacing:.03em}
+  .di .h{color:var(--green-bright)} .di .m{color:var(--amber)} .di .l{color:var(--text-dim)}
+
+  footer{border-top:1px solid var(--line);margin-top:3rem;padding-top:1.6rem;text-align:center;font-size:.72rem;color:var(--text-dim);letter-spacing:.06em}
+  footer .ver{opacity:.5;margin-top:.4rem}
+
+  @media print{
+    body{background:#fff;color:#111}
+    .wrap{max-width:none}
+    header,.comp,.ccp,.plot,.why,footer{break-inside:avoid}
+    .comp{box-shadow:none}
+    h1,h2,.comp-head h3{color:#000}
+    p,.comp .what{color:#222}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="conc-mark">CONC · HOUSE</div>
+    <h1>HACCP</h1>
+    <div class="tagline">Hazard Analysis &amp; Critical Control Points — A Voluntary Food-Safety System</div>
+    <div class="statusline">
+      <span class="pill green">Voluntary plan</span>
+      <span class="pill green">Limits validated 2026-06-24</span>
+      <span class="pill dim">6 CCPs · 224 dishes</span>
+      <span class="pill amber">Build + s.34 ahead</span>
+    </div>
+  </header>
+
+  <!-- OVERVIEW -->
+  <section id="overview">
+    <div class="eyebrow">Overview</div>
+    <h2>What this is, and why it exists</h2>
+    <p class="lead">CONC runs a multi-site <strong>cook-chill</strong> kitchen: cook at Bloor &amp; Rexdale → blast-chill → vacuum-pack → refrigerate → van between sites → reheat → serve <strong>~300 shelter residents</strong>. This is a complete, documented <strong>HACCP food-safety system</strong> for that operation — the analysis, the controls, the records, and the in-app tooling that keeps it current.</p>
+    <div class="why">CONC is legally required only to pass a <strong>standard Ontario (O. Reg. 493/17) health inspection</strong>. This HACCP system is <strong>voluntary</strong> — built to demonstrate, in a city-contract bid, that CONC operates a kitchen that is documented and controlled <em>above</em> the regulatory floor. A funder or partner can see exactly how food safety is managed, not just trust that it is.</p>
+    <p>The single framing rule that runs through every document: <strong>Ontario binds almost no numbers.</strong> Only three are mandatory — cold-hold ≤4&nbsp;°C, hot-hold ≥60&nbsp;°C, and ≤4&nbsp;°C in transit (s.&nbsp;27). Every other limit (cooking, cooling, reheating, shelf-life, ROP) is <strong>CONC's own evidence-based standard</strong>, adopted to satisfy the s.&nbsp;26(2) performance duty (<em>"food processed in a manner that makes it safe to eat"</em>) and drawn from Health Canada / FDA / UK FSA. Stating it that way — "our validated standard," not "the regulation requires" — is what makes the plan honest under audit.</p>
+    <p>The consumers are a <strong>highly susceptible population</strong> (shelter residents, many immunocompromised), so every borderline decision takes the stricter path. That single fact raises the risk tier of the whole operation and is why the controls below are conservative by design.</p>
+
+    <div class="ccp-strip">
+      <div class="ccp"><b>CCP-1 · Cook</b><span>Poultry/mixed/egg ≥74&nbsp;°C · ground 71&nbsp;°C (poultry 74) · fish 70&nbsp;°C</span></div>
+      <div class="ccp"><b>CCP-2 · Cool</b><span>60→20&nbsp;°C ≤2&nbsp;h, 20→4&nbsp;°C ≤4&nbsp;h · blast chiller</span></div>
+      <div class="ccp"><b>CCP-3 · Hold + Move</b><span>≤4&nbsp;°C · ROP +validated barrier · use-by ≤7&nbsp;d</span></div>
+      <div class="ccp"><b>CCP-4 · Reheat</b><span>≥74&nbsp;°C within 2&nbsp;h, once</span></div>
+      <div class="ccp"><b>CCP-5 · Hot-hold</b><span>≥60&nbsp;°C, or ≤4&nbsp;h then discard</span></div>
+      <div class="ccp"><b>CCP-6 · Allergen</b><span>Zero cross-contact · anaphylactic plates verified</span></div>
+    </div>
+  </section>
+
+  <!-- COMPONENTS -->
+  <section id="components">
+    <div class="eyebrow">The System, Component by Component</div>
+    <h2>Eight pieces, and the reasoning behind each</h2>
+    <p>The system is deliberately layered: a plain-language front sheet, a formal plan, the analytical core, the records layer, and the software that keeps it all in sync with the live menu. Each is a separate document or build so any one can be read, audited, or revised on its own.</p>
+
+    <!-- 1 -->
+    <div class="comp">
+      <div class="comp-head"><h3>1 · Regulatory Foundation &amp; Validation</h3><span class="comp-file">HACCP_REGULATORY_FINDINGS.md</span></div>
+      <div class="what">The cited regulatory ground-truth: what Ontario / Toronto Public Health / Health Canada / FDA / FSA actually require, the binding-vs-best-practice split, and the seven architect decisions that resolved the open questions.</div>
+      <div class="why">A food-safety plan is only as credible as its sources. This pins every limit to a quoted authority and — crucially — establishes that ROP/cook-chill is <strong>not</strong> a TPH-reviewed special process here, so the whole plan is correctly framed as voluntary rigor rather than overstated compliance.</div>
+      <div class="roadmap">
+        <div class="rl done"><span class="mark">✓</span><span><b>Done:</b> researched, cited, cross-checked; s.26/s.27 framing established; 7 decisions locked (voluntary; ROP ≤4&nbsp;°C+barrier; 2-yr retention; Ch.545; s.34 future).</span></div>
+        <div class="rl next"><span class="mark">→</span><span><b>Next:</b> a citation second-pass (the adversarial-verification layer didn't finish) before the plan is leaned on in a bid.</span></div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="comp">
+      <div class="comp-head"><h3>2 · Preliminary Hazard Analysis</h3><span class="comp-file">HACCP_PRELIMINARY_HAZARD_ANALYSIS.md</span></div>
+      <div class="what">A one-page, read-first executive summary: the operation, the four hazard families, the six CCPs at a glance, and the key findings.</div>
+      <div class="why">An inspector, a funder, or a new kitchen lead should grasp the whole system in about a minute before diving into detail. It leads with the vulnerable-population risk tier because that single fact shapes every downstream choice.</div>
+      <div class="roadmap">
+        <div class="rl done"><span class="mark">✓</span><span><b>Done:</b> written and kept as the living index for the document set.</span></div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="comp">
+      <div class="comp-head"><h3>3 · The HACCP Plan (spine)</h3><span class="comp-file">HACCP_PLAN_DRAFT.md</span></div>
+      <div class="what">The Codex preliminary steps 1–5: HACCP team, product description, intended use &amp; consumers, and the three process flow diagrams (no-cook / same-day cook-serve / cook-chill-transport-reheat) with precise start and end points.</div>
+      <div class="why">You cannot analyze hazards without first scoping the process exactly — where it begins (receiving), where it ends (service or documented discard), and who eats the food. Grouping 224 recipes into three process flows (the "process approach") is what makes a plan of this size tractable.</div>
+      <div class="roadmap">
+        <div class="rl done"><span class="mark">✓</span><span><b>Done:</b> steps 1–4, flow diagrams, scope, start/end points.</span></div>
+        <div class="rl next"><span class="mark">→</span><span><b>Next:</b> Step 5 — walk the diagrams on-site at both kitchens + one live van run to confirm reality matches the paper.</span></div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="comp">
+      <div class="comp-head"><h3>4 · Hazard Analysis → CCPs → Limits</h3><span class="comp-file">HACCP_HAZARD_ANALYSIS.md</span></div>
+      <div class="what">The analytical heart (Principles 1–3): a 14-step hazard worksheet (biological/chemical/physical), the Codex decision tree that promotes the real Critical Control Points, and the validated critical-limit table.</div>
+      <div class="why">This is where "what could go wrong" becomes "where control is non-negotiable." The decision tree separates the six <strong>CCPs</strong> (loss of control = unsafe food, no recovery) from ordinary control points good practice handles — so effort and monitoring land where they actually matter. The highly-susceptible-population rule raises severity one band throughout.</div>
+      <div class="roadmap">
+        <div class="rl done"><span class="mark">✓</span><span><b>Done:</b> full worksheet, 6 CCPs, limits validated; ROP resolved to ≤4&nbsp;°C + a validated botulinum barrier; HSP foods-to-avoid folded into CCP-6.</span></div>
+        <div class="rl next"><span class="mark">→</span><span><b>Next:</b> confirm which ROP dishes use the 90&nbsp;°C/10-min barrier cook vs a formulation barrier (per-recipe).</span></div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="comp">
+      <div class="comp-head"><h3>5 · Per-Dish CCP Decision-Tree</h3><span class="comp-file">HACCP_CCP_DECISION_TREE.md</span></div>
+      <div class="what">Every one of the 224 live dishes run through the decision tree → its process class and the CCPs that apply to it, generated automatically from the production feed.</div>
+      <div class="why">224 recipes can't each carry a hand-written plan. Generating the determination from the menu data means it is deterministic, reproducible, and <strong>self-updating</strong> when the menu changes — and it surfaces the dishes that need the most attention (the 53 vacuum-packed/ROP items, the no-kill-step cold items).</div>
+      <div class="roadmap">
+        <div class="rl done"><span class="mark">✓</span><span><b>Done:</b> generated for all 224 (P3&nbsp;81 / P2&nbsp;60 / P1&nbsp;83); regenerates via a script on any feed change.</span></div>
+        <div class="rl next"><span class="mark">→</span><span><b>Next:</b> classify the 23 dishes whose process is inferred (empty logistics metadata).</span></div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="comp">
+      <div class="comp-head"><h3>6 · Monitoring, Corrective Actions, Verification &amp; Records</h3><span class="comp-file">HACCP_MONITORING_RECORDS.md</span></div>
+      <div class="what">Principles 4–7: the per-CCP master plan (what's monitored, how often, by whom; the corrective action; the verification; the record) plus a software design to capture temperatures on the existing HUB/DOOR backbone.</div>
+      <div class="why">A control only counts if it is monitored, corrected when it fails, verified by someone, and recorded. CONC's controls already exist as cook-card instructions — <strong>the missing layer is the record.</strong> The design reuses the apps the kitchen already runs, so it's buildable without standing up a new system.</div>
+      <div class="roadmap">
+        <div class="rl done"><span class="mark">✓</span><span><b>Done:</b> master plan + corrective/verification programs + the temperature-capture schema designed.</span></div>
+        <div class="rl next"><span class="mark">→</span><span><b>Next:</b> build it — Phase A capture → Phase B publish records → Phase C pre-service gate.</span></div>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="comp">
+      <div class="comp-head"><h3>7 · Record-Keeping Guide</h3><span class="comp-file">HACCP_RECORDKEEPING_GUIDE.md</span></div>
+      <div class="what">The audit-ready playbook: the minimal record set, the hazard→CCP→limit→control→monitor→record→fix combinations in one table, simplicity tactics, and the exact questions an auditor will ask.</div>
+      <div class="why">A record system fails two ways — too heavy and staff stop filling it in, or too thin and it fails the audit. The target is the <strong>minimum set that proves control</strong>, captured in the workflow staff already do. 2-year retention and a 7-day retained food sample are baked in.</div>
+      <div class="roadmap">
+        <div class="rl done"><span class="mark">✓</span><span><b>Done:</b> forms, combinations, retention (2&nbsp;yr) + food-sample rule, auditor checklist.</span></div>
+        <div class="rl next"><span class="mark">→</span><span><b>Next:</b> the digital capture (component 6) replaces the paper clipboard.</span></div>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="comp future">
+      <div class="comp-head"><h3>8 · In-App HACCP Card (MISE)</h3><span class="comp-file">conc-recipe-hub</span></div>
+      <div class="what">A per-dish HACCP card generated by the same deterministic engine as the Cook's Card — printable, and baked into the recipe XLSX export — covering process class, CCPs, limits, hazards, and hold/shelf-life.</div>
+      <div class="why">Safety happens at the instruction the cook reads, not in a binder on a shelf. Generating the HACCP card right next to the Cook's Card means it is always current with the recipe, and the stored recipe files carry the CCP information with them. This is also where the fish (155→158&nbsp;°F) and ground-poultry (→74&nbsp;°C) cook-temp corrections landed.</div>
+      <div class="roadmap">
+        <div class="rl done"><span class="mark">✓</span><span><b>Done:</b> built + tested (41/41); cook-temp corrections applied; published feed byte-unchanged.</span></div>
+        <div class="rl next"><span class="mark">→</span><span><b>Next:</b> a quick visual QA, then it can deploy live (held on a feature branch until then).</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFFICULTY x IMPACT -->
+  <section id="roadmap">
+    <div class="eyebrow">Roadmap at a glance</div>
+    <h2>Difficulty vs. impact — what's done, what's worth doing next</h2>
+    <p>Each change plotted by how hard it is (horizontal) against how much it moves food safety + contract-credibility (vertical). <span style="color:var(--green)">●</span> done · <span style="color:var(--amber)">●</span> ahead. The pattern tells the story: the high-impact foundation is already in place at low cost; what remains splits into cheap quick-wins and two deliberate "big bets."</p>
+
+    <div class="chart-wrap">
+      <div>
+        <div class="plot">
+          <span class="divider div-v"></span><span class="divider div-h"></span>
+          <span class="quad-label ql-tl">Quick wins</span>
+          <span class="quad-label ql-tr">Big bets</span>
+          <span class="quad-label ql-bl">Fill-ins</span>
+          <span class="quad-label ql-br">Defer</span>
+          <!-- done -->
+          <span class="dot done" style="left:12%;bottom:55%" title="Cook-temp corrections">1</span>
+          <span class="dot done" style="left:30%;bottom:85%" title="ROP 7-day + barrier">2</span>
+          <span class="dot done" style="left:45%;bottom:92%" title="Hazard analysis + CCPs + limits">3</span>
+          <span class="dot done" style="left:58%;bottom:70%" title="Per-dish decision-tree">4</span>
+          <span class="dot done" style="left:32%;bottom:64%" title="Record-keeping guide">5</span>
+          <span class="dot done" style="left:50%;bottom:58%" title="In-app HACCP card">6</span>
+          <span class="dot done" style="left:63%;bottom:82%" title="Regulatory validation + framing">7</span>
+          <!-- todo -->
+          <span class="dot todo" style="left:20%;bottom:46%" title="Citation second-pass">8</span>
+          <span class="dot todo" style="left:14%;bottom:33%" title="Ch.545 provider + card visual-QA">9</span>
+          <span class="dot todo" style="left:38%;bottom:55%" title="On-site flow verification">10</span>
+          <span class="dot todo" style="left:56%;bottom:89%" title="Temp-capture Phase A">11</span>
+          <span class="dot todo" style="left:81%;bottom:84%" title="Temp-capture Phase B+C">12</span>
+          <span class="dot todo" style="left:86%;bottom:74%" title="s.34 cure/smoke/ferment">13</span>
+          <span class="axis x">Difficulty →</span>
+          <span class="axis y">Impact →</span>
+        </div>
+      </div>
+
+      <div class="legend">
+        <h4>Done</h4>
+        <div class="leg done"><span class="n">1</span><span class="t"><b>Cook-temp corrections</b> (fish 155→158&nbsp;°F; ground&nbsp;74&nbsp;°C)<br><span class="di">Difficulty <span class="l">Low</span> · Impact <span class="m">Med</span></span></span></div>
+        <div class="leg done"><span class="n">2</span><span class="t"><b>ROP 7-day use-by + validated barrier</b><br><span class="di">Difficulty <span class="m">Med</span> · Impact <span class="h">High</span> — botulinum control</span></span></div>
+        <div class="leg done"><span class="n">3</span><span class="t"><b>Hazard analysis + 6 CCPs + limits</b><br><span class="di">Difficulty <span class="m">Med</span> · Impact <span class="h">High</span> — the core</span></span></div>
+        <div class="leg done"><span class="n">4</span><span class="t"><b>Per-dish decision-tree (224)</b><br><span class="di">Difficulty <span class="m">Med</span> · Impact <span class="h">High</span></span></span></div>
+        <div class="leg done"><span class="n">5</span><span class="t"><b>Record-keeping guide</b><br><span class="di">Difficulty <span class="m">Med</span> · Impact <span class="h">High</span></span></span></div>
+        <div class="leg done"><span class="n">6</span><span class="t"><b>In-app HACCP card (MISE)</b><br><span class="di">Difficulty <span class="m">Med</span> · Impact <span class="m">Med</span></span></span></div>
+        <div class="leg done"><span class="n">7</span><span class="t"><b>Regulatory validation + s.26/27 framing</b><br><span class="di">Difficulty <span class="m">Med</span> · Impact <span class="h">High</span> — audit credibility</span></span></div>
+
+        <h4 style="margin-top:1.2rem">Ahead</h4>
+        <div class="leg todo"><span class="n">8</span><span class="t"><b>Citation second-pass</b><br><span class="di">Difficulty <span class="l">Low</span> · Impact <span class="m">Med</span></span></span></div>
+        <div class="leg todo"><span class="n">9</span><span class="t"><b>Confirm Ch.545 provider + card visual-QA</b><br><span class="di">Difficulty <span class="l">Low</span> · Impact <span class="l">Low–Med</span> — quick wins</span></span></div>
+        <div class="leg todo"><span class="n">10</span><span class="t"><b>On-site flow verification (Step 5)</b><br><span class="di">Difficulty <span class="m">Med</span> · Impact <span class="m">Med</span></span></span></div>
+        <div class="leg todo"><span class="n">11</span><span class="t"><b>Temp-capture Phase A (logging)</b><br><span class="di">Difficulty <span class="m">Med</span> · Impact <span class="h">High</span> — turns procedures into records</span></span></div>
+        <div class="leg todo"><span class="n">12</span><span class="t"><b>Temp-capture Phase B+C (publish + gate)</b><br><span class="di">Difficulty <span class="h">High</span> · Impact <span class="h">High</span></span></span></div>
+        <div class="leg todo"><span class="n">13</span><span class="t"><b>s.34 cure/smoke/ferment procedures</b><br><span class="di">Difficulty <span class="h">High</span> · Impact <span class="h">High</span> — unlocks a new menu line</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>CONC · HOUSE — Hospitality Operations Unified System Engine</p>
+    <p>Voluntary HACCP food-safety system · limits validated 2026-06-24 against O. Reg. 493/17 / Health Canada / FDA / UK FSA</p>
+    <p class="ver">Generated report · companion to the HACCP document set in <code>conc-kitchen-house</code></p>
+  </footer>
+
+</div>
+</body>
+</html>
