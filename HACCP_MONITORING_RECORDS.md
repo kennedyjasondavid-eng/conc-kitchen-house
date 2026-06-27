@@ -162,4 +162,4 @@ Scheduling cooks to stay inside the hold limit is an operational matter EXPO can
 
 ---
 
-*Working draft — **voluntary** HACCP plan. Software shapes are a design proposal. Limits validated 2026-06-24 (see `HACCP_REGULATORY_FINDINGS.md`). Open: citation second-pass (findings §8).*
+*Working draft — **voluntary** HACCP plan. Software shapes are a design proposal. Limits validated 2026-06-24 (see `HACCP_REGULATORY_FINDINGS.md`); citation second-pass logged 2026-06-27 (`HACCP_CITATION_SECOND_PASS_2026-06-27.md`).*

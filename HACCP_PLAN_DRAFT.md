@@ -40,7 +40,7 @@ A HACCP plan is owned by a named, competent, multi-disciplinary team — not one
 
 | Seat | CONC role | HACCP responsibility |
 |---|---|---|
-| **HACCP Coordinator / Team Lead** | Kitchen Manager / Head Chef (certified food handler — Ontario requires ≥1 certified handler on premises) | Owns the plan, chairs reviews, signs off corrective actions, liaises with Toronto Public Health |
+| **HACCP Coordinator / Team Lead** | Kitchen Manager / Head Chef (certified food handler — Ontario requires ≥1 certified handler or supervisor on premises during operating hours) | Owns the plan, chairs reviews, signs off corrective actions, liaises with Toronto Public Health |
 | **Production lead — Bloor** | Bloor kitchen lead | Owns COOK + COOL + PREP (vac-bag) + the FRIDGE at the production end |
 | **Service lead — Rexdale** | Rex kitchen lead | Owns day-of COOK, HEAT (reheat), hot-hold, plating at the service end |
 | **Logistics / cold-chain** | Driver(s) / transport coordinator | Owns SEND (AM/PM van runs), PULL/thaw, MOVES — the inter-site cold chain |
@@ -154,8 +154,8 @@ CONC's standout asset is that **traceability already exists in software** — DO
 
 ## What's needed to finish Steps 5–12
 
-**Principles 1–7 are now drafted** across the two annexes, with the limits validated (`HACCP_REGULATORY_FINDINGS.md`) and the architect's decisions folded in. What remains is execution, not design: on-site flow verification at both kitchens + a live van run (Step 5); the equipment list (does the blast chiller hold the 2 h / 6 h targets under full load, and which ROP items rely on the ≥90 °C/10-min barrier cook vs a formulation barrier?); a citation second-pass on the findings; and the **staged build of the temperature-capture layer** (`HACCP_MONITORING_RECORDS.md` §7, Phases A→C) that turns these procedures into provable records.
+**Principles 1–7 are now drafted** across the two annexes, with the limits validated (`HACCP_REGULATORY_FINDINGS.md`), second-pass checked (`HACCP_CITATION_SECOND_PASS_2026-06-27.md`), and the architect's decisions folded in. What remains is execution, not design: on-site flow verification at both kitchens + a live van run (Step 5); the equipment list (does the blast chiller hold the 2 h / 6 h targets under full load, and which ROP items rely on the ≥90 °C/10-min barrier cook vs a formulation barrier?); any PHI workflow classification CONC chooses to request; and the **staged build of the temperature-capture layer** (`HACCP_MONITORING_RECORDS.md` §7, Phases A→C) that turns these procedures into provable records.
 
 ---
 
-*Working draft — **voluntary** HACCP plan (contract-differentiation; standard inspection only). Limits validated 2026-06-24 (see `HACCP_REGULATORY_FINDINGS.md`). Open: citation second-pass (findings §8).*
+*Working draft — **voluntary** HACCP plan (contract-differentiation; standard inspection only). Limits validated 2026-06-24 (see `HACCP_REGULATORY_FINDINGS.md`); citation second-pass logged 2026-06-27 (`HACCP_CITATION_SECOND_PASS_2026-06-27.md`).*

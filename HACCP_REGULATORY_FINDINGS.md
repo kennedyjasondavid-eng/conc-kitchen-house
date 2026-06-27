@@ -1,5 +1,7 @@
 # HACCP Regulatory Findings — CONC Cook-Chill / ROP Critical-Limit Validation
 
+> **Second-pass note (2026-06-27):** See `HACCP_CITATION_SECOND_PASS_2026-06-27.md` before using this file as evidence. This document is the 2026-06-24 research history. The live HACCP docs now exist, `HACCP_HAZARD_ANALYSIS.md` §4 is the critical-limit owner, and the `<3 °C` ROP recommendation below has been superseded by the architect-locked decision: **ROP ≤4 °C + validated barrier**. The old Toronto Ch. 545 each-area food-handler clause is also **historical**, not current-confirmed; cite O. Reg. 493/17 s. 32 for the binding food-handler floor.
+
 **Operation:** Christie Ossington Neighbourhood Centre (CONC), Toronto, Ontario — non-profit shelter catering.
 Multi-site **cook-chill**: cook at two kitchens (Bloor, Rexdale) → blast-chill → **vacuum-pack (Reduced Oxygen Packaging / ROP)** → refrigerate → van transport between sites → reheat → serve **~300 shelter residents (a highly susceptible / vulnerable population)**. 224 recipes.
 
@@ -29,7 +31,7 @@ Multi-site **cook-chill**: cook at two kitchens (Bloor, Rexdale) → blast-chill
 
 5. **A federal SFC licence is NOT required.** CONC prepares and serves within one province and does not trade interprovincially/export — CFIA: *"You do not need a licence … manufacture, process, treat, preserve, grade, package or label food that will be sold and consumed within your province or territory."* **Binding regulator = Ontario / TPH.** CFIA/SFCR + the Preventive Control Plan model are **best-practice** (worth adopting as the plan's structure — §7).
 
-6. **Toronto is stricter than Ontario on food handlers:** Toronto Municipal Code Ch. 545 requires **at least one *certified* food handler in a supervisory capacity in *each area* where food is prepared/processed/served/packaged/stored, at all times of operation** — broader than the provincial s. 32 floor (one trained handler/supervisor per operating hour).
+6. **Food handlers:** second pass corrected this item. The binding current floor is O. Reg. 493/17 s. 32: at least one certified food handler or supervisor on premises during every operating hour. The old Toronto Ch. 545 each-area wording appears in historical By-law 678-2006, but not in the current consolidated Ch. 545 PDF.
 
 7. **The shelter is a highly susceptible population (HSP).** Health Canada's vulnerable-population / immunocompromised guidance imposes **stricter controls and a list of foods to avoid** (no non-dried deli meats unless reheated steaming, hot dogs to 74 °C, no raw/undercooked eggs or meat, no raw sprouts, no unpasteurized dairy/juice, avoid soft & blue cheeses even pasteurized, no refrigerated pâté/smoked seafood). Fold these into CCP-6 / a vulnerable-population annex.
 
@@ -105,7 +107,7 @@ Multi-site **cook-chill**: cook at two kitchens (Bloor, Rexdale) → blast-chill
 | Item | Our draft | Authoritative value | Source (URL + quote) | Tier | Verdict | Action |
 |---|---|---|---|---|---|---|
 | Provincial floor | (n/a) | **≥ 1 trained handler/supervisor present every operating hour** | **O. Reg. 493/17 s. 32 (BINDING):** *"Every operator of a food service premise shall ensure that there is at least one food handler or supervisor on the premise who has completed food handler training during every hour in which the premise is operating."* | **BINDING** | adds | Document who holds current certification per shift/site. |
-| Toronto (stricter) | (n/a) | **≥ 1 *certified* handler supervising *each area* at all times** | **Toronto Municipal Code Ch. 545 §545-5G(17)(a)** (By-law 678-2006, verbatim): *"… at least one certified food handler working in a supervisory capacity in each area of the premises where food is prepared, processed, served, packaged or stored."* Certificate *"valid for five years."* | **BINDING (municipal)** | adds | Ensure a certified supervisory handler covers **each** prep area at both sites. ⚠ The City-run certification course is *"closed … on hold indefinitely"* — use another Ontario health unit / Ministry-approved provider. Confirm the consolidated Ch. 545 wording with TPH (§6). |
+| Toronto Ch. 545 each-area wording | (n/a) | Historical only; **do not cite as current law** | By-law 678-2006 contains the each-area wording, but the current consolidated Ch. 545 PDF does not contain "food handler" (second pass, 2026-06-27). | Historical | corrects | Cite O. Reg. 493/17 s. 32 as the binding floor. Use each-area certified coverage only as CONC internal practice unless TPH confirms otherwise. |
 
 ### Written food-safety plan, monitoring & record-retention
 
@@ -135,7 +137,7 @@ Multi-site **cook-chill**: cook at two kitchens (Bloor, Rexdale) → blast-chill
 | Cold/hot holding | **BINDING — s. 27: ≤ 4 °C / ≥ 60 °C** | s. 27 |
 | RTE shelf-life / date-marking | **SILENT** (milk only) | TPH sous-vide ≤ 7 days; FDA §3-501.17 (best-practice) |
 | ROP / vacuum / cook-chill / sous-vide | **SILENT as named processes**; s. 27(2)(b) hermetic-seal bar; **s. 34 mandatory plan for *manufactured meat* only** | TPH sous-vide guidance + s. 26 + PHI review; FDA §3-502.11/.12, FSA 10-day (best-practice) |
-| Food-handler training | **BINDING — s. 32** | s. 32 + Toronto Ch. 545 (stricter) |
+| Food-handler training | **BINDING — s. 32** | s. 32; old Toronto Ch. 545 each-area wording is historical/not current-confirmed |
 | General written HACCP plan | **Not mandated** (mandatory only for manufactured meat) | Best-practice (strongly advised) |
 | Record retention | **BINDING — purchase s. 29(2) & pest-control s. 13(2), each ≥ 1 yr** | s. 29(2), s. 13(2) |
 
@@ -152,7 +154,7 @@ Everything else in §4 should be stated as **"CONC's evidence-based standard und
 
 ## 5. Corrections to apply (keyed to the §4 critical-limit table to be authored)
 
-> The HACCP docs don't exist yet (§0a). Apply these when `HACCP_HAZARD_ANALYSIS.md` §4 is created.
+> Historical note: when this research file was written, the HACCP docs did not exist yet (§0a). The live docs now exist; use `HACCP_HAZARD_ANALYSIS.md` §4 plus `HACCP_CITATION_SECOND_PASS_2026-06-27.md` before carrying any correction forward.
 
 1. **Terminology (global):** replace **"hazardous food" → "potentially hazardous food (PHF)"** throughout all HACCP docs (matches the O. Reg. 493/17 s. 1(1) defined term).
 2. **CCP-1 cooking — add the ground-poultry row:** change the blanket *"ground ≥ 71 °C"* to two rows — **ground beef/pork/veal/lamb = 71 °C (160 °F)** and **ground poultry = 74 °C (165 °F)**. (The only substantive temperature error in the draft.)
@@ -163,7 +165,7 @@ Everything else in §4 should be stated as **"CONC's evidence-based standard und
 7. **CCP-2 / CCP-4 — cite the gap-fillers:** cooling = MOH "60→20 °C/2h, 20→4 °C/4h"; reheat = Health Canada/MOH 74 °C; mark "reheat within 2 h" and "reheat once" as **best practice** (FDA / convention), not Ontario-binding.
 8. **CCP-5 — add the s. 27(2)(a) two-hour prep excursion** as the only lawful danger-zone window; note s. 27 explicitly covers **"transported"** (van runs).
 9. **Records — set retention = ≥ 1 year** for all CCP monitoring logs (statutory floor; confirm 2 years for the special process with TPH); add **7-day retained food sample** of every RTE item (TPH Centralized Kitchens).
-10. **Food handlers — add the Toronto Ch. 545 requirement** (certified supervisory handler in each area at all times) above the provincial s. 32 floor.
+10. **Food handlers — use O. Reg. 493/17 s. 32** as the binding floor. Do not cite the historical Toronto Ch. 545 each-area wording as current law.
 11. **CCP-6 / HSP annex — add the Health Canada vulnerable-population foods-to-avoid list** as restricted/prohibited foods.
 12. **Cross-app:** if any cooking-temperature *text* lives in `conc-recipe-hub` (e.g. a `COOK_FISH` / cook-temp string), the **only** value that changes is **ground poultry → 74 °C**; everything else confirms. (No change needed to fish 70 °C, eggs 74 °C, whole poultry 82 °C.)
 
@@ -177,7 +179,7 @@ Web research cannot settle these — phone **Toronto Health Connections 416-338-
 2. **Classification:** Do you treat our workflow as **"sous-vide," generic "ROP," or a "Centralized Kitchen"** operation? (This determines which guidance applies — they differ on cold-storage temp: < 3 °C vs ≤ 4 °C.)
 3. **Manufactured meat:** Do **any** of our recipes (curing/smoking/fermenting/drying meat) trigger the **mandatory s. 34 PHI/MOH-approved written procedures**?
 4. **Record retention:** Is **1 year** (the s. 29(2)/s. 13(2) statutory floor) sufficient for our **CCP monitoring logs (cooking/cooling/holding/transport/reheat)**, or do you expect **2 years** for the special process? Any required log format?
-5. **Food-handler rule (current text):** Is **Toronto Municipal Code Ch. 545 §545-5G(17)** still in force as worded (certified supervisor in each area at all times), and which **approved certification provider** should we use given the City program is suspended?
+5. **Food-handler provider:** Which currently accepted certification provider should CONC use? The old Toronto Ch. 545 each-area wording is historical/not current-confirmed; use O. Reg. 493/17 s. 32 as the binding floor.
 6. **Cold-storage target:** Confirm the binding cold-storage temperature for our **vacuum-packed** product — **< 3 °C** (TPH sous-vide guidance) vs the general **≤ 4 °C** (s. 27).
 7. **Inter-site transport:** Any specific expectations for **temperature monitoring/logging during van transport** between Bloor and Rexdale (s. 27 covers "transported," but no numeric monitoring cadence is published)?
 
@@ -210,9 +212,9 @@ Health Canada's *Policy on Listeria monocytogenes in Ready-to-Eat Foods (2023)* 
 
 ## 8. Open uncertainties / sources not fully verified (honest disclosure)
 
-1. **FDA Food Code verbatim section text (§3-501.14 cooling, §3-501.17 date-marking, §3-403.11 reheating):** the official FDA PDF (fda.gov/media/164194) and two health-department reproductions returned **corrupted/404** to automated fetch. The **substance** of each (7-day/41 °F date-marking with prep-day = Day 1; 135 °F→70 °F/2h then →41 °F/6h total cooling; 165 °F/74 °C/2h reheat) was corroborated across multiple secondary reproductions, and **§3-502.11/.12 (ROP) was quoted verbatim** by the regulation-reading agent from the FDA source. These FDA values are **best-practice cross-checks only** — the binding-in-Ontario gap-fillers (MOH cooling, HC/TPH reheat & shelf-life) are primary-quoted verbatim. *Confirm FDA verbatim text against the official 2022 Food Code if a citation is needed in the plan.*
+1. **FDA Food Code section text (§3-501.14 cooling, §3-501.17 date-marking, §3-403.11 reheating, §3-502.12 ROP):** second pass retrieved the official 2022 Food Code PDF and extracted the relevant section evidence. These FDA values remain **best-practice cross-checks only** — the binding-in-Ontario gap-fillers (MOH cooling, HC/TPH reheat & shelf-life) remain primary.
 2. **O. Reg. 493/17 text** was captured from the **official Ontario e-Laws downloadable `.doc`** (`ontario.ca/laws/docs/170493_eV002.doc`) and the **official MOH 2019 Reference Document**, because the live e-Laws HTML page is a JavaScript app and CanLII returned HTTP 403 to automated fetch. Section numbers and wording matched across both primary sources (consolidation current to Jan 1 2025, last amendment 497/24).
-3. **Toronto Municipal Code Ch. 545 §545-5G(17)** quotes are verbatim from the **2006 enacting by-law** (law0678.pdf); the *current consolidated* Ch. 545 PDF parsed only as the licensing index, so the present wording/section number could **not** be confirmed — flagged for TPH (§6 Q5). The food-handler *requirement* itself is independently confirmed by s. 32 (provincial) and the City's eating-establishment page.
+3. **Toronto Municipal Code Ch. 545 §545-5G(17)** quotes are verbatim from the **2006 enacting by-law** (law0678.pdf), but second pass found the current consolidated Ch. 545 PDF does not contain "food handler." Treat the each-area wording as historical unless TPH confirms otherwise. The binding current food-handler requirement is O. Reg. 493/17 s. 32.
 4. **FDA HSP §3-801.11** prohibited-foods text was not retrieved verbatim; the Health Canada immunocompromised foods-to-avoid list (primary, March 2025) carries the same controls and is quoted instead.
 5. **Listeria policy applicability** (manufacturer vs food-service) is a jurisdictional question for TPH/CFIA — treated as best-practice here.
 6. **Process note:** the multi-agent research workflow that produced the three primary-source foundations (O. Reg. 493/17, TPH, Health Canada) completed those reads, but its 13 per-question structured-finding + adversarial-verification agents were cut short by API rate/session limits. This report was synthesized by the primary session from the three completed verbatim foundation extracts plus targeted follow-up research (FSA 10-day rule, CFIA licensing + PCP). The **adversarial citation-verification layer was not run**; quotes were taken directly from the foundation agents' retrieved text and the follow-up fetches, but a second-pass verification of each quote against its source URL is advisable before the plan is finalized.

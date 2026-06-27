@@ -1,7 +1,7 @@
 # CONC HACCP — Preliminary Hazard Analysis (Executive Summary)
 
 **Read-first front sheet.** A one-page orientation to CONC's food-safety hazard analysis — what the hazards are, why they matter, and the controls that hold them. The full worksheets live in the documents listed at the foot.
-**Date:** 2026-06-24 · **Status: WORKING DRAFT.** Critical limits **validated against `HACCP_REGULATORY_FINDINGS.md`** (2026-06-24; Health Canada / O. Reg. 493/17 / MOH / TPH / FDA / FSA). **This is a *voluntary* HACCP plan** — a contract-differentiation asset, not a regulatory mandate; CONC is subject only to standard O. Reg. 493/17 inspection, with **no TPH special-process review for ROP** (architect-confirmed). **Open:** a citation second-pass (findings §8) + on-site flow confirmation.
+**Date:** 2026-06-24 · **Status: WORKING DRAFT.** Critical limits **validated against `HACCP_REGULATORY_FINDINGS.md`** (2026-06-24; Health Canada / O. Reg. 493/17 / MOH / TPH / FDA / FSA), with citation second-pass logged in `HACCP_CITATION_SECOND_PASS_2026-06-27.md`. **This is a *voluntary* HACCP plan** — a contract-differentiation asset, not a regulatory mandate; CONC is subject only to standard O. Reg. 493/17 inspection, with **no TPH special-process review for ROP** (architect-confirmed). **Open:** on-site flow confirmation and any PHI classification guidance CONC chooses to request.
 
 ---
 
@@ -34,7 +34,7 @@ Four hazard families account for nearly all the risk:
 ## Key findings & decisions
 - **The controls already exist — but only as instructions.** MISE cook-cards carry HACCP-correct method text (two-stage blast-chill, reheat-to-74 °C-once, cut-specific cook temps, ROP labelling). **What's missing is the *record*** — no probe readings are captured anywhere. Closing that gap is the build, not the procedure.
 - **Cooling is compliant** (architect-confirmed): cook → blast-chill to <40 °C within 2 h → hold at fridge temp overnight → bag in the morning. "Cooled overnight" is refrigerated holding before bagging, not passive cooling.
-- **ROP hold cut from 14 days → ≤7 days** at ≤4 °C — the safe no-barrier limit for a vulnerable population. The cook→serve schedule is kept inside the limit by an **automated verification flag**, not manual vigilance.
+- **ROP hold cut from 14 days → ≤7 days** at ≤4 °C **with a validated barrier** (90 °C/10-min cook by default, or documented formulation barrier). The cook→serve schedule is kept inside the limit by an **automated verification flag**, not manual vigilance.
 - **Allergen control (CCP-6) is CONC's most mature control** — already largely built in DOOR (exclude-array routing, auto anaphylactic list, red-flag + mandatory H&W acknowledgement). The HACCP task is to formalise it, not invent it.
 - **Minor items:** ✓ fish cook temp **raised 155 → 158 °F (70 °C)** (Health Canada) on 2026-06-24; no documented transport-temperature spec; a few hold-day anomalies (a 27-day and some "?d" entries) to classify.
 
@@ -57,5 +57,6 @@ HACCP sits on a base of prerequisite programs (sanitation, pest control, supplie
 | `HACCP_HAZARD_ANALYSIS.md` | Principles 1–3 — full hazard worksheet, CCP determination, critical limits |
 | `HACCP_MONITORING_RECORDS.md` | Principles 4–7 — monitoring, corrective actions, verification, records + the capture schema |
 | `HACCP_CCP_DECISION_TREE.md` | Per-dish CCP-vs-CP determinations across the live menu (generated from MISE) |
+| `HACCP_CITATION_SECOND_PASS_2026-06-27.md` | Dated citation audit: confirmed claims, superseded `<3 °C` context, and remaining source checks |
 
-*Working draft — **voluntary** HACCP plan (contract-differentiation; standard inspection only). Limits validated 2026-06-24 (see `HACCP_REGULATORY_FINDINGS.md`). Open: citation second-pass (findings §8).*
+*Working draft — **voluntary** HACCP plan (contract-differentiation; standard inspection only). Limits validated 2026-06-24 (see `HACCP_REGULATORY_FINDINGS.md`) and second-pass logged 2026-06-27 (`HACCP_CITATION_SECOND_PASS_2026-06-27.md`).*

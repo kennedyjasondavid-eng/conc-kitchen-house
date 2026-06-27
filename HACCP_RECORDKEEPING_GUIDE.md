@@ -35,7 +35,7 @@ Six active logs + the plan + the review trail. Most are one line per batch or tw
 | 7 | **Retained food sample (7-day)** | TPH Centralized-Kitchen rule | dated, sealed sample of **every RTE item produced** | each RTE item, daily | lead | labelled sample fridge | **7 days** |
 | — | **Allergen / anaphylactic records** | CCP-6 | *DOOR already generates these* — plating sheets + auto anaphylactic list + H&W acknowledgement | every meal | H&W / lead | **DOOR (existing)** | 2 yr* |
 | — | **Receiving + cleaning** (PRPs) | foundation | receiving: supplier · temp · accept/reject · initials · cleaning: tick per shift | per delivery / per shift | receiver / staff | paper | 2 yr* |
-| — | **Food-handler certification** | competency | cert on file per handler; **a certified supervisory handler in *each area* at all times** (Toronto Ch. 545, above the provincial s. 32 floor) | standing | coordinator | binder | current |
+| — | **Food-handler certification** | competency | cert on file; **at least one certified food handler or supervisor on premises during every operating hour** (O. Reg. 493/17 s. 32). CONC may cover each area as an internal practice. | standing | coordinator | binder | current |
 | — | **The HACCP plan + review sign-offs** | the system exists & is live | the HACCP plan docs + weekly coordinator review signature | standing | coordinator | binder / repo | current + superseded |
 
 *\*CONC commitment: keep all monitoring logs **2 years** (architect decision 2026-06-24). The binding statutory floor is **≥1 year** for purchase + pest records (O. Reg. 493/17 s. 29(2)/s. 13(2)); there is no binding retention for temperature logs. Validated — `HACCP_REGULATORY_FINDINGS.md`.*
