@@ -15,7 +15,7 @@
    - **Actual workflow (confirmed):** a stew is cooked over a few hours, **blast-chilled to <40 °F (<4 °C) within 2 h**, then **held at fridge temperature (≤4 °C) overnight** and **vacuum-bagged the next morning.** This is compliant with CCP-2 — "overnight" is *refrigerated holding before the bagging step*, not passive ambient cooling; a blast chiller **is** in use (it simply isn't named in the HUB schedule text).
    - *Follows from the cook-day/bag-day split:* **date the ROP "use-by" from the cook/production day** (when the food became a TCS hazard), not the next-morning bagging day. The remaining CCP-2 work is purely to *record* the 2 h / 6 h checkpoint temperatures (Principle 4).
 
-3. **⚠ ROP shelf-life is too long. This resolves your "bagged holding" question.** 53 recipes (24 %) are vacuum-sealed (`packaging:"vac"`) = Reduced-Oxygen Packaging. The system's current label (MISE `HACCP_BAG_LABEL`) is **"Use by 2 weeks… store at 41°F or below."** For ROP held at ≤4 °C **without a validated botulinum barrier**, 14 days exceeds the safe ceiling (see §4, CCP-3). **Resolved limit: ≤7 days at ≤4 °C with a validated barrier** (production day = day 1) — see the decision and basis in §4. This brings the 14-day label and the 8-day Vegan Chilli hold into line.
+3. **⚠ ROP shelf-life was too long in the legacy method label. This resolves your "bagged holding" question.** 53 recipes (24 %) are vacuum-sealed (`packaging:"vac"`) = Reduced-Oxygen Packaging. The deployed HACCP card/model now uses the resolved limit: **≤7 days at ≤4 °C with a validated barrier** (production day = day 1) — see the decision and basis in §4. One older ordinary MISE cook-card fragment (`HACCP_BAG_LABEL`) still says **"Use by 2 weeks… store at 41°F or below"** and needs a future CODEX cleanup; until then, §4 and the HACCP card/model govern.
 
 4. **Transport has no temperature spec.** Cold/hot/raw van legs (AM/PM runs, "no return leg") carry no documented cold-pack, insulation, or arrival-temperature check. Folded into CCP-3.
 
@@ -130,7 +130,7 @@ Per CCP, with basis. **Framing rule** (validated 2026-06-24 — full citations i
 
 ---
 
-## 5. Open deviations & validation to-do (before go-live)
+## 5. Open deviations & validation to-do (before live records rollout)
 
 *Resolved during drafting: the cooling "blast-chill vs cooled overnight" question (§0.2) — compliant workflow confirmed by the architect. Fridge-capacity is out of scope for this pass at the architect's direction.*
 
@@ -140,15 +140,16 @@ Per CCP, with basis. **Framing rule** (validated 2026-06-24 — full citations i
 
 | # | Item | Action | Owner |
 |---|---|---|---|
-| 1 | ✓ **ROP pathway — RESOLVED** | Voluntary; no TPH special-process review. ROP cold **≤4 °C + validated barrier**; re-label (cook date/time + discard-by); reschedule the 8-day Chilli to ≤7 d | Coordinator |
+| 1 | ✓ **ROP pathway — RESOLVED** | Voluntary; no TPH special-process review. ROP cold **≤4 °C + validated barrier**; HACCP card/model deployed with **≤7 d** shelf-life; re-label ordinary cook-card snippets to cook date/time + discard-by where still stale | Coordinator |
 | 2 | ✓ **Fish cook temp — DONE** | Raised `COOK_FISH` step text + basa prose 155 → 158 °F (70 °C) on 2026-06-24 | — |
 | 3 | ✓ **Transport — RESOLVED** | Validated insulated/refrigerated transport (≤4 °C in transit, binding s. 27); **no per-leg log** — rely on documented equipment capability | Logistics |
 | 4 | **"?d" + 27 d / 10 d holds** | Classify each; assign definite limits | Coordinator |
 | 5 | **Monitoring/records layer** | Build temp + time capture on COOK/COOL/HEAT/SEND (Principles 4 & 7); **2-year** retention + 7-day retained food sample | Systems owner |
 | 6 | ✓ **Food handler — s. 32 floor confirmed** | Ontario requires a certified food handler or supervisor on premises during every operating hour. Current Ch. 545 does **not** carry the old each-area food-handler wording; each-area coverage remains CONC practice unless TPH confirms otherwise. Confirm current accepted provider before training. | Coordinator |
 | 7 | ✓ **Ground-poultry cook temp — DONE** | Verified: no wrong 71 °C was encoded (the shared ground-meat step was texture-only, "until browned"). Added an explicit **71 °C/160 °F (74 °C/165 °F for poultry) — verify with thermometer** target to `COOK_GROUND` on 2026-06-24 (9 ground-meat dishes incl. Pad Krapow; re-baselined). | — |
-| 8 | **Citation second-pass** | Re-check the `HACCP_REGULATORY_FINDINGS.md` quotes against primary sources before final sign-off (findings §8) | Coordinator |
+| 8 | ✓ **Citation second-pass — DONE** | Logged in `HACCP_CITATION_SECOND_PASS_2026-06-27.md`: s.27, s.34, current Ch. 545, FDA sections, and FSA barrier evidence checked; `<3 °C` retained only as superseded/advisory citation context | — |
 | 9 | **s. 34 — FUTURE process (cure/smoke/ferment)** | Planned, not current. Before launch: build the process's hazards + critical limits (nitrite / pH / aw / time-temp) as an **MOH/PHI-approved written procedure (binding)** and produce only once approved | Coordinator + PHI |
+| 10 | **CODEX legacy bag-label snippet** | `CONC_Recipe_Data.js::HACCP_BAG_LABEL` still says `"Use by" date (2 weeks)`. Future CODEX cleanup should align it to the locked ROP limit (`≤7 d`, cook date/time, discard-by, validated barrier) while keeping public feeds stable. | Systems owner |
 
 ---
 

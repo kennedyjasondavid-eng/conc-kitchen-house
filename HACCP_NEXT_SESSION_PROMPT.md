@@ -1,11 +1,11 @@
 # HACCP — Paste-Ready Citation / Continuation Prompt
 
-*Created 2026-06-24; updated 2026-06-27 after the HACCP docs were authored and the architect decisions were locked. For current pickup context, read `HACCP_SESSION_HANDOFF_2026-06-27.md` first. The critical-limit source of truth is `HACCP_HAZARD_ANALYSIS.md` §4; `HACCP_REGULATORY_FINDINGS.md` is the citation/research history and still contains superseded `<3 °C` research recommendations. Citation second-pass status lives in `HACCP_CITATION_SECOND_PASS_2026-06-27.md`.*
+*Created 2026-06-24; updated 2026-06-27 after the HACCP docs were authored, the citation second-pass was logged, and the CODEX/MISE HACCP card was deployed. For current pickup context, read `HACCP_SESSION_HANDOFF_2026-06-27.md` first. The critical-limit source of truth is `HACCP_HAZARD_ANALYSIS.md` §4; `HACCP_REGULATORY_FINDINGS.md` is citation/research history and still contains superseded `<3 °C` research recommendations. Citation second-pass status lives in `HACCP_CITATION_SECOND_PASS_2026-06-27.md`.*
 
 ---
 
 ## What this session is for
-Continue CONC's **preliminary HACCP plan work** for the multi-site cook-chill / ROP operation. The plan docs now exist and are live in this repo. Use this prompt only for citation second-pass work, local-browser verification, or future revisions after reading the 2026-06-27 handoff. Do **not** re-do the regulatory research unless the task is specifically to verify citations; the current architect decision is voluntary HACCP, standard inspection only, and ROP at **≤4 °C + validated barrier**.
+Continue CONC's **preliminary HACCP plan work** for the multi-site cook-chill / ROP operation. The plan docs and CODEX/MISE HACCP card now exist and are live. Use this prompt for future revisions, record-capture planning, or targeted source checks after reading the 2026-06-27 handoff. Do **not** re-do the regulatory research unless the task is specifically to verify citations; the current architect decision is voluntary HACCP, standard inspection only, and ROP at **≤4 °C + validated barrier**.
 
 ## Operation context (one paragraph)
 CONC (Christie Ossington Neighbourhood Centre), Toronto, Ontario — non-profit shelter catering. Cook at two kitchens (Bloor, Rexdale) → blast-chill → **vacuum-pack (Reduced Oxygen Packaging / ROP)** → refrigerate → **van transport between sites** → reheat → serve **~300 shelter residents (a highly susceptible / vulnerable population)**. 224 recipes. **Binding regulator = Ontario O. Reg. 493/17 (Food Premises) under the HPPA, enforced by Toronto Public Health / DineSafe.** CFIA/SFCR is best-practice only (no federal licence required).
@@ -52,8 +52,10 @@ Six CCPs: CCP-1 Cooking · CCP-2 Cooling · CCP-3 Chilled/ROP hold + transport �
 9. **Food handlers:** cite **O. Reg. 493/17 s. 32** as the binding floor (one certified food handler or supervisor on premises during every hour of operation). Do **not** cite old Toronto Ch. 545 each-area wording as current law; treat each-area coverage as CONC practice unless TPH confirms otherwise.
 10. **No CFIA/SFC licence** — note Ontario/TPH is binding; reuse the CFIA **PCP** model (= 7 HACCP principles + supporting programs) as the doc structure.
 
-## Recipe-hub cross-app note (staged — do not deploy without Jason's gate)
-The in-app HACCP card and cook-temp text changes are built on `conc-recipe-hub` branch `claude/nifty-clarke-wtq7o8`, including ground poultry at **74 °C** and fish at **70 °C**. The work is staged for visual QA before merge/deploy. Keep `recipe_production.json` and `DOOR_RECIPE_DATA.json` byte-stable; the HACCP card is render/generation-only and must not change the published feed.
+## Recipe-hub cross-app note (deployed 2026-06-27)
+The in-app HACCP card and cook-temp text changes are deployed on `conc-recipe-hub` main at `31529df`, including ground poultry at **74 °C**, fish at **70 °C**, ROP **≤7 d @ ≤4 °C + validated barrier**, and the internal-draft/reference-based card wording. `recipe_production.json` and `DOOR_RECIPE_DATA.json` remained byte-stable; keep that feed guard for any future CODEX HACCP cleanup.
+
+**Remaining CODEX cleanup:** the HACCP card/model is correct, but the older ordinary cook-card fragment `CONC_Recipe_Data.js::HACCP_BAG_LABEL` still says `"Use by" date (2 weeks)`. Update that snippet to the locked cook-date/discard-by/≤7-day language in a future CODEX pass, re-baseline method snapshots, and re-run `tests/feed_stable_hash.mjs`.
 
 ## Questions to carry to Toronto Public Health (DineSafe@toronto.ca / 416-338-7600, ask for your PHI)
 1. ROP/cook-chill: confirm there is no pre-approval or variance for CONC's current workflow; ask what evidence a PHI would expect if reviewing the voluntary plan under s. 26.
@@ -64,7 +66,7 @@ The in-app HACCP card and cook-temp text changes are built on `conc-recipe-hub` 
 6. Confirm that the only binding cold-storage target is ≤4 °C under s. 27, and record any stricter guidance as advisory unless Jason re-rules it.
 7. Any expectations for temperature monitoring/logging **during van transport** between sites?
 
-## Open caveats before finalizing
+## Closed validation notes and remaining checks
 - **Citation second-pass logged:** see `HACCP_CITATION_SECOND_PASS_2026-06-27.md`. The named loose ends are cleared: current Ch. 545 does not carry the old each-area food-handler wording, official FSA barrier text was verified through the UK Government Web Archive, and FDA section evidence was captured from the official 2022 Food Code PDF.
 - **FDA Food Code exact sections:** §3-501.14, §3-501.17, §3-403.11, and §3-502.12 were verified from the official 2022 Food Code PDF as best-practice support only.
 - Verbatim source backups (if still present) were extracted to `C:\Users\Jason\AppData\Local\Temp\haccp_found\` (3 foundation reads: O. Reg. 493/17, TPH, Health Canada).

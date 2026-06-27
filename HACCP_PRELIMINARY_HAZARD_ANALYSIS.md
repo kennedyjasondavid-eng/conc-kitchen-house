@@ -32,9 +32,9 @@ Four hazard families account for nearly all the risk:
 | **6 — Allergen / anaphylactic** | PREP + plate | **Zero cross-contact to a flagged resident; 100 % of anaphylactic plates verified** pre-service |
 
 ## Key findings & decisions
-- **The controls already exist — but only as instructions.** MISE cook-cards carry HACCP-correct method text (two-stage blast-chill, reheat-to-74 °C-once, cut-specific cook temps, ROP labelling). **What's missing is the *record*** — no probe readings are captured anywhere. Closing that gap is the build, not the procedure.
+- **The controls mostly exist as instructions; the record is still missing.** MISE/CODEX now carries the deployed per-dish HACCP card/model beside the Cook's Card, with corrected fish, ground-poultry, and ROP limits. **What's missing is the *record*** — no probe readings are captured anywhere. One legacy ordinary cook-card fragment still needs cleanup: `HACCP_BAG_LABEL` says `"Use by" date (2 weeks)` even though the HACCP card/model and plan now govern ROP at **≤7 days @ ≤4 °C + validated barrier**.
 - **Cooling is compliant** (architect-confirmed): cook → blast-chill to <40 °C within 2 h → hold at fridge temp overnight → bag in the morning. "Cooled overnight" is refrigerated holding before bagging, not passive cooling.
-- **ROP hold cut from 14 days → ≤7 days** at ≤4 °C **with a validated barrier** (90 °C/10-min cook by default, or documented formulation barrier). The cook→serve schedule is kept inside the limit by an **automated verification flag**, not manual vigilance.
+- **ROP hold cut from 14 days → ≤7 days** at ≤4 °C **with a validated barrier** (90 °C/10-min cook by default, or documented formulation barrier). The HACCP card/model is live with this limit; the remaining CODEX cleanup is to align the older generated method-label snippet.
 - **Allergen control (CCP-6) is CONC's most mature control** — already largely built in DOOR (exclude-array routing, auto anaphylactic list, red-flag + mandatory H&W acknowledgement). The HACCP task is to formalise it, not invent it.
 - **Minor items:** ✓ fish cook temp **raised 155 → 158 °F (70 °C)** (Health Canada) on 2026-06-24; no documented transport-temperature spec; a few hold-day anomalies (a 27-day and some "?d" entries) to classify.
 
@@ -57,6 +57,6 @@ HACCP sits on a base of prerequisite programs (sanitation, pest control, supplie
 | `HACCP_HAZARD_ANALYSIS.md` | Principles 1–3 — full hazard worksheet, CCP determination, critical limits |
 | `HACCP_MONITORING_RECORDS.md` | Principles 4–7 — monitoring, corrective actions, verification, records + the capture schema |
 | `HACCP_CCP_DECISION_TREE.md` | Per-dish CCP-vs-CP determinations across the live menu (generated from MISE) |
-| `HACCP_CITATION_SECOND_PASS_2026-06-27.md` | Dated citation audit: confirmed claims, superseded `<3 °C` context, and remaining source checks |
+| `HACCP_CITATION_SECOND_PASS_2026-06-27.md` | Dated citation audit: confirmed claims, superseded `<3 °C` context, and cleared source checks |
 
 *Working draft — **voluntary** HACCP plan (contract-differentiation; standard inspection only). Limits validated 2026-06-24 (see `HACCP_REGULATORY_FINDINGS.md`) and second-pass logged 2026-06-27 (`HACCP_CITATION_SECOND_PASS_2026-06-27.md`).*

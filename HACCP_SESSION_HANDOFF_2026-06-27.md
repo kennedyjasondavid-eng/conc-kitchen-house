@@ -2,7 +2,7 @@
 
 **Purpose.** Full pickup brief for a new session on CONC's HACCP food-safety work. Read this first, then the doc set in §6. It captures both the *state* (what's done, where it lives, what's open) and the *hard-won context* (the non-obvious decisions and footguns that aren't visible from the files alone).
 
-**One-line status.** A complete, voluntary HACCP system is authored and **LIVE on `conc-kitchen-house` main** (10 artifacts incl. an HTML report). The in-app HACCP card in **MISE/`conc-recipe-hub` is built + tested but STAGED** — 6 commits on a feature branch, held for a visual QA before merge/deploy. The published recipe feed is byte-unchanged, so DOOR/EXPO/HUB are unaffected.
+**One-line status.** A complete, voluntary HACCP document set is authored and **LIVE on `conc-kitchen-house` main**. The in-app HACCP card in **MISE/`conc-recipe-hub` is now merged, deployed, and live on GitHub Pages** at `31529df`; the public recipe feeds remained byte-stable, so DOOR/EXPO/HUB were not disturbed. The remaining high-value work is no longer "merge the card" — it is **record capture**: on-site flow verification, ROP barrier confirmation, and Phases A→C temperature logging.
 
 ---
 
@@ -19,21 +19,21 @@ CONC runs a multi-site **cook-chill** shelter-catering operation (~300 residents
 ### conc-kitchen-house — LIVE
 | | |
 |---|---|
-| `main` = `origin/main` = feature branch | **`1d56489`** (all in sync) |
-| Feature branch | `claude/nifty-clarke-wtq7o8` |
-| State | **All HACCP work merged to main + deployed to GitHub Pages.** |
+| `main` = `origin/main` | **`b939b32`** before this doc-update pass; pushed/deployed |
+| State | **HACCP docs, citation second-pass, and HTML report merged to main + deployed to GitHub Pages.** |
 | Live report | https://kennedyjasondavid-eng.github.io/conc-kitchen-house/HACCP_REPORT.html |
 
-### conc-recipe-hub (MISE) — STAGED, NOT deployed
+### conc-recipe-hub (MISE) — LIVE / deployed
 | | |
 |---|---|
-| `origin/main` | **`dd0e733`** |
-| Feature branch `claude/nifty-clarke-wtq7o8` | **`a2723f6`** — exactly **6 commits ahead, 0 behind** origin/main (pushed) |
-| State | In-app HACCP card built + tested; **held for visual QA** before merge/deploy (Jason-gated). |
+| `origin/main` | **`31529df`** |
+| Feature branch `claude/nifty-clarke-wtq7o8` | **`31529df`** — preserved remotely, same tip as deployed main |
+| State | In-app HACCP card merged to main + deployed. Live page verified 2026-06-27: new "internal draft / reference-based controls" wording present; old pending-TPH-validation wording absent. |
 | Feed safety | `recipe_production.json` + `DOOR_RECIPE_DATA.json` **byte-unchanged** → DOOR/EXPO/HUB unaffected. |
 
-The 6 staged recipe-hub commits (clean stack on top of origin/main):
+The deployed recipe-hub HACCP stack:
 ```
+31529df  docs(haccp): align card validation wording
 a2723f6  Add internal-temp target to ground-meat cook step (74C poultry / 71C beef-pork)
 2e3aacd  Align HACCP card + decision-tree to architect decisions (ROP <=4C + validated barrier; voluntary)
 21e1dc5  CCP decision-tree generator: CCP-3 ROP <3C / Listeria Cat 1   ← message says <3C; SUPERSEDED by 2e3aacd
@@ -60,7 +60,7 @@ These are the things that will bite a new session that only reads the files.
 
 6. **Single source of truth for the numbers: §4 of `HACCP_HAZARD_ANALYSIS.md`.** §5 (deviations log, 9 items) records *why* each number is what it is. The in-app card, the preliminary summary's CCP table, the report's CCP strip, and the decision-tree generator must all **agree with §4**. Change §4 first, then ripple downstream. If you find a disagreement, §4 wins (unless the architect re-rules — then update §4).
 
-7. **Feed byte-stability is a hard gate.** `recipe_production.json` + `DOOR_RECIPE_DATA.json` must stay byte-identical (`tests/feed_stable_hash.mjs`) or it ripples to DOOR/EXPO/HUB. The HACCP card is render/generation-only and does not touch the feed. The cook-temp changes live in `CONC_Recipe_Data.js` (cook-card seed text) and re-baselined the method snapshot — **they did not alter the published feed.** Keep it that way.
+7. **Feed byte-stability is a hard gate.** `recipe_production.json` + `DOOR_RECIPE_DATA.json` must stay byte-identical (`tests/feed_stable_hash.mjs`) or it ripples to DOOR/EXPO/HUB. The deployed HACCP card is render/generation-only and does not touch the feed. The cook-temp changes live in `CONC_Recipe_Data.js` (cook-card seed text) and re-baselined the method snapshot — **they did not alter the published feed.** Keep it that way.
 
 8. **Recipe-hub test invocation:** run **from repo root** — `cd /home/user/conc-recipe-hub && node tests/all.mjs` (many tests use a bare relative `index.html`; from `tests/` you get ENOENT). Last green **41/41**. HACCP has its own gate: `tests/haccp_card.mjs` + `tests/haccp_baseline.json` (300 templates). `method_baseline.json` was re-baselined **twice** (fish, then ground-meat) — those are **intentional**, not drift.
 
@@ -122,13 +122,13 @@ The decision-tree doc is regenerated by **`conc-recipe-hub/docs/gen_ccp_decision
 ## 7. Open items & next steps (prioritized; difficulty / impact)
 
 **Quick wins (low effort — do before any bid):**
-- **Citation second-pass** — re-verify the quoted regulation text (s.27 numbers, s.34 scope, Toronto Ch.545) via a **local session** (blocked here). The adversarial-verification layer didn't fully finish; this is the one genuinely-open *validation* gap before the plan is leaned on. *Low / Med.*
-- **Visual QA the in-app HACCP card**, then (Jason-gated) **merge the 6 recipe-hub commits + deploy.** They're a clean fast-forward (0 behind). *Low / Med.*
-- **Confirm an approved Toronto Ch.545 food-handler certification provider** (external). *Low / Low–Med.*
+- **CODEX legacy bag-label snippet cleanup** — the deployed HACCP card/model correctly says ROP **≤7 d @ ≤4 °C + validated barrier**, but `CONC_Recipe_Data.js` still contains the older `HACCP_BAG_LABEL` text: `"Use by" date (2 weeks)`. Update that ordinary cook-card fragment to the locked discard-by/cook-day language, re-baseline method snapshots, and keep `recipe_production.json` / `DOOR_RECIPE_DATA.json` stable. *Low / Med.*
+- **Confirm an approved Toronto food-handler certification provider** (external). Use O. Reg. 493/17 s. 32 as the binding floor; do not resurrect old Ch. 545 each-area wording as law. *Low / Low–Med.*
+- **Optional PHI question list** — if CONC wants extra comfort, ask how TPH would classify the voluntary ROP/cook-chill plan and what evidence they would expect under s. 26. Treat any answer as guidance unless Jason re-rules the plan. *Low / Low–Med.*
 
 **Worth the lift (the real investments):**
-- **Build the temperature-capture layer — Phases A→C** on the existing HUB/DOOR backbone (A: capture → B: publish records → C: pre-service gate). This is the high-impact build — it's what turns the procedures into provable records. Schema already designed in `HACCP_MONITORING_RECORDS.md`. *Med→High / High.*
 - **On-site flow verification (Step 5)** — walk Bloor + Rex + one live van run; time-stamp every cool/hold/transport leg. Promotes the plan from "preliminary" to "live." *Med / Med.*
+- **Build the temperature-capture layer — Phases A→C** on the existing HUB/DOOR backbone (A: capture → B: publish records → C: pre-service gate). This is the high-impact build — it turns correct procedures into provable records. Schema already designed in `HACCP_MONITORING_RECORDS.md`. *Med→High / High.*
 
 **Deliberate / future:**
 - **Classify the 23 inferred-process dishes** (empty logistics metadata) in the decision tree. *Low–Med / Low–Med.*
@@ -140,8 +140,8 @@ The decision-tree doc is regenerated by **`conc-recipe-hub/docs/gen_ccp_decision
 
 ## 8. How to pick up
 
-- **Branch discipline:** develop on `claude/nifty-clarke-wtq7o8` in each repo; push `git push -u origin <branch>` (retry network errors 2/4/8/16 s). **Deploys/merges are Jason-gated.** This session, Jason authorized HOUSE merges to main; the **recipe-hub deploy is NOT yet authorized** (held for the card QA).
-- **HOUSE merges** (precedent this session): commit on feature → push → `git checkout main && git merge --ff-only <branch> && git push origin main && git checkout <branch>`. Merging to main publishes to GitHub Pages (~60 s).
+- **Branch discipline:** deploys/merges are Jason-gated. This session, Jason authorized and completed both deploys: HOUSE `main` at `b939b32`, Recipe Hub `main` at `31529df`. For future work, start from fresh `main` and use a new scoped branch rather than continuing the deployed HACCP branch.
+- **HOUSE merges** (precedent this session): commit → push `main`. Merging to main publishes to GitHub Pages (~60 s).
 - **Recipe-hub tests:** `cd /home/user/conc-recipe-hub && node tests/all.mjs` (from repo root). HACCP gate: `node tests/haccp_card.mjs`. Confirm feed stability with `tests/feed_stable_hash.mjs`.
 - **Simulate any date in HUB** (if touching the live board): `window.__HUB_NOW__='YYYY-MM-DD'` then `loadScheduleData()`.
 - **Do NOT** create PRs unless asked; **do NOT** retry 403/407 egress denials; **do NOT** re-tighten ROP to <3 °C; **do NOT** reintroduce "TPH reviews this" language.

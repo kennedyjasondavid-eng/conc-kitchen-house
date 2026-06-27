@@ -157,7 +157,7 @@ Scheduling cooks to stay inside the hold limit is an operational matter EXPO can
 
 1. **Capture placement** — recommended split above (capture in HUB, record+gate in DOOR). The one new surface is a small write/publish path in HUB; everything else reuses existing machinery. *Confirm this split before building.*
 2. **ROP use-by = 7 d at ≤4 °C** — justified by the validated botulinum barrier (≥90 °C/10-min cook, or pH/aw/salt); no TPH variance required (voluntary plan).
-3. **Retention period** — confirm ≥1 year against TPH guidance.
+3. **Retention period** — **2 years** is CONC's voluntary HACCP commitment; the citation second-pass did not find a binding general temperature-log retention period. Still confirm the internal filing owner/format before rollout.
 4. **Probe hardware** — do the kitchens have enough calibrated digital probes / an in-chiller logging probe for per-batch capture? (Drives Phase A feasibility.)
 
 ---
