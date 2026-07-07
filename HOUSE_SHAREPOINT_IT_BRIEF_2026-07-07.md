@@ -139,7 +139,7 @@ A single-page-application registration with delegated Graph permissions (details
 Swap localStorage-backed state to Graph-backed storage at the named seams, one function at a time, app by app (DOOR's three seams first, then EXPO snapshots/state). The GitHub JSON transport between apps can remain during this stage; candidates migrate as they prove out. Decision point: the HUB feed and anonymous tablets (§7).
 
 **Stage 4 — Identity everywhere.**
-Staff sign in with CONC Microsoft accounts (MSAL, as HUB/CODEX already do); retire pasted GitHub tokens for day-to-day flows and the portal PIN. IT input needed on conditional access and shared-device policy for kitchen tablets.
+Staff sign in with CONC Microsoft accounts (MSAL, as HUB/CODEX already do); retire pasted GitHub tokens for day-to-day flows and the portal PIN. All staff already hold M365 credentials, so this is configuration, not provisioning. IT input needed on conditional access and shared-device policy for kitchen tablets.
 
 **Stage 5 — Hosting (last, by design).**
 Move the apps off the personal GitHub Pages account. They are static files, so the requirement is modest: HTTPS static hosting + the JSON feeds served alongside (or CORS-enabled) + offline tolerance. Realistic options to discuss with IT: an org-owned GitHub organization (smallest change), Azure Static Web Apps on CONC's tenant (Entra auth built in; nonprofit credits apply), or an existing org web property. We'd note that SharePoint page hosting itself is likely a poor fit for full JavaScript apps given modern script restrictions — but that's IT's call to make, not ours to prescribe.
@@ -192,13 +192,13 @@ If CONC prefers tighter scoping than `Files.ReadWrite.All`, we're glad to work w
 3. **Retention label names** — what CONC policy calls the finance / HR / incident-legal labels.
 4. **Shared kitchen tablets** — the HUB board is anonymous-read today by design. When runtime data moves (Stage 3+), do we keep the aggregate schedule feed public, or adopt a shared-device/kiosk sign-in pattern? What's CONC's stance on shared-device Entra sign-in?
 5. **Hosting target** (Stage 5, no urgency) — org GitHub organization vs Azure Static Web Apps vs existing org infrastructure.
-6. **Accounts/licences** — a few kitchen staff roles may need M365 accounts they don't have today; we'll bring the list.
 
 ---
 
 ## 8. What we are *not* asking for
 
 - No servers to stand up or maintain, no databases, no VMs.
+- No new accounts or licences — every staff member already has Microsoft 365 credentials.
 - No software purchases or vendor onboarding.
 - No custom development from IT — the kitchen team writes and maintains the apps.
 - No service accounts, stored secrets, or credentials held by the apps.
