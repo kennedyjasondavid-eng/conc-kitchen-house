@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HOUSE → Microsoft 365 · SharePoint Integration Brief</title>
+</head>
+<body>
+<style>
+  :root {
+    --paper: #f7f8f6;
+    --card: #ffffff;
+    --ink: #1d2a24;
+    --ink-soft: #47564e;
+    --ink-faint: #6d7c73;
+    --accent: #2f7a52;
+    --accent-deep: #1b4332;
+    --accent-wash: #e8f1ec;
+    --warn-ink: #8a6d1a;
+    --warn-wash: #f6efdc;
+    --line: #d8dfda;
+    --line-soft: #e6ebe7;
+    --mono-bg: #eef2ef;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #151b18;
+      --card: #1c2420;
+      --ink: #e4ebe6;
+      --ink-soft: #a8b6ad;
+      --ink-faint: #7e8c83;
+      --accent: #52b788;
+      --accent-deep: #74c99e;
+      --accent-wash: #20302a;
+      --warn-ink: #cfa42e;
+      --warn-wash: #2a2410;
+      --line: #33403a;
+      --line-soft: #273129;
+      --mono-bg: #232d27;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #151b18;
+    --card: #1c2420;
+    --ink: #e4ebe6;
+    --ink-soft: #a8b6ad;
+    --ink-faint: #7e8c83;
+    --accent: #52b788;
+    --accent-deep: #74c99e;
+    --accent-wash: #20302a;
+    --warn-ink: #cfa42e;
+    --warn-wash: #2a2410;
+    --line: #33403a;
+    --line-soft: #273129;
+    --mono-bg: #232d27;
+  }
+  :root[data-theme="light"] {
+    --paper: #f7f8f6;
+    --card: #ffffff;
+    --ink: #1d2a24;
+    --ink-soft: #47564e;
+    --ink-faint: #6d7c73;
+    --accent: #2f7a52;
+    --accent-deep: #1b4332;
+    --accent-wash: #e8f1ec;
+    --warn-ink: #8a6d1a;
+    --warn-wash: #f6efdc;
+    --line: #d8dfda;
+    --line-soft: #e6ebe7;
+    --mono-bg: #eef2ef;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    font-size: 16.5px;
+    line-height: 1.58;
+  }
+  .sans { font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif; }
+  code, .mono {
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, Menlo, monospace;
+    font-size: 0.84em;
+    background: var(--mono-bg);
+    border-radius: 3px;
+    padding: 0.08em 0.35em;
+    word-break: break-word;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 3.2rem 1.4rem 4.5rem; }
+  .measure { max-width: 45rem; }
+
+  h1, h2, h3, h4 {
+    font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif;
+    text-wrap: balance;
+    margin: 0;
+  }
+  h1 { font-size: clamp(1.7rem, 4.4vw, 2.45rem); font-weight: 800; letter-spacing: -0.022em; line-height: 1.12; }
+  h2 { font-size: 1.28rem; font-weight: 750; letter-spacing: -0.012em; margin: 0 0 0.9rem; }
+  h3 { font-size: 1.0rem; font-weight: 700; }
+  p { margin: 0 0 0.95rem; }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .eyebrow {
+    font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 0.65rem;
+  }
+  .subtitle { color: var(--ink-soft); font-size: 1.06rem; max-width: 42rem; margin-top: 0.8rem; }
+
+  header.doc { border-bottom: 3px solid var(--accent); padding-bottom: 1.6rem; margin-bottom: 2.4rem; }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 2.4rem;
+    margin-top: 1.5rem;
+    font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif;
+    font-size: 0.86rem;
+  }
+  .meta-row div { display: flex; flex-direction: column; gap: 0.1rem; }
+  .meta-row dt { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+  .meta-row dd { margin: 0; color: var(--ink); font-weight: 600; }
+
+  section { margin: 0 0 2.9rem; }
+  .secnum { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 0.45rem; }
+
+  .callout {
+    background: var(--accent-wash);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 0.95rem 1.15rem;
+    margin: 1.2rem 0;
+  }
+  .callout.warn { background: var(--warn-wash); border-left-color: var(--warn-ink); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .lead-in { font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif; font-weight: 700; font-size: 0.9rem; }
+  .callout.warn .lead-in { color: var(--warn-ink); }
+
+  /* pipeline diagram */
+  .pipe-scroll { overflow-x: auto; padding: 0.4rem 0 0.2rem; }
+  .pipeline { min-width: 640px; display: flex; flex-direction: column; gap: 0.55rem; font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif; }
+  .pipe-row { display: flex; align-items: stretch; gap: 0; }
+  .node {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.55rem 0.85rem;
+    flex: 1;
+    min-width: 0;
+  }
+  .node b { display: block; font-size: 0.88rem; letter-spacing: 0.01em; }
+  .node span { display: block; font-size: 0.72rem; color: var(--ink-faint); line-height: 1.35; margin-top: 0.15rem; }
+  .node.ms { border-top-color: var(--warn-ink); border-style: dashed; background: transparent; }
+  .arrow {
+    align-self: center; flex: 0 0 auto;
+    padding: 0 0.5rem; color: var(--accent);
+    font-weight: 700; font-size: 1.05rem;
+  }
+  .pipe-note { font-size: 0.78rem; color: var(--ink-faint); }
+  .pipe-row.lower { max-width: 78%; }
+
+  /* tables */
+  .tbl-scroll { overflow-x: auto; }
+  table {
+    border-collapse: collapse; width: 100%;
+    font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif;
+    font-size: 0.86rem;
+  }
+  th {
+    text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.09em;
+    color: var(--ink-faint); font-weight: 700;
+    padding: 0.45rem 0.9rem 0.45rem 0;
+    border-bottom: 2px solid var(--line);
+  }
+  td {
+    padding: 0.55rem 0.9rem 0.55rem 0;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: top;
+    color: var(--ink-soft);
+  }
+  td:first-child { color: var(--ink); font-weight: 600; white-space: nowrap; }
+  td.stage-target { white-space: nowrap; color: var(--accent-deep); font-weight: 650; }
+
+  /* facts grid */
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 0.8rem; margin-top: 1.1rem; }
+  .fact {
+    background: var(--card); border: 1px solid var(--line); border-radius: 7px;
+    padding: 0.85rem 1rem;
+    font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif;
+    font-size: 0.86rem; line-height: 1.5; color: var(--ink-soft);
+  }
+  .fact b { color: var(--ink); display: block; margin-bottom: 0.25rem; font-size: 0.9rem; }
+
+  /* app cards */
+  .apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 0.9rem; margin-top: 1.1rem; }
+  .app {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 1rem 1.1rem 1.05rem;
+    break-inside: avoid;
+  }
+  .app h3 { display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.15rem; }
+  .app h3 small { font-family: ui-monospace, Consolas, monospace; font-weight: 400; font-size: 0.68rem; color: var(--ink-faint); }
+  .app .role { font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif; font-size: 0.8rem; color: var(--ink-faint); margin-bottom: 0.7rem; }
+  .app dl { margin: 0; display: grid; grid-template-columns: 5.6rem 1fr; gap: 0.35rem 0.7rem; font-size: 0.84rem; }
+  .app dt {
+    font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif;
+    font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--accent); padding-top: 0.12rem;
+  }
+  .app dd { margin: 0; color: var(--ink-soft); line-height: 1.45; }
+  .app dd b { color: var(--ink); }
+
+  /* stages */
+  .stages { display: flex; flex-direction: column; gap: 0; margin-top: 1.2rem; }
+  .stage { display: flex; gap: 1.1rem; padding: 1.05rem 0; border-top: 1px solid var(--line-soft); break-inside: avoid; }
+  .stage:last-child { border-bottom: 1px solid var(--line-soft); }
+  .stage-n {
+    flex: 0 0 2.15rem; height: 2.15rem; border-radius: 50%;
+    background: var(--accent); color: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif;
+    font-weight: 800; font-size: 1rem;
+  }
+  .stage.later .stage-n { background: transparent; color: var(--accent); border: 2px solid var(--accent); }
+  .stage-body h3 { margin-bottom: 0.3rem; }
+  .stage-body h3 em { font-style: normal; font-weight: 500; font-size: 0.78rem; color: var(--ink-faint); margin-left: 0.5rem; }
+  .stage-body p { font-size: 0.95rem; color: var(--ink-soft); margin-bottom: 0.35rem; }
+  .stage-body p:last-child { margin-bottom: 0; }
+  .outcome { font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif; font-size: 0.84rem; }
+  .outcome b { color: var(--accent-deep); }
+
+  /* ask panels */
+  .ask { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+  .panel {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 1.15rem 1.25rem; break-inside: avoid;
+  }
+  .panel h3 { color: var(--accent-deep); margin-bottom: 0.7rem; }
+  .panel ol, .panel ul { margin: 0; padding-left: 1.15rem; font-size: 0.92rem; color: var(--ink-soft); }
+  .panel li { margin-bottom: 0.5rem; line-height: 1.5; }
+  .panel li b { color: var(--ink); }
+  pre.tree {
+    background: var(--mono-bg); border-radius: 6px; padding: 0.75rem 0.9rem;
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.76rem; line-height: 1.55; overflow-x: auto; margin: 0.6rem 0;
+    color: var(--ink);
+  }
+  pre.tree .cm { color: var(--ink-faint); }
+
+  /* questions + not-asking */
+  ol.qs { padding-left: 1.3rem; font-size: 0.98rem; }
+  ol.qs li { margin-bottom: 0.55rem; }
+  ol.qs li b { font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif; font-size: 0.93rem; }
+  ul.nots { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.45rem 1.6rem; font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif; font-size: 0.9rem; color: var(--ink-soft); }
+  ul.nots li { padding-left: 1.35rem; position: relative; }
+  ul.nots li::before { content: "✕"; position: absolute; left: 0; color: var(--ink-faint); font-weight: 700; }
+
+  footer.doc {
+    border-top: 1px solid var(--line); margin-top: 3rem; padding-top: 1.2rem;
+    font-family: -apple-system, "Segoe UI", system-ui, Roboto, sans-serif;
+    font-size: 0.8rem; color: var(--ink-faint); line-height: 1.7;
+  }
+
+  @media (max-width: 560px) {
+    .app dl { grid-template-columns: 1fr; gap: 0.1rem; }
+    .app dt { padding-top: 0.4rem; }
+  }
+  @media print {
+    body { background: #fff; color: #111; font-size: 12px; }
+    .wrap { max-width: none; padding: 0; }
+    .node, .fact, .app, .panel { border-color: #bbb; }
+    section { break-inside: auto; }
+    .stage, .fact, .app, .panel { break-inside: avoid; }
+    a { color: inherit; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+
+<header class="doc">
+  <p class="eyebrow">CONC Kitchen Operations · HOUSE</p>
+  <h1>Bringing the kitchen system's data home to Microsoft 365</h1>
+  <p class="subtitle">A staged SharePoint integration plan for the HOUSE apps — what exists today, what we're asking IT to set up, and where it goes from there.</p>
+  <dl class="meta-row">
+    <div><dt>For</dt><dd>CONC IT</dd></div>
+    <div><dt>From</dt><dd>Jason Kennedy — Kitchen Operations</dd></div>
+    <div><dt>Date</dt><dd>July 7, 2026</dd></div>
+    <div><dt>The ask</dt><dd>Stages 1–2 · standard M365 admin, no code from IT</dd></div>
+  </dl>
+</header>
+
+<section>
+  <h2><span class="secnum">1</span>Summary</h2>
+  <div class="measure">
+    <p>CONC's kitchen runs on <b>HOUSE</b> — five in-house browser apps that plan, route, and report shelter catering across the Bloor and Rexdale kitchens. They were built deliberately on infrastructure the organization already owns: single HTML files, no servers, no vendors, no licence costs.</p>
+    <p>Today the apps are hosted on GitHub Pages and move their shared data through GitHub, under a personal account. We want to bring the <b>data</b> home to CONC's Microsoft 365 tenant in stages, with app <b>hosting</b> as the deliberate final step.</p>
+    <p>Most of the groundwork already exists inside the apps — two ship complete Microsoft sign-in + Graph API clients that are dormant only because no Entra app registration exists yet; a third was written with named "swap to SharePoint here" seams.</p>
+  </div>
+  <div class="callout">
+    <p class="lead-in">The near-term ask is two items of standard M365 administration:</p>
+    <p><b>① A governed SharePoint document library</b> — folders, permission groups, retention labels, version history — so PROOF, DOOR, and EXPO can start putting files on the shared drive immediately, and <b>② one Entra app registration</b> (single-page app, delegated Graph permissions, no client secret) so the apps can read and write those files as the signed-in user. Nothing in this plan asks IT to run, host, or maintain software.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="secnum">2</span>The system at a glance</h2>
+  <div class="pipe-scroll">
+    <div class="pipeline" role="img" aria-label="Data flow: CODEX feeds DOOR and EXPO; DOOR feeds EXPO; EXPO publishes to HUB; PROOF reads aggregate feeds from DOOR, HUB and CODEX, plus sensitive workbooks from SharePoint.">
+      <div class="pipe-row">
+        <div class="node"><b>MISE / CODEX</b><span>recipe library — allergen &amp; cost feed</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><b>DOOR</b><span>resident registry · menu · routing · compliance</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><b>EXPO</b><span>production scheduler (4-week, multi-site)</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><b>HUB</b><span>daily staff board — phones, tablets, print</span></div>
+      </div>
+      <div class="pipe-row lower">
+        <div class="node ms"><b>SharePoint · LOG / CREW / LEDGER</b><span>sensitive workbooks — designed, not yet stood up</span></div>
+        <div class="arrow">⇢</div>
+        <div class="node"><b>PROOF</b><span>board / funder reporting — aggregates only, writes nothing</span></div>
+      </div>
+      <p class="pipe-note">Each solid arrow is a small JSON file published to GitHub and read over public GitHub Pages URLs. PROOF also reads the public aggregate feeds from DOOR, HUB, and CODEX.</p>
+    </div>
+  </div>
+  <div class="measure">
+    <p>Staff enter data once — in DOOR (residents, menu) or CODEX (recipes) — and everything downstream regenerates. That "enter once, generate everything" property is the core of the system, and every stage below preserves it.</p>
+    <p><b>The data-classification story, in three lines:</b> resident data never leaves the DOOR browser — everything published is aggregate. PROOF is a lens, never a vault: it reads the sensitive workbooks into memory for one render, prints suppressed aggregates, and forgets the rows. Everything on GitHub today is operational, non-personal data — menus, schedules, recipes, costs.</p>
+  </div>
+  <h3 style="margin:1.6rem 0 0.6rem;">Where things live today → where they're going</h3>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>Layer</th><th>Today</th><th>Moves at</th></tr></thead>
+      <tbody>
+        <tr><td>File outputs (xlsx · PDF · snapshots)</td><td>Manual browser downloads; some pushed to GitHub</td><td class="stage-target">Stage 1–2</td></tr>
+        <tr><td>Sensitive reporting data</td><td>PROOF's tier (staff certs, incidents, spend) is specified for SharePoint but not yet stood up</td><td class="stage-target">Stage 1</td></tr>
+        <tr><td>Per-user working state</td><td>Browser localStorage on each device</td><td class="stage-target">Stage 3</td></tr>
+        <tr><td>Credentials</td><td>GitHub tokens pasted per browser; portal PIN</td><td class="stage-target">Stage 2 → 4</td></tr>
+        <tr><td>Cross-app data transport</td><td>JSON on GitHub, read over public Pages URLs</td><td class="stage-target">Stage 3 (candidates)</td></tr>
+        <tr><td>App hosting</td><td>GitHub Pages, personal account</td><td class="stage-target">Stage 5 (last)</td></tr>
+        <tr><td>Working folders</td><td>Already OneDrive-synced (<span class="mono">OneDrive – CHRISTIE OSSINGTON…</span>)</td><td class="stage-target">already M365</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2><span class="secnum">3</span>SharePoint already touches HOUSE</h2>
+  <p class="measure">This is not a greenfield ask — the integration surface already exists:</p>
+  <div class="facts">
+    <div class="fact"><b>~148 recipe links in HUB</b> point at Excel recipe cards in <code>conctoronto.sharepoint.com/sites/Kitchen/…/Bloor/Recipes/</code>. Staff follow HUB → SharePoint every day.</div>
+    <div class="fact"><b>DOOR carries SharePoint settings</b> — a tenant base URL and a pilot output-folder deep link under the Kitchen site — plus staff-facing copy already promising "automatic archiving to SharePoint."</div>
+    <div class="fact"><b>HUB &amp; CODEX ship complete Graph clients</b> — Microsoft sign-in (MSAL, single-page-app flow, no secrets), site-profile sync, recipe archive upload, a shared review queue. All dormant awaiting a Client ID.</div>
+    <div class="fact"><b>A written provisioning request exists</b> — CODEX's repo has carried an Entra app-registration request since June 20, 2026. Section 5-B here generalizes it to all the apps.</div>
+    <div class="fact"><b>DOOR has named swap seams</b> — three isolated persistence functions whose comments read "swap this for a SharePoint write via Microsoft Graph — call sites don't change."</div>
+    <div class="fact"><b>PROOF's sensitive tier is fully specified</b> — exact workbook schemas, permission groups, and retention labels are documented and waiting. Zero code needed; only the Stage-1 setup.</div>
+  </div>
+  <div class="callout warn">
+    <p><span class="lead-in">One inconsistency to resolve:</span> two tenant hostnames appear in app configuration — <code>conctoronto.sharepoint.com</code> (hardcoded recipe links, DOOR's default) and <code>conc.sharepoint.com</code> (the configurable default in HUB and CODEX settings). Please confirm the canonical tenant and site so we can align the defaults.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="secnum">4</span>Per-app touchpoints</h2>
+  <div class="apps">
+    <div class="app">
+      <h3>DOOR <small>conc-kitchen-door</small></h3>
+      <p class="role">Resident registry · routing · plating · allergen compliance</p>
+      <dl>
+        <dt>Reads</dt><dd>CODEX recipe/allergen feed</dd>
+        <dt>Writes</dt><dd>~9 JSON artifacts (menu, routing, registry summary, change log) to GitHub for the sibling apps</dd>
+        <dt>Sensitive</dt><dd><b>The only home of resident-level data</b> — browser-local, never published</dd>
+        <dt>SP today</dt><dd>Tenant URL + pilot-folder links in settings; three Graph-ready persistence seams</dd>
+        <dt>Gains</dt><dd><b>St 1:</b> compliance/plating exports on the shared drive · <b>St 2:</b> change-log &amp; compliance archiving written directly to SharePoint · <b>St 3:</b> registry state shared across devices</dd>
+      </dl>
+    </div>
+    <div class="app">
+      <h3>EXPO <small>conc-kitchen-expo</small></h3>
+      <p class="role">Production scheduler — menu → multi-site cook/prep/send plan</p>
+      <dl>
+        <dt>Reads</dt><dd>DOOR menu/routing/registry; CODEX production feed</dd>
+        <dt>Writes</dt><dd>Live staff schedule to the HUB repo (atomic commit); state snapshots to its own repo</dd>
+        <dt>SP today</dt><dd>None in code (working folder is OneDrive-synced)</dd>
+        <dt>Gains</dt><dd><b>St 1:</b> order sheets &amp; driver manifests on the shared drive · <b>St 2:</b> snapshots written to SharePoint — durable, org-owned backup of the planner's state · <b>St 3:</b> multi-device planning state</dd>
+      </dl>
+    </div>
+    <div class="app">
+      <h3>HUB <small>conc-kitchen-hub</small></h3>
+      <p class="role">Staff-facing daily board — deliberately anonymous-read on shared tablets</p>
+      <dl>
+        <dt>Reads</dt><dd>EXPO schedule; DOOR routing/registry; CODEX recipe names — cached for offline</dd>
+        <dt>Writes</dt><dd>Supervisor day-notes to GitHub; site profiles to SharePoint <b>via Graph (built, dormant)</b></dd>
+        <dt>SP today</dt><dd>~148 recipe deep-links + Recipe Booklet; a "SharePoint Sync" settings tab awaiting a Client ID</dd>
+        <dt>Gains</dt><dd><b>St 2:</b> site-profile sync goes live · <b>St 3+:</b> decision point — keep the aggregate feed public for anonymous tablets, or adopt shared-device sign-in (§6)</dd>
+      </dl>
+    </div>
+    <div class="app">
+      <h3>MISE / CODEX <small>conc-recipe-hub</small></h3>
+      <p class="role">Recipe library + the allergen/cost feed the other apps consume</p>
+      <dl>
+        <dt>Reads</dt><dd>Self-contained (co-located data layer)</dd>
+        <dt>Writes</dt><dd>4-file recipe feed to GitHub; recipe archives + review-queue JSON to SharePoint <b>via Graph (built, dormant)</b>; optional AI-translation calls (user-supplied key)</dd>
+        <dt>SP today</dt><dd>Dormant archive upload + review queue under the Kitchen site; the written Client-ID request</dd>
+        <dt>Gains</dt><dd><b>St 2:</b> recipe archive &amp; the multi-user review workflow go live. Scopes: delegated <code>Files.ReadWrite.All</code> (+ optional <code>Mail.Send</code>)</dd>
+      </dl>
+    </div>
+    <div class="app">
+      <h3>PROOF <small>conc-kitchen-proof</small></h3>
+      <p class="role">Board / funder reporting — a lens, never a vault</p>
+      <dl>
+        <dt>Reads</dt><dd>Five public aggregate feeds + three sensitive workbooks file-picked from the OneDrive-synced SharePoint folder — in memory only</dd>
+        <dt>Writes</dt><dd>Nothing. Output is printed PDF with suppressed aggregates + provenance footer</dd>
+        <dt>SP today</dt><dd>The entire sensitive tier is specified for SharePoint; workbooks don't exist yet</dd>
+        <dt>Gains</dt><dd><b>St 1 makes PROOF fully operational.</b></dd>
+      </dl>
+    </div>
+    <div class="app">
+      <h3>Portal <small>conc-kitchen-house</small></h3>
+      <p class="role">Landing page linking the apps</p>
+      <dl>
+        <dt>Today</dt><dd>Static page, PIN-gated app links</dd>
+        <dt>Gains</dt><dd><b>St 4:</b> Entra sign-in replaces the PIN · <b>St 5:</b> moves with everything else</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="callout warn" style="margin-top:1.1rem;">
+    <p><span class="lead-in">Time-sensitive:</span> PROOF's incident log (<code>LOG.xlsx</code>) is forward-only — incidents and near-misses from days before it exists cannot be honestly reconstructed. Every week without the Stage-1 setup is reporting history lost.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="secnum">5</span>The staged plan</h2>
+  <div class="stages">
+    <div class="stage">
+      <div class="stage-n">1</div>
+      <div class="stage-body">
+        <h3>A governed SharePoint home <em>no code — pure M365 administration</em></h3>
+        <p>Create the document library structure, permission groups, retention labels, and version history (details right), and provision OneDrive sync on the named kitchen machines.</p>
+        <p class="outcome"><b>Outcome:</b> PROOF goes live against real workbooks; DOOR/EXPO/PROOF file outputs land on the shared drive through the sync client — the file-drop capability with zero code changes.</p>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-n">2</div>
+      <div class="stage-body">
+        <h3>One Entra app registration <em>the single biggest unlock</em></h3>
+        <p>A single-page-application registration with delegated Graph permissions. Apps act only as the signed-in user — no service accounts, no secrets, no standing credentials.</p>
+        <p class="outcome"><b>Outcome:</b> HUB's site-profile sync and CODEX's recipe archive + review queue go live as already built; DOOR/EXPO gain in-app "save to SharePoint" at their prepared seams (kitchen-team code work, not IT's).</p>
+      </div>
+    </div>
+    <div class="stage later">
+      <div class="stage-n">3</div>
+      <div class="stage-body">
+        <h3>Runtime data moves home <em>multi-device sync</em></h3>
+        <p>Swap browser-local state to Graph-backed storage at the named seams, one function at a time, app by app. The GitHub JSON transport between apps can remain during this stage; candidates migrate as they prove out.</p>
+      </div>
+    </div>
+    <div class="stage later">
+      <div class="stage-n">4</div>
+      <div class="stage-body">
+        <h3>Identity everywhere</h3>
+        <p>Staff sign in with CONC Microsoft accounts; pasted GitHub tokens and the portal PIN retire from day-to-day flows. Needs IT's input on conditional access and shared-device policy for kitchen tablets.</p>
+      </div>
+    </div>
+    <div class="stage later">
+      <div class="stage-n">5</div>
+      <div class="stage-body">
+        <h3>Hosting <em>last, by design</em></h3>
+        <p>Move the apps off the personal GitHub Pages account. They are static files, so the requirement is modest: HTTPS static hosting + the JSON feeds served alongside. Options to discuss: an org-owned GitHub organization, Azure Static Web Apps on CONC's tenant, or existing org infrastructure — your call, not ours to prescribe.</p>
+      </div>
+    </div>
+  </div>
+  <p class="measure" style="margin-top:1rem; font-size:0.95rem; color:var(--ink-soft);">Sequencing rationale: Stages 1–2 capture most of the governance value — sensitive data under M365 controls, org-owned copies of operational outputs — at near-zero risk, while the apps keep running exactly as they do today. Hosting moves last because it's the most disruptive change and the least urgent: the public static pages expose no sensitive data.</p>
+</section>
+
+<section>
+  <h2><span class="secnum">6</span>The concrete ask — Stages 1–2</h2>
+  <div class="ask">
+    <div class="panel">
+      <h3>A · SharePoint site &amp; library <span style="font-weight:500; font-size:0.78rem; color:var(--ink-faint);">(Stage 1)</span></h3>
+      <ol>
+        <li><b>Confirm the canonical tenant + site</b> — we believe <code>conctoronto.sharepoint.com</code>, site <code>/sites/Kitchen</code>.</li>
+        <li><b>Create the folder structure:</b>
+<pre class="tree">Operations Reporting/
+  PROOF Tier-2/
+    Active/      <span class="cm">← LOG · CREW · LEDGER (live workbooks)</span>
+    Closeouts/   <span class="cm">← month-end frozen copies</span>
+    Outputs/     <span class="cm">← generated report PDFs</span>
+Kitchen Ops/
+  DOOR Outputs/  <span class="cm">← compliance exports · change-log</span>
+  EXPO Outputs/  <span class="cm">← order sheets · schedule snapshots</span></pre>
+        Workbook schemas, columns, and dropdowns are fully specified in <code>conc-kitchen-proof/SHAREPOINT_SETUP_CHECKLIST.md</code>.</li>
+        <li><b>Permission groups per file/folder:</b> <code>PROOF-Log</code> (managers only), <code>PROOF-Crew</code> &amp; <code>PROOF-Ledger</code> (director / admin / bookkeeper + kitchen lead), plus a kitchen-ops group. No org-wide access; no anonymous links.</li>
+        <li><b>Retention labels</b> per CONC policy: finance (LEDGER), HR (CREW), incident/legal (LOG).</li>
+        <li><b>Version history on</b> for the library.</li>
+        <li><b>OneDrive sync</b> of <code>PROOF Tier-2/Active</code> and <code>Kitchen Ops/</code> on the named kitchen machines (we'll supply the list).</li>
+      </ol>
+    </div>
+    <div class="panel">
+      <h3>B · Entra app registration <span style="font-weight:500; font-size:0.78rem; color:var(--ink-faint);">(Stage 2)</span></h3>
+      <ul>
+        <li><b>Platform:</b> single-page application.</li>
+        <li><b>Redirect URIs:</b> the app origins — currently the five <code>https://kennedyjasondavid-eng.github.io/conc-kitchen-*/</code> URLs; updated when hosting moves at Stage 5.</li>
+        <li><b>API permissions (delegated):</b> Microsoft Graph <code>User.Read</code>, <code>Files.ReadWrite.All</code>; optionally <code>Mail.Send</code> (one CODEX email-notify helper — skippable).</li>
+        <li><b>Admin consent</b> granted if CONC policy requires it.</li>
+        <li><b>No client secret, certificate, or service account</b> — the apps are browser-only; MSAL handles sign-in in the user's session, and every action is bounded by what that user can already access in SharePoint.</li>
+        <li><b>Deliverable back to us:</b> the Application (client) ID — and Tenant ID if tenant-restricted sign-in is required. Both are public identifiers, entered in each app's settings screen.</li>
+      </ul>
+      <p style="font-size:0.86rem; color:var(--ink-faint); margin:0.8rem 0 0;">If CONC prefers tighter scoping than <code>Files.ReadWrite.All</code>, we're glad to work with <code>Sites.Selected</code> scoped to the Kitchen site instead — whichever fits your permission model.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="secnum">7</span>Decision points where we need IT's judgement</h2>
+  <ol class="qs measure">
+    <li><b>Canonical tenant/site</b> — <code>conctoronto</code> vs <code>conc</code>.</li>
+    <li><b>Permission scoping</b> — delegated <code>Files.ReadWrite.All</code> (simplest; user-bounded) vs <code>Sites.Selected</code> (tighter; slightly more setup).</li>
+    <li><b>Retention label names</b> — what CONC policy calls the finance / HR / incident-legal labels.</li>
+    <li><b>Shared kitchen tablets</b> — the HUB board is anonymous-read today by design. When runtime data moves (Stage 3+): keep the aggregate schedule feed public, or adopt a shared-device / kiosk sign-in pattern? What's CONC's stance on shared-device Entra sign-in?</li>
+    <li><b>Hosting target</b> (Stage 5, no urgency) — org GitHub organization vs Azure Static Web Apps vs existing org infrastructure.</li>
+    <li><b>Accounts &amp; licences</b> — a few kitchen roles may need M365 accounts they don't have today; we'll bring the list.</li>
+  </ol>
+</section>
+
+<section>
+  <h2><span class="secnum">8</span>What we are <i>not</i> asking for</h2>
+  <ul class="nots">
+    <li>No servers, databases, or VMs to run or maintain</li>
+    <li>No software purchases or vendor onboarding</li>
+    <li>No custom development from IT — the kitchen team writes and maintains the apps</li>
+    <li>No service accounts, stored secrets, or standing credentials</li>
+    <li>No migration of resident-identifying data — it stays on-device in DOOR unless a future stage is separately reviewed</li>
+  </ul>
+  <p class="measure" style="margin-top:1.2rem;">The division of labour we're proposing: <b>IT owns tenancy, identity, and governance; the kitchen team owns the apps.</b> Stages 1–2 are a few hours of standard M365 administration that unlock work the apps are already built for.</p>
+</section>
+
+<footer class="doc">
+  <p>Full detail, per-app inventories, and source references: <code>HOUSE_SHAREPOINT_IT_BRIEF_2026-07-07.md</code> in the <code>conc-kitchen-house</code> repository.<br>
+  Companion setup docs: <code>conc-kitchen-proof/SHAREPOINT_SETUP_CHECKLIST.md</code> · <code>conc-kitchen-proof/GOVERNANCE.md</code> · <code>conc-recipe-hub/docs/CODEX_U13_SHAREPOINT_CLIENT_ID_REQUEST_2026-06-20.md</code></p>
+</footer>
+
+</div>
+</body>
+</html>

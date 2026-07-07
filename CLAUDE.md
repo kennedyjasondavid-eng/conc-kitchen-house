@@ -20,6 +20,7 @@ Pipeline: **MISE/CODEX → DOOR/EXPO → HUB**; DOOR is upstream of EXPO, HUB do
 | `INSIGHTS.md` | **The cross-HOUSE KNOWLEDGE owner** — design wisdom + lessons + telos for *every* app. Read it before any HOUSE design pass. App-specific grammar (e.g. EXPO's `EXPO_DESIGN_PRINCIPLES.md`, PROOF's `INSIGHTS.md`) **points back to it** — don't restate it. |
 | `HOUSE_Doc_Governance_Plan.md` | The doc-governance model + rollout (single owner per fact; the `LEDGER:`/`WRAP:` convention) |
 | `HOUSE_ACTION_PLAN_2026-06-14.md`, `HOUSE_SESSION_HANDOFF_2026-06-14.md` | Dated, **frozen** HOUSE-wide planning snapshots |
+| `HOUSE_SHAREPOINT_IT_BRIEF_2026-07-07.md`, `SHAREPOINT_IT_BRIEF.html` | **The SharePoint / M365 integration brief for CONC IT** — per-app external touchpoints, the big-picture data plane, the staged plan (Stages 1–5, hosting last), and the concrete Stage-1/2 ask (governed library + one Entra SPA app registration). The `.html` is the printable handout, Pages-served once merged. |
 
 **What lives elsewhere (this repo points, never restates):** cross-app STATUS (versions/phases/schema seams) → the HOUSE status ledger in `~/.claude/CLAUDE.md`. The product/ecosystem "why" → the V42 vision HTML under `~CONC Project Management Tool~`.
 
