@@ -21,6 +21,7 @@ Pipeline: **MISE/CODEX → DOOR/EXPO → HUB**; DOOR is upstream of EXPO, HUB do
 | `HOUSE_Doc_Governance_Plan.md` | The doc-governance model + rollout (single owner per fact; the `LEDGER:`/`WRAP:` convention) |
 | `HOUSE_ACTION_PLAN_2026-06-14.md`, `HOUSE_SESSION_HANDOFF_2026-06-14.md` | Dated, **frozen** HOUSE-wide planning snapshots |
 | `HOUSE_SHAREPOINT_IT_BRIEF_2026-07-07.md`, `SHAREPOINT_IT_BRIEF.html` | **The SharePoint / M365 integration brief for CONC IT** — per-app external touchpoints, the big-picture data plane, the staged plan (Stages 1–5, hosting last), and the concrete Stage-1/2 ask (governed library + one Entra SPA app registration). The `.html` is the printable handout, Pages-served once merged. |
+| `HOUSE_ASSESSMENT_2026-07-07.md` | **Current HOUSE-wide planning snapshot** (re-baselines the overtaken 2026-06-14 action plan): full six-repo sweep, per-app state, ranked risks (bus factor · adoption gap · food-safety debt · landmines · staleness), the ideal-usage picture, and a 3-horizon roadmap with operating rules. |
 
 **What lives elsewhere (this repo points, never restates):** cross-app STATUS (versions/phases/schema seams) → the HOUSE status ledger in `~/.claude/CLAUDE.md`. The product/ecosystem "why" → the V42 vision HTML under `~CONC Project Management Tool~`.
 
