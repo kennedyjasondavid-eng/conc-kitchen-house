@@ -1,0 +1,85 @@
+{
+  "_meta": {
+    "version": 1,
+    "spec_status": "draft",
+    "placeholder_units": true,
+    "updated": "2026-06-22",
+    "jurisdiction": "Toronto Public Health / Ontario O. Reg. 493/17 / Health Canada",
+    "change_rule": "Only ADD or re-point a unit or limit with a dated migration note. Never silently redefine an active limit.",
+    "note": "Temperatures verified 2026-06-22 against the sources below; pending CONC Food Safety Lead sign-off. The `units` array is PLACEHOLDER — replace with the real fridge/freezer inventory per site (Bloor/Rex/LAN); until placeholder_units is false, consumers (HUB form, PROOF R6) should treat unit-level numbers as not-yet-live.",
+    "sources": {
+      "cold_hot_holding_thermometers": "City of Toronto — Eight Steps to a PASS (Toronto Public Health)",
+      "cooling_two_stage": "Ontario Food Premises Regulation O. Reg. 493/17",
+      "cooking_internal_temps": "Health Canada — Safe internal cooking temperatures"
+    }
+  },
+
+  "danger_zone_c": { "min": 4, "max": 60, "max_minutes_in_zone": 120 },
+
+  "schedule": {
+    "checks_per_day": 2,
+    "slots": ["AM", "PM"]
+  },
+
+  "calibration": {
+    "method": "ice-point",
+    "target_c": 0,
+    "tolerance_c": 1,
+    "cadence_days": 30
+  },
+
+  "units": [
+    { "id": "PLACEHOLDER_bloor_fridge_1",  "site": "Bloor", "label": "Bloor — fridge 1 (PLACEHOLDER)",  "kind": "fridge",  "min_c": 0, "max_c": 4,   "placeholder": true },
+    { "id": "PLACEHOLDER_bloor_freezer_1", "site": "Bloor", "label": "Bloor — freezer 1 (PLACEHOLDER)", "kind": "freezer",            "max_c": -18, "placeholder": true },
+    { "id": "PLACEHOLDER_rex_fridge_1",    "site": "Rex",   "label": "Rex — fridge 1 (PLACEHOLDER)",    "kind": "fridge",  "min_c": 0, "max_c": 4,   "placeholder": true },
+    { "id": "PLACEHOLDER_rex_freezer_1",   "site": "Rex",   "label": "Rex — freezer 1 (PLACEHOLDER)",   "kind": "freezer",            "max_c": -18, "placeholder": true },
+    { "id": "PLACEHOLDER_lan_fridge_1",    "site": "LAN",   "label": "LAN — fridge 1 (PLACEHOLDER)",    "kind": "fridge",  "min_c": 0, "max_c": 4,   "placeholder": true },
+    { "id": "PLACEHOLDER_lan_freezer_1",   "site": "LAN",   "label": "LAN — freezer 1 (PLACEHOLDER)",   "kind": "freezer",            "max_c": -18, "placeholder": true }
+  ],
+
+  "ccps": [
+    {
+      "id": "CCP-1", "name": "Cold storage", "kind": "fridge",
+      "critical_limit": "<= 4 C", "max_c": 4,
+      "records_in_v1": true
+    },
+    {
+      "id": "CCP-2", "name": "Frozen storage", "kind": "freezer",
+      "critical_limit": "<= -18 C", "max_c": -18,
+      "records_in_v1": true
+    },
+    {
+      "id": "CCP-3", "name": "Cooking", "phase": 2, "records_in_v1": false,
+      "critical_limit": "internal temperature reached",
+      "internal_min_c": {
+        "poultry_whole": 82,
+        "poultry_pieces_or_ground": 74,
+        "ground_meat": 71,
+        "beef_pork_cuts": 71,
+        "fish": 70,
+        "egg_dishes_and_mixtures": 74
+      }
+    },
+    {
+      "id": "CCP-4", "name": "Cooling (cook -> chill)", "phase": 2, "records_in_v1": false,
+      "critical_limit": "two-stage cooling",
+      "stages": [
+        { "from_c": 60, "to_c": 20, "within_minutes": 120 },
+        { "from_c": 20, "to_c": 4,  "within_minutes": 240 }
+      ],
+      "note": "EXPO already enforces the cold-hold timing model that backstops this CCP today."
+    },
+    {
+      "id": "CCP-5", "name": "Reheating", "phase": 2, "records_in_v1": false,
+      "critical_limit": ">= 74 C within 2 h", "min_c": 74, "within_minutes": 120
+    },
+    {
+      "id": "CCP-6", "name": "Hot holding", "phase": 2, "records_in_v1": false,
+      "critical_limit": ">= 60 C", "min_c": 60
+    },
+    {
+      "id": "CCP-7", "name": "Transport (site-to-site van)", "phase": 2, "records_in_v1": false,
+      "critical_limit": "cold <= 4 C / hot >= 60 C", "cold_max_c": 4, "hot_min_c": 60
+    }
+  ]
+}

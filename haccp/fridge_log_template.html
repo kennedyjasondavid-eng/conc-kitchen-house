@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CONC — Cold-Storage Temperature Log</title>
+<style>
+  :root { --ink:#111; --line:#444; --muted:#666; --warn:#b00; --band:#f4f4f2; }
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, "Segoe UI", Arial, sans-serif; color: var(--ink); margin: 0; padding: 16px; }
+  .controls { display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap; padding:12px; background:var(--band); border:1px solid #ddd; border-radius:8px; margin-bottom:16px; }
+  .controls label { font-size:12px; color:var(--muted); display:block; }
+  .controls select, .controls input { font-size:14px; padding:6px 8px; border:1px solid #bbb; border-radius:6px; }
+  .controls button { font-size:14px; padding:8px 16px; border:0; border-radius:6px; background:#1b6; color:#fff; cursor:pointer; }
+  .controls .note { font-size:12px; color:var(--muted); margin-left:auto; max-width:340px; }
+
+  .sheet { page-break-after: always; }
+  .sheet:last-child { page-break-after: auto; }
+
+  .hdr { display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid var(--ink); padding-bottom:6px; margin-bottom:8px; }
+  .hdr h1 { font-size:18px; margin:0; }
+  .hdr .site { font-size:22px; font-weight:800; }
+  .hdr .meta { text-align:right; font-size:12px; color:var(--muted); }
+  .hdr .weekof { font-size:15px; font-weight:700; color:var(--ink); }
+
+  .reminder { font-size:12.5px; background:var(--band); border:1px solid #ddd; border-radius:6px; padding:6px 10px; margin-bottom:10px; }
+  .reminder b { color:var(--warn); }
+  .draftflag { background:#fff3cd; border-color:#f0d000; }
+
+  table { border-collapse:collapse; width:100%; table-layout:fixed; }
+  th, td { border:1px solid var(--line); padding:0; font-size:11px; }
+  thead th { background:#eee; padding:3px 2px; text-align:center; line-height:1.2; }
+  th.unitcol, td.unitcol { width:150px; text-align:left; padding:4px 6px; vertical-align:middle; }
+  td.unitcol .ulabel { font-weight:700; font-size:11.5px; }
+  td.unitcol .urange { font-size:10.5px; color:var(--muted); }
+  .slotrow th { font-size:10px; padding:2px; }
+
+  /* writable cell: temp on top, initials on a hairline below */
+  td.cell { height:38px; vertical-align:top; }
+  td.cell .temp { height:24px; }
+  td.cell .init { height:14px; border-top:1px dotted #aaa; font-size:8px; color:#aaa; text-align:center; line-height:14px; }
+
+  .actions { margin-top:12px; }
+  .actions h2 { font-size:13px; margin:0 0 4px; }
+  .actions table th { background:#eee; font-size:10.5px; padding:3px; }
+  .actions td { height:26px; }
+  .ac-date{width:70px;} .ac-unit{width:130px;} .ac-read{width:60px;} .ac-init{width:46px;}
+
+  .footrow { display:flex; gap:24px; margin-top:12px; font-size:12px; }
+  .footrow .box { border:1px solid var(--line); border-radius:6px; padding:6px 10px; flex:1; }
+  .footrow .box .lbl { font-size:10.5px; color:var(--muted); }
+  .footrow .sig { border-bottom:1px solid var(--ink); height:20px; margin-top:6px; }
+
+  @media print {
+    body { padding:0; }
+    .controls { display:none; }
+    @page { size: landscape; margin: 10mm; }
+  }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <div>
+    <label for="site">Site</label>
+    <select id="site"></select>
+  </div>
+  <div>
+    <label for="weekof">Week of (Monday)</label>
+    <input type="date" id="weekof">
+  </div>
+  <button onclick="window.print()">🖨 Print</button>
+  <div class="note" id="srcnote"></div>
+</div>
+
+<div id="sheets"></div>
+
+<script>
+// ---- Embedded fallback (keeps the sheet working offline from file://). ----
+// The live source of truth is ./haccp_spec.json; this copy is refreshed when the spec changes.
+const EMBEDDED_SPEC = {
+  "_meta": { "version": 1, "placeholder_units": true, "updated": "2026-06-22" },
+  "schedule": { "checks_per_day": 2, "slots": ["AM","PM"] },
+  "units": [
+    { "id":"PLACEHOLDER_bloor_fridge_1","site":"Bloor","label":"Bloor — fridge 1 (PLACEHOLDER)","kind":"fridge","min_c":0,"max_c":4,"placeholder":true },
+    { "id":"PLACEHOLDER_bloor_freezer_1","site":"Bloor","label":"Bloor — freezer 1 (PLACEHOLDER)","kind":"freezer","max_c":-18,"placeholder":true },
+    { "id":"PLACEHOLDER_rex_fridge_1","site":"Rex","label":"Rex — fridge 1 (PLACEHOLDER)","kind":"fridge","min_c":0,"max_c":4,"placeholder":true },
+    { "id":"PLACEHOLDER_rex_freezer_1","site":"Rex","label":"Rex — freezer 1 (PLACEHOLDER)","kind":"freezer","max_c":-18,"placeholder":true },
+    { "id":"PLACEHOLDER_lan_fridge_1","site":"LAN","label":"LAN — fridge 1 (PLACEHOLDER)","kind":"fridge","min_c":0,"max_c":4,"placeholder":true },
+    { "id":"PLACEHOLDER_lan_freezer_1","site":"LAN","label":"LAN — freezer 1 (PLACEHOLDER)","kind":"freezer","max_c":-18,"placeholder":true }
+  ]
+};
+
+let SPEC = EMBEDDED_SPEC;
+const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+async function loadSpec() {
+  try {
+    const r = await fetch('./haccp_spec.json', { cache: 'no-store' });
+    if (r.ok) {
+      SPEC = await r.json();
+      note('Source: live haccp_spec.json (v' + (SPEC._meta?.version ?? '?') + ').');
+      return;
+    }
+    throw new Error('HTTP ' + r.status);
+  } catch (e) {
+    SPEC = EMBEDDED_SPEC;
+    note('Source: embedded fallback (could not fetch haccp_spec.json — e.g. opened from file://). Numbers match the baked copy.');
+  }
+}
+function note(t) { document.getElementById('srcnote').textContent = t; }
+
+function sites() { return [...new Set(SPEC.units.map(u => u.site))]; }
+function unitsFor(site) { return SPEC.units.filter(u => u.site === site); }
+function rangeText(u) {
+  if (u.kind === 'freezer') return 'Target ≤ ' + (u.max_c ?? -18) + ' °C';
+  return 'Target ' + (u.min_c ?? 0) + ' – ' + (u.max_c ?? 4) + ' °C';
+}
+
+function mondayOf(d) {
+  const x = new Date(d); const day = (x.getDay() + 6) % 7; // 0 = Monday
+  x.setDate(x.getDate() - day); x.setHours(0,0,0,0); return x;
+}
+function fmtDate(d) { return (d.getMonth()+1) + '/' + d.getDate(); }
+function fmtLong(d) { return d.toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' }); }
+
+function weekDates(monday) {
+  return DAYS.map((_, i) => { const d = new Date(monday); d.setDate(d.getDate()+i); return d; });
+}
+
+function sheetHTML(site, monday) {
+  const us = unitsFor(site);
+  const dates = weekDates(monday);
+  const slots = SPEC.schedule?.slots || ['AM','PM'];
+  const draft = SPEC._meta?.placeholder_units;
+
+  let dayHeads = dates.map((d,i) =>
+    `<th colspan="${slots.length}">${DAYS[i]}<br>${fmtDate(d)}</th>`).join('');
+  let slotHeads = dates.map(() => slots.map(s => `<th>${s}</th>`).join('')).join('');
+
+  let rows = us.map(u => {
+    let cells = dates.map(() => slots.map(() =>
+      `<td class="cell"><div class="temp"></div><div class="init">init</div></td>`).join('')).join('');
+    return `<tr>
+      <td class="unitcol"><div class="ulabel">${u.label}</div><div class="urange">${rangeText(u)}</div></td>
+      ${cells}
+    </tr>`;
+  }).join('');
+
+  let actionRows = Array.from({length:4}).map(() =>
+    `<tr><td></td><td></td><td></td><td></td><td></td></tr>`).join('');
+
+  return `<div class="sheet">
+    <div class="hdr">
+      <div><h1>CONC Kitchen — Cold-Storage Temperature Log</h1>
+           <div class="site">${site}</div></div>
+      <div class="meta">Week of<br><span class="weekof">${fmtLong(monday)}</span><br>
+           Spec v${SPEC._meta?.version ?? '?'}</div>
+    </div>
+
+    <div class="reminder ${draft ? 'draftflag' : ''}">
+      Fridge <b>≤ 4 °C</b> · Freezer <b>≤ −18 °C</b> · Danger zone <b>4–60 °C</b> ·
+      Check <b>AM + PM</b> · <b>If a reading is outside the target, act now and log it in the box below.</b>
+      ${draft ? '<br><b>DRAFT:</b> units are placeholders — replace with the real fridge/freezer inventory in haccp_spec.json.' : ''}
+    </div>
+
+    <table>
+      <thead>
+        <tr><th class="unitcol" rowspan="2">Unit (target)</th>${dayHeads}</tr>
+        <tr class="slotrow">${slotHeads}</tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+
+    <div class="actions">
+      <h2>Out-of-range / corrective-action log</h2>
+      <table>
+        <thead><tr>
+          <th class="ac-date">Date</th><th class="ac-unit">Unit</th>
+          <th class="ac-read">Reading</th><th>Action taken</th><th class="ac-init">Init</th>
+        </tr></thead>
+        <tbody>${actionRows}</tbody>
+      </table>
+    </div>
+
+    <div class="footrow">
+      <div class="box"><div class="lbl">Thermometer calibrated (ice-point) — date / by</div><div class="sig"></div></div>
+      <div class="box"><div class="lbl">Reviewed by (supervisor) — date</div><div class="sig"></div></div>
+    </div>
+  </div>`;
+}
+
+function render() {
+  const site = document.getElementById('site').value;
+  const wk = document.getElementById('weekof').value;
+  const monday = mondayOf(wk ? new Date(wk + 'T00:00') : new Date());
+  const list = (site === '__ALL__') ? sites() : [site];
+  document.getElementById('sheets').innerHTML = list.map(s => sheetHTML(s, monday)).join('');
+}
+
+async function init() {
+  await loadSpec();
+  const sel = document.getElementById('site');
+  sel.innerHTML = `<option value="__ALL__">All sites</option>` +
+    sites().map(s => `<option value="${s}">${s}</option>`).join('');
+  sel.value = sites()[0] || '__ALL__';
+  const mon = mondayOf(new Date());
+  document.getElementById('weekof').value = mon.toISOString().slice(0,10);
+  sel.addEventListener('change', render);
+  document.getElementById('weekof').addEventListener('change', render);
+  render();
+}
+init();
+</script>
+</body>
+</html>
