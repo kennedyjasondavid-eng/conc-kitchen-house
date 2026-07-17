@@ -43,7 +43,7 @@ Each app is a single HTML file hosted on GitHub Pages. No login, no backend, no 
         compliance         multi-site             one
 ```
 
-- **DOOR** authors the active menu (`menu_current.json`, `menu_reno.json`) and tracks residents + restrictions.
+- **DOOR** authors the active menu (`menu_current.json`; `menu_reno.json` is reno-legacy since the 2026-06-26 standard cutover) and tracks residents + restrictions.
 - **CODEX** holds canonical recipe data (`recipe_production.json`, `DOOR_RECIPE_DATA.json`) that DOOR and EXPO pull from at load time.
 - **EXPO** pulls menu from DOOR + recipes from CODEX, runs the scheduler, publishes `hub_schedule.json`.
 - **HUB** displays the published schedule for floor staff — printable, filterable, day-by-day.
@@ -70,7 +70,7 @@ If a fetch fails (offline, GitHub down), each app falls back to baked-in snapsho
 
 Every app (with one exception below) is one `index.html` file with all CSS and JS inline. No build tools. No npm. No frameworks. Open the file in a browser and it works. This is **non-negotiable** — the system survives because anyone with a text editor and a browser can read, debug, and ship it.
 
-Exception: **HUB** uses a generated pipeline. The hosted file is `CONC_Production_Hub.html`, produced from `00_Production_Source_Table.xlsx` + `hub_shell.html` + `hub_logic.js` + `hub_rcp.js` via `CONC_Hub_Builder.html`. See [HUB README](https://github.com/kennedyjasondavid-eng/conc-kitchen-hub#readme).
+(Former exception, now resolved: **HUB**'s served `CONC_Production_Hub.html` used to be generated from `00_Production_Source_Table.xlsx` + component files via `CONC_Hub_Builder.html`, but that pipeline was **deprecated and archived 2026-06-07** — the served single file is now hand-edited directly, like the others. See [HUB README](https://github.com/kennedyjasondavid-eng/conc-kitchen-hub#readme).)
 
 ### Data flow & coupling
 
@@ -133,15 +133,11 @@ To change which apps are linked, edit the four `<a class="card">` blocks in `ind
 
 ---
 
-## Versions (current)
+## Versions
 
-| App | Version | Date | Notes |
-|---|---|---|---|
-| HOUSE portal | v1.0 | 2026-05-16 | Initial four-card landing |
-| DOOR | v25+ | 2026-05-12 | Tier migration, ~17.5K lines |
-| CODEX (MISE) | v50 | 2026-05-09 | Dark mode complete, 224 recipes, ~21K lines |
-| EXPO | v9.17 | 2026-05-17 | Phase 0 shipped, reno-from-DOOR live, ~23K lines |
-| HUB | (pipeline) | 2026-05-17 | `hub_schedule.json` driving live board, reno mode |
+Per the HOUSE doc-governance model this repo owns, **cross-app versions live in one place — the HOUSE status ledger (`~/.claude/CLAUDE.md`)** — so they aren't duplicated here (a copied table drifts, and this one did). For the live version / phase / mode of every app, see that ledger and the `STATE_OF_THE_HOUSE.html` snapshot.
+
+Quick orientation as of the **2026-06-26 reno→standard cutover** (re-verify against the ledger before a deploy): EXPO ~v9.39.x (standard is now the default mode), DOOR `v31-standard.1` (menu v31), CODEX/MISE ~28K lines (224 recipes), PROOF `v0.9-P5` (reports R1–R5 shipped), HUB serving the standard board, HOUSE portal v1.0.
 
 For per-app history, see each repo's README and changelog/handoff docs.
 
