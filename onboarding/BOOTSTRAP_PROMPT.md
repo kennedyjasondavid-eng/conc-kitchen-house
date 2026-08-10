@@ -32,9 +32,10 @@ Please do the following setup, then confirm each step:
 
 3. INSTALL the machine-global HOUSE ledger — the single source of truth for CROSS-APP facts
    (versions, phases, schema seams), which the repo CLAUDE.md files all point to:
-   - copy [bundle]/memory/HOUSE_LEDGER_STARTER.md    -> ~/.claude/CLAUDE.md
-   NOTE: that starter is a RECONSTRUCTION. If I hand you my real ~/.claude/CLAUDE.md from my personal
-   machine, use that instead — it's authoritative and current.
+   - copy [bundle]/memory/HOUSE_LEDGER.md    -> ~/.claude/CLAUDE.md
+   NOTE: this is the consolidated ledger (built 2026-08-10 from the six repo memories). No standalone
+   ledger file existed before — the old ~/.claude and ~/.codex pointers were dead/repurposed — so
+   maintain THIS file as the cross-app source of truth going forward.
 
 4. READ, in this order: ~/.claude/CLAUDE.md  →  conc-kitchen-house/INSIGHTS.md  →
    conc-kitchen-house/HOUSE_ASSESSMENT_2026-07-07.md + HOUSE_PLAN_OF_ACTION_2026-07-07.md  →

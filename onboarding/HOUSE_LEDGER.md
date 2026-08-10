@@ -1,16 +1,16 @@
-# HOUSE — machine-global status ledger (STARTER / RECONSTRUCTED)
+# HOUSE — machine-global status ledger (consolidated 2026-08-10)
 
-> ⚠️ **READ THIS FIRST.** This file is a **reconstruction**, assembled 2026-08-10 from the six
-> repo memory files, because the real machine-global ledger was **not present in the cloud
-> environment** it was gathered from. On Jason's personal machine the authoritative copy lives at
-> **`~/.claude/CLAUDE.md`** (Claude) and **`~/.codex/AGENTS.md`** / **`~/.Codex/AGENTS.md`** (Codex).
-> **If you can retrieve the real one, replace this file with it.** Until then, treat this as a
-> faithful-but-secondhand snapshot: the per-app `CLAUDE.md` files in each repo are primary; where
-> this ledger and a repo file disagree, the repo file wins and this file is stale.
+> **What this is.** The single source of truth for _cross-app_ facts (versions, phases, schema
+> seams). Every repo's own `CLAUDE.md` opens by pointing at a machine-global ledger for exactly this
+> reason — so cross-app status isn't duplicated (and allowed to drift) across six repos.
 >
-> **This is the single source of truth for _cross-app_ facts** (versions, phases, schema seams).
-> Each repo's own `CLAUDE.md` opens by pointing here for exactly that reason — so cross-app status
-> isn't duplicated (and allowed to drift) in six places.
+> **Provenance (verified 2026-08-10).** No standalone ledger file actually existed: the Claude
+> pointer `~/.claude/CLAUDE.md` was never created, and the Codex pointer `~/.codex/AGENTS.md` now
+> holds unrelated content (an OpenAI "Sites" plugins dual-write rule — a different project). So this
+> file was **consolidated from the six repo memories**; the deepest single-app source is EXPO's repo
+> `CLAUDE.md` (the ~1950-line one). This file is now the real thing — **install it to
+> `~/.claude/CLAUDE.md` and maintain it as the cross-app source of truth going forward.** Where it
+> and a repo `CLAUDE.md` disagree, the repo file is newer — reconcile the difference up into here.
 
 ---
 

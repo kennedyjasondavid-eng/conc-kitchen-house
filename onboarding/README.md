@@ -12,7 +12,7 @@ carries only the pieces that have **no other home in git**:
 
 | File | What it is |
 |---|---|
-| `HOUSE_LEDGER_STARTER.md` | ⚠️ **Reconstructed** machine-global cross-app ledger → install to `~/.claude/CLAUDE.md`. The authoritative copy lives on Jason's personal machine; replace with it when available. |
+| `HOUSE_LEDGER.md` | Consolidated machine-global cross-app ledger → install to `~/.claude/CLAUDE.md`. Built 2026-08-10 from the six repo memories: no standalone ledger existed (the `~/.claude/CLAUDE.md` pointer was never created; `~/.codex/AGENTS.md` had been repurposed for unrelated work), so this is that ledger, authoritative going forward. |
 | `BOOTSTRAP_PROMPT.md` | Paste-into-the-new-account setup prompt (clone repos, install skills + ledger, operating rules). |
 | `skills/conc-kitchen/SKILL.md` | The CONC kitchen/ops reference skill. Skills live in `~/.claude/skills/`, not in any repo — so they're version-controlled here. |
 | `skills/production-hub/SKILL.md` | The Production Hub (HTML dashboard) skill. |
@@ -29,8 +29,10 @@ to "rebuild the HOUSE onboarding bundle." That zip is a point-in-time export, no
 - **SharePoint / M365 brief:** [`../HOUSE_SHAREPOINT_IT_BRIEF_2026-07-07.md`](../HOUSE_SHAREPOINT_IT_BRIEF_2026-07-07.md).
 - **Per-app memory:** each sibling repo's root `CLAUDE.md` (PROOF uses `AGENTS.md`):
   `conc-kitchen-door` · `conc-kitchen-expo` · `conc-kitchen-hub` · `conc-recipe-hub` · `conc-kitchen-proof`.
-- **The machine-global ledger (authoritative):** `~/.claude/CLAUDE.md` (Claude) / `~/.codex/AGENTS.md`
-  (Codex) on the working machine — the single source of truth for cross-app versions/phases/schema seams.
+- **The machine-global ledger:** `HOUSE_LEDGER.md` in this folder **is** it — install to
+  `~/.claude/CLAUDE.md`. (The repo `CLAUDE.md` pointers to a pre-existing `~/.claude/CLAUDE.md` /
+  `~/.codex/AGENTS.md` are stale: verified 2026-08-10, no such HOUSE ledger existed — the Claude path was
+  never created and the Codex path holds unrelated content — so this consolidation supersedes them.)
 
 ## The six repos
 `github.com/kennedyjasondavid-eng/` → `conc-kitchen-door` (DOOR), `conc-kitchen-expo` (EXPO),
