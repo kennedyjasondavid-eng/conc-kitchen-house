@@ -59,6 +59,16 @@ Six repos at `/home/user/`: **DOOR** (`conc-kitchen-door`) = resident registry +
 
 **Quality bar:** 10–25 substantial findings beat 60 trivia. Batch related P3s into one grouped finding. Every P0/P1 will face an adversarial refute pass — self-check the consequence chain before claiming.
 
+## TOKEN-LEAN MODE (mandatory as of 18:45 UTC — overrides anything above that conflicts)
+
+Two usage windows were lost to full attentive reads. New rules:
+
+- **Hard read budget: ≤ ~3,500 lines of app code read via the Read tool per slice.** Spend it by risk: (1) the high-risk zones your brief names, (2) neighborhoods (±30 lines) around grep-battery hits worth inspecting, (3) load-bearing write sites. **No full-file or full-range attentive reads.** Prefer Grep with -C context and `sed -n` extraction to scratch over large Reads; tool execution is free — model tokens are not.
+- **The coverage statement changes accordingly:** list exactly which regions you READ vs which are grep-covered-only. Honesty over completeness — an unread region is stated as unread, never implied swept.
+- **Write to your findings file after EVERY protocol step** (battery results immediately, each finding as confirmed), not at the end.
+- If budget-pressed, skip protocol step 5 (doc-drift) and note it skipped; never skip the load-bearing-write trace on food-safety/publish paths.
+- **RESUME:** if `findings/<SLICE>.md` exists, read it FIRST and continue from where it stops — completed sections are done; do not redo or overwrite them.
+
 ## Interruption armor (added after the 18:20 UTC cap outage)
 
 - **Write your findings file INCREMENTALLY.** Create it with its header the moment you start; append each grep-battery result and each finding AS YOU CONFIRM IT; finish by updating the coverage statement + healthy/limitations sections. If your run is killed, the partial file is salvage.
