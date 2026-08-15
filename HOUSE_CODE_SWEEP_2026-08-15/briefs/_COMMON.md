@@ -59,6 +59,11 @@ Six repos at `/home/user/`: **DOOR** (`conc-kitchen-door`) = resident registry +
 
 **Quality bar:** 10–25 substantial findings beat 60 trivia. Batch related P3s into one grouped finding. Every P0/P1 will face an adversarial refute pass — self-check the consequence chain before claiming.
 
+## Interruption armor (added after the 18:20 UTC cap outage)
+
+- **Write your findings file INCREMENTALLY.** Create it with its header the moment you start; append each grep-battery result and each finding AS YOU CONFIRM IT; finish by updating the coverage statement + healthy/limitations sections. If your run is killed, the partial file is salvage.
+- **If `findings/<SLICE>.md` already exists** (a prior interrupted run), read it first and CONTINUE from where it stops — do not restart from zero or overwrite completed sections.
+
 ## Findings file layout
 
 1. Header: slice id, date, repo HEAD sha(s), **coverage statement** (ranges read attentively; ranges skim-class and why).

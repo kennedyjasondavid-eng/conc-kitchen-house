@@ -37,3 +37,4 @@ Branch: `claude/house-repos-code-sweep-1lf1jv` (conc-kitchen-house). Analysis-on
 
 - 2026-08-15 ~15:3x UTC — CP0 scaffolding authored. Repo HEADs at sweep start: door 7500521 · house a01a02a · expo 2686de6 · hub 9ecce4c · proof b3dc772 · recipe-hub 6ea8b30. Jason: repos actively worked elsewhere — re-verify volatile facts before final report; EXPO #233 in flight.
 - 2026-08-15 ~15:5x UTC — CP0 pushed (e1fa299). All 11 sweep agents launched (waves A+B). Origin fetch showed 2 new house branches (active work confirmed); main unmoved.
+- 2026-08-15 18:2x UTC — OUTAGE: all 11 agents killed by the session usage cap (~16:0x, reset 18:20 UTC) before any findings landed. Hardening: _COMMON.md now mandates incremental findings-file writes + resume-from-partial. RELAUNCH in two waves: W1 = D-1, E-1, E-2, H-1, X-B, X-C (never-cut set); W2 = E-3, M-1, M-2, P-1, X-A after W1 commits.
