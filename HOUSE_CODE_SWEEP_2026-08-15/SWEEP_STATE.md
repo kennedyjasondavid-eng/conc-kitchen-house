@@ -13,7 +13,7 @@ Branch: `claude/house-repos-code-sweep-1lf1jv` (conc-kitchen-house). Analysis-on
 | E-3 | EXPO L26,910–end + test-suite health | RUNNING |
 | M-1 | MISE L3,633–18,141 + CSS/HTML sampling | RUNNING |
 | M-2 | MISE L18,141–end + data layer by script | RUNNING |
-| D-1 | DOOR full app + gate-coverage map | RUNNING |
+| D-1 | DOOR full app + gate-coverage map | COMMITTED (10: 5 P1/4 P2/1 P3) |
 | H-1 | HUB full + tests + workflows + archive greps | COMMITTED (15: 5 P1/10 P2) |
 | P-1 | PROOF full + HOUSE portal + CI-map & TZ lanes | RUNNING |
 | X-A | Cross-app contract conformance | RUNNING |
