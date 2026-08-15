@@ -17,7 +17,7 @@ Branch: `claude/house-repos-code-sweep-1lf1jv` (conc-kitchen-house). Analysis-on
 | H-1 | HUB full + tests + workflows + archive greps | COMMITTED (15: 5 P1/10 P2) |
 | P-1 | PROOF full + HOUSE portal + CI-map & TZ lanes | RUNNING |
 | X-A | Cross-app contract conformance | RUNNING |
-| X-B | Publish paths end-to-end | RUNNING |
+| X-B | Publish paths end-to-end | COMMITTED (11: 4 P1/5 P2/2 P3) |
 | X-C | Shared-origin storage + duplicated vocab | RUNNING |
 
 ## Stages
