@@ -9,7 +9,7 @@ Branch: `claude/house-repos-code-sweep-1lf1jv` (conc-kitchen-house). Analysis-on
 | Slice | Scope | Status |
 |---|---|---|
 | E-1 | EXPO L1–12,074 + whole-file battery + boot timeline | RUNNING |
-| E-2 | EXPO L12,074–26,910 engine core | RUNNING |
+| E-2 | EXPO L12,074–26,910 engine core | COMMITTED (7: 3 P1/4 P2) |
 | E-3 | EXPO L26,910–end + test-suite health | RUNNING |
 | M-1 | MISE L3,633–18,141 + CSS/HTML sampling | RUNNING |
 | M-2 | MISE L18,141–end + data layer by script | RUNNING |
