@@ -1,0 +1,3 @@
+# CI sibling checkouts for tests/proven_seams_gate.mjs (seams-gate.yml layout);
+# also ignored if someone materializes them locally.
+_siblings/
