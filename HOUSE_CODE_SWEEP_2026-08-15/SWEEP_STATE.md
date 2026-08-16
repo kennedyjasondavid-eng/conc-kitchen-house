@@ -27,9 +27,9 @@ Branch: `claude/house-repos-code-sweep-1lf1jv` (conc-kitchen-house). Analysis-on
 - [x] Wave A launched (E-1, E-2, E-3, D-1, H-1, P-1)
 - [x] Wave B launched (M-1, M-2, X-A, X-B, X-C)
 - [x] All findings files committed (CP per return) — 11/11 slices done; 93 raw findings (34 P1 / 41 P2 / 18 P3, 0 P0 claimed)
-- [ ] Triage complete (TRIAGE_NOTES.md: dedupe, IDs, severity calibration, verify set)
-- [ ] Refute pass V-1..V-3 complete (verdicts in TRIAGE_NOTES.md)
-- [ ] Report written: ../HOUSE_CODE_SWEEP_REPORT_2026-08-15.md
+- [x] Triage complete — 93 raw → 87 unique (29 P1/39 P2/19 P3), 6 merges
+- [x] Refute pass complete (R-1 16/16 + R-2 19/19 = 35/35 CONFIRMED, 0 refuted; calibration 6/6)
+- [x] Report written: ../HOUSE_CODE_SWEEP_REPORT_2026-08-15.md
 - [ ] Draft PR opened (conc-kitchen-house only) + PR subscribed
 - [ ] Artifact published
 
@@ -39,3 +39,4 @@ Branch: `claude/house-repos-code-sweep-1lf1jv` (conc-kitchen-house). Analysis-on
 - 2026-08-15 ~15:5x UTC — CP0 pushed (e1fa299). All 11 sweep agents launched (waves A+B). Origin fetch showed 2 new house branches (active work confirmed); main unmoved.
 - 2026-08-15 18:2x UTC — OUTAGE: all 11 agents killed by the session usage cap (~16:0x, reset 18:20 UTC) before any findings landed. Hardening: _COMMON.md now mandates incremental findings-file writes + resume-from-partial. RELAUNCH in two waves: W1 = D-1, E-1, E-2, H-1, X-B, X-C (never-cut set); W2 = E-3, M-1, M-2, P-1, X-A after W1 commits.
 - 2026-08-15 18:4x UTC — SECOND outage (window exhausted in ~10 min; resets 23:20 UTC). Salvage: all 6 W1 slices left partial findings (603 lines) — committed. MODE CHANGE (Jason): token-lean serial — ONE sweep agent at a time on a smaller model, hard ≤3.5K-line read budget per slice (grep-first, targeted reads), commit after each; main model reserved for triage/refute/report. Resume order: H-1 → D-1 → X-B → E-2 → E-1 → X-C → E-3 → X-A → M-1 → M-2 → P-1. If an agent dies on budget again: stop all launches, schedule wake post-reset, zero further spend.
+- 2026-08-16 — Report finalized (refute caveats folded: E-1-1 trigger narrowed to import/future-preset vector; E-3-2 is 7 gates; MERGE-3 strengthened with the hubAllergenToFlags recipe-link path). Remaining: draft PR + artifact.
