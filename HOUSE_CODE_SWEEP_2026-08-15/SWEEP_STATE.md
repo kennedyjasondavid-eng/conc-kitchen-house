@@ -15,7 +15,7 @@ Branch: `claude/house-repos-code-sweep-1lf1jv` (conc-kitchen-house). Analysis-on
 | M-2 | MISE L18,141–end + data layer by script | COMMITTED (6: 2 P1/4 P2) |
 | D-1 | DOOR full app + gate-coverage map | COMMITTED (10: 5 P1/4 P2/1 P3) |
 | H-1 | HUB full + tests + workflows + archive greps | COMMITTED (15: 5 P1/10 P2) |
-| P-1 | PROOF full + HOUSE portal + CI-map & TZ lanes | RUNNING |
+| P-1 | PROOF full + HOUSE portal + CI-map & TZ lanes | COMMITTED (10: 2 P1/4 P2/4 P3) |
 | X-A | Cross-app contract conformance | COMMITTED (5: 2 P1/2 P2/1 P3) |
 | X-B | Publish paths end-to-end | COMMITTED (11: 4 P1/5 P2/2 P3) |
 | X-C | Shared-origin storage + duplicated vocab | COMMITTED (13: 3 P1/5 P2/5 P3) |
@@ -26,7 +26,7 @@ Branch: `claude/house-repos-code-sweep-1lf1jv` (conc-kitchen-house). Analysis-on
 - Budget note (Jason, mid-CP0): the 5hr/5x session limit is USAGE (tokens), not wall-clock — treat the stage table as a sequence; size the refute pass to the finding count; checkpoint-push often (a cap can land mid-flight).
 - [x] Wave A launched (E-1, E-2, E-3, D-1, H-1, P-1)
 - [x] Wave B launched (M-1, M-2, X-A, X-B, X-C)
-- [ ] All findings files committed (CP per return)
+- [x] All findings files committed (CP per return) — 11/11 slices done; 93 raw findings (34 P1 / 41 P2 / 18 P3, 0 P0 claimed)
 - [ ] Triage complete (TRIAGE_NOTES.md: dedupe, IDs, severity calibration, verify set)
 - [ ] Refute pass V-1..V-3 complete (verdicts in TRIAGE_NOTES.md)
 - [ ] Report written: ../HOUSE_CODE_SWEEP_REPORT_2026-08-15.md
