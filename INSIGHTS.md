@@ -4,6 +4,8 @@
 
 > **Relocated 2026-06-21 from `conc-kitchen-hub/INSIGHTS.md` to this HOUSE umbrella repo** — the cross-HOUSE KNOWLEDGE owner belongs in the HOUSE-level repo, not in a leaf app (the HUB location was organic accretion). A forwarding tombstone remains at the old path so existing pointers still resolve; git history before 2026-06-21 lives in the `conc-kitchen-hub` log.
 
+> **Companion registry: `HOUSE_PROVEN_SEAMS.md`** (added 2026-08-16, the code sweep's structural recommendation) — the solved-once implementation table: problem class → hardened seam → where it lives → who still lacks it (`setItemSafe`, the fetch bust pattern, the token sanitizer, `PublishAuth`, `pushFilesToGitHubAtomic`, the noon-anchor idiom, the escape families, `HUB_HOME_SITES`, PROOF's enum guard, MISE's glob test-runner). This doc carries the *why*; that one carries the *port-me* pointers — **touching one of those problem classes, port the seam instead of reinventing or omitting it.**
+
 ---
 
 ## Telos — what we're actually building
