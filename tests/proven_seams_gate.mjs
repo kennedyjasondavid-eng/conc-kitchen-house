@@ -2,7 +2,7 @@
 // tests/proven_seams_gate.mjs — the HOUSE_PROVEN_SEAMS.md registry verifier.
 //
 // Parses the machine-anchors block inside HOUSE_PROVEN_SEAMS.md and checks it
-// against the sibling repo checkouts, in BOTH directions:
+// against the sibling repos, in BOTH directions:
 //
 //   ANCHOR ROT  — a `seam` check fails: the hardened implementation moved or
 //                 was renamed at its origin. Re-anchor the registry row (and
@@ -12,12 +12,29 @@
 //                 Update the row's cell. This is registry maintenance, never
 //                 an app regression; nothing in the apps is wrong.
 //
-// Sibling resolution, in order: $SEAMS_SIBLINGS_ROOT/<repo> → <houseRoot>/_siblings/<repo>
-// (the CI checkout layout) → <houseRoot>/../<repo> (the local multi-repo session
-// layout). A missing sibling is a loud SKIP locally, but a HARD FAIL when
-// SEAMS_REQUIRE_ALL=1 (set by CI) — a misconfigured workflow must never pass
-// vacuously (the registry's own row-9 principle: empty must not validate clean).
-// Zero parsed rows or zero executed checks also fail for the same reason.
+// TWO ACQUISITION MODES for the sibling files:
+//
+//   git   (default) — read from sibling checkouts on disk. Resolution order:
+//         $SEAMS_SIBLINGS_ROOT/<repo> → <houseRoot>/_siblings/<repo> →
+//         <houseRoot>/../<repo> (the local multi-repo session layout).
+//         Byte-true against HEAD; the strong mode.
+//   pages (SEAMS_FETCH=pages) — fetch each anchored file from the repos'
+//         public GitHub Pages sites. This exists because four of the five
+//         siblings are PRIVATE repos with public Pages — the same public data
+//         plane the HOUSE apps already use to read each other — and the CI
+//         workflow's default token cannot check private siblings out. No
+//         stored credential means nothing to expire: the anti-decay gate must
+//         not itself carry a decaying credential (registry row 4's lesson).
+//         Fetches carry a ?t=Date.now() bust (row 2's own seam, ported).
+//         Trade-offs, accepted + documented: Pages lags a push by a deploy
+//         (~1 min — irrelevant at the weekly cadence), Jekyll never serves
+//         dot-dirs (targets marked "gitOnly": true are SKIPPED here, loudly,
+//         and only enforced in git mode), and a 404 is read as file-absent.
+//
+// SEAMS_REQUIRE_ALL=1 (set by CI) hard-fails on a missing sibling checkout /
+// unreachable Pages site — a misconfigured run must never pass vacuously (the
+// registry's own row-9 principle: empty must not validate clean). Zero parsed
+// rows or zero executed checks fail for the same reason in every mode.
 //
 // SEAMS_DOC=<path> overrides the doc location (used by the authored-to-fail
 // receipt: run against a doctored copy to prove both failure classes go red).
@@ -29,6 +46,8 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..');
 const DOC = process.env.SEAMS_DOC || join(ROOT, 'HOUSE_PROVEN_SEAMS.md');
 const REQUIRE_ALL = process.env.SEAMS_REQUIRE_ALL === '1';
+const MODE = process.env.SEAMS_FETCH === 'pages' ? 'pages' : 'git';
+const PAGES_BASE = process.env.SEAMS_PAGES_BASE || 'https://kennedyjasondavid-eng.github.io';
 
 const fails = [];
 const skips = [];
@@ -53,7 +72,7 @@ for (const row of anchors.rows) {
   }
 }
 
-// ---- sibling repo resolution
+// ---- acquisition: one file read per (repo, file), mode-dependent
 const repoRoots = {};
 function resolveRepo(name) {
   if (name in repoRoots) return repoRoots[name];
@@ -65,6 +84,33 @@ function resolveRepo(name) {
 }
 
 const fileCache = new Map();
+// → { status: 'ok', text } | { status: 'absent' } | { status: 'norepo' } | { status: 'error', detail }
+async function getFile(repo, file) {
+  const key = repo + '::' + file;
+  if (fileCache.has(key)) return fileCache.get(key);
+  let out;
+  if (MODE === 'git') {
+    const root = resolveRepo(repo);
+    if (!root) out = { status: 'norepo' };
+    else {
+      const path = join(root, file);
+      out = existsSync(path) ? { status: 'ok', text: readFileSync(path, 'utf8') } : { status: 'absent' };
+    }
+  } else {
+    const url = `${PAGES_BASE}/${repo}/${file}?t=${Date.now()}`;
+    try {
+      const r = await fetch(url, { cache: 'no-store' });
+      if (r.ok) out = { status: 'ok', text: await r.text() };
+      else if (r.status === 404) out = { status: 'absent' };
+      else out = { status: 'error', detail: `HTTP ${r.status}` };
+    } catch (e) {
+      out = { status: 'error', detail: String(e && e.message || e) };
+    }
+  }
+  fileCache.set(key, out);
+  return out;
+}
+
 function checkEntry(text, entry) {
   if (typeof entry === 'string') return text.includes(entry);
   if (entry && typeof entry.re === 'string') return new RegExp(entry.re).test(text);
@@ -72,20 +118,30 @@ function checkEntry(text, entry) {
 }
 const fmt = e => (typeof e === 'string' ? JSON.stringify(e) : '/' + e.re + '/');
 
-function runTarget(row, t, kind) {
-  const root = resolveRepo(t.repo);
+async function runTarget(row, t, kind) {
   const where = `${t.repo}/${t.file}`;
-  if (!root) {
+  if (t.gitOnly && MODE === 'pages') {
+    skips.push(`SKIP — row ${row.row} (${kind}): ${where} is gitOnly (Jekyll never serves this path; enforced in git-mode runs)`);
+    return;
+  }
+  const got = await getFile(t.repo, t.file);
+
+  if (got.status === 'norepo') {
     const msg = `row ${row.row} (${kind}): sibling checkout for ${t.repo} not found`;
-    if (REQUIRE_ALL) fails.push('MISSING REPO — ' + msg + ' (CI checkout misconfigured?)');
+    if (REQUIRE_ALL) fails.push('MISSING REPO — ' + msg + ' (run misconfigured?)');
     else skips.push('SKIP — ' + msg);
     return;
   }
-  const path = join(root, t.file);
-  const fileExists = existsSync(path);
+  if (got.status === 'error') {
+    const msg = `row ${row.row} (${kind}): could not fetch ${where} (${got.detail})`;
+    if (REQUIRE_ALL) fails.push('FETCH ERROR — ' + msg);
+    else skips.push('SKIP — ' + msg);
+    return;
+  }
 
   if ('exists' in t) {
     checksRun++;
+    const fileExists = got.status === 'ok';
     if (t.exists !== fileExists) {
       fails.push(t.exists
         ? `ANCHOR ROT — row ${row.row} (${row.class}): ${where} is MISSING — the anchored file moved; re-anchor the row.`
@@ -94,12 +150,11 @@ function runTarget(row, t, kind) {
     return; // an exists-target carries no content checks
   }
 
-  if (!fileExists) {
+  if (got.status === 'absent') {
     fails.push(`ANCHOR ROT — row ${row.row} (${row.class}): ${where} is MISSING — re-anchor the row.`);
     return;
   }
-  if (!fileCache.has(path)) fileCache.set(path, readFileSync(path, 'utf8'));
-  const text = fileCache.get(path);
+  const text = got.text;
 
   for (const c of t.has || []) {
     checksRun++;
@@ -118,17 +173,17 @@ function runTarget(row, t, kind) {
 }
 
 for (const row of anchors.rows) {
-  for (const t of row.seam || []) runTarget(row, t, 'seam');
-  for (const t of row.gap || []) runTarget(row, t, 'gap');
+  for (const t of row.seam || []) await runTarget(row, t, 'seam');
+  for (const t of row.gap || []) await runTarget(row, t, 'gap');
 }
 
 if (checksRun === 0) fails.push('zero checks executed — a vacuous run must not read as green');
 
 for (const s of skips) console.log(s);
-console.log(`rows: ${anchors.rows.length} · checks run: ${checksRun} · skips: ${skips.length}`);
+console.log(`mode: ${MODE} · rows: ${anchors.rows.length} · checks run: ${checksRun} · skips: ${skips.length}`);
 if (fails.length) {
   console.error('GATE: FAIL — proven-seams registry drift');
   for (const f of fails) console.error(' - ' + f);
   process.exit(1);
 }
-console.log('GATE: PASS — HOUSE_PROVEN_SEAMS.md agrees with the sibling checkouts (anchors intact, cells current)');
+console.log('GATE: PASS — HOUSE_PROVEN_SEAMS.md agrees with the sibling repos (anchors intact, cells current)');

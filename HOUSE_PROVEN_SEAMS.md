@@ -27,7 +27,7 @@
 
 ## Machine anchors — the verifier's input
 
-The machine-checkable **subset** of the table above (not a restatement — prose claims a script can't grep stay prose-only). `tests/proven_seams_gate.mjs` parses this block and checks it against the sibling repo checkouts in both directions: a `seam` check failing = **anchor rot** (the implementation moved/renamed — re-anchor the row); a `gap` check failing = **stale cell** (the "who still lacks it" claim is no longer true — update the cell). **Edit the table → edit these anchors in the same change.** Check entries are literal substrings, or `{"re": "…"}` for a regex; a target with `"exists"` asserts file presence/absence instead of content.
+The machine-checkable **subset** of the table above (not a restatement — prose claims a script can't grep stay prose-only). `tests/proven_seams_gate.mjs` parses this block and checks it against the sibling repos in both directions: a `seam` check failing = **anchor rot** (the implementation moved/renamed — re-anchor the row); a `gap` check failing = **stale cell** (the "who still lacks it" claim is no longer true — update the cell). **Edit the table → edit these anchors in the same change.** Check entries are literal substrings, or `{"re": "…"}` for a regex; a target with `"exists"` asserts file presence/absence instead of content; `"gitOnly": true` marks a path Pages never serves (dot-dirs) — enforced in git-mode runs, loudly skipped in Pages mode.
 
 <!-- SEAMS-ANCHORS-START -->
 ```json
@@ -73,7 +73,7 @@ The machine-checkable **subset** of the table above (not a restatement — prose
     { "row": 10, "class": "zero-config test discovery",
       "seam": [
         { "repo": "conc-recipe-hub", "file": "tests/all.mjs", "has": ["readdirSync("] },
-        { "repo": "conc-kitchen-proof", "file": ".github/workflows/proof-gates.yml", "has": ["node tests/all.mjs"] }
+        { "repo": "conc-kitchen-proof", "file": ".github/workflows/proof-gates.yml", "has": ["node tests/all.mjs"], "gitOnly": true }
       ],
       "gap": [ { "repo": "conc-kitchen-expo", "file": "tests/all.mjs", "exists": false } ] }
   ]
@@ -87,7 +87,7 @@ The machine-checkable **subset** of the table above (not a restatement — prose
 
 - **Add a row** when a problem class gets solved well for the *second* time — that duplication is the signal it belongs here. Prefer promoting the better implementation to "the seam" and citing the other as a port.
 - **Update, don't append:** a row's "who still lacks it" cell shrinks as ports land — edit the cell (with a date) rather than adding a second row. When a cell reaches "nobody", keep the row: it's still the pointer for the *next* new app or surface.
-- **Enforcement (added 2026-08-16):** `tests/proven_seams_gate.mjs` verifies the machine-anchors block against the sibling checkouts; `.github/workflows/seams-gate.yml` runs it on push + PR **and a weekly cron** — the cron matters because this registry rots against *other* repos' changes, not its own pushes. A red non-PR run auto-opens a repo issue (the loud-flag step ported from HUB `contract-gates.yml` — this registry's own rule applied to itself). A **stale-cell red is registry maintenance, never an app regression**: the app improved; update the cell.
+- **Enforcement (added 2026-08-16):** `tests/proven_seams_gate.mjs` verifies the machine-anchors block against the sibling repos; `.github/workflows/seams-gate.yml` runs it on push + PR **and a weekly cron** — the cron matters because this registry rots against *other* repos' changes, not its own pushes. A red non-PR run auto-opens a repo issue (the loud-flag step ported from HUB `contract-gates.yml` — this registry's own rule applied to itself). A **stale-cell red is registry maintenance, never an app regression**: the app improved; update the cell. Two acquisition modes: local multi-repo sessions verify **git checkouts** (byte-true, incl. `gitOnly` targets); CI verifies over the repos' **public Pages sites** — four of the five siblings are private repos with public Pages, and the anti-decay gate must not itself carry an expiring credential (row 4's lesson), so CI reads the same public data plane the apps already use to read each other.
 - **Pending ride-alongs (2026-08-16):** a one-line registry pointer beside each app orientation doc's existing INSIGHTS pointer (EXPO · DOOR · HUB · MISE CLAUDE.md; PROOF's INSIGHTS.md) — fold into the next PR that touches each repo; note it here as they land.
 - **This doc owns the seam table** (single owner per fact, per `HOUSE_Doc_Governance_Plan.md`). `INSIGHTS.md` points here; app docs may cite a row but never restate the table.
 - Line-number anchors are as-of snapshots — re-grep the symbol name before editing at a cited location.

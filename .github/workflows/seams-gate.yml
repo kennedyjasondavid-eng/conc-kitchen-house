@@ -1,9 +1,18 @@
 # HOUSE proven-seams registry verifier — keeps HOUSE_PROVEN_SEAMS.md honest.
 #
-# Runs tests/proven_seams_gate.mjs against fresh checkouts of all five sibling
-# repos, both directions: a seam symbol gone at its origin = ANCHOR ROT; a
-# "who still lacks it" claim no longer true = STALE CELL (update the doc — the
-# app improved; this is registry maintenance, never an app regression).
+# Runs tests/proven_seams_gate.mjs in PAGES MODE: each anchored sibling file is
+# fetched from the repos' public GitHub Pages sites. Why not checkout: four of
+# the five siblings (EXPO / HUB / MISE / PROOF) are PRIVATE repos with public
+# Pages, so this repo's default workflow token cannot check them out, and the
+# anti-decay gate must not itself carry an expiring cross-repo PAT (registry
+# row 4's lesson — credential lifecycles decay). The public Pages plane is the
+# same one the HOUSE apps already use to read each other. Targets Jekyll never
+# serves (dot-dirs) are marked gitOnly in the anchors and enforced by local
+# git-mode runs instead.
+#
+# Both directions: a seam symbol gone at its origin = ANCHOR ROT; a "who still
+# lacks it" claim no longer true = STALE CELL (update the doc — the app
+# improved; registry maintenance, never an app regression).
 #
 # The WEEKLY CRON is the load-bearing trigger: this registry rots against the
 # *other* repos' changes, which never push to this repo. Push/PR runs cover
@@ -33,34 +42,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check out the five sibling repos
-        uses: actions/checkout@v4
-        with:
-          repository: kennedyjasondavid-eng/conc-kitchen-door
-          path: _siblings/conc-kitchen-door
-      - uses: actions/checkout@v4
-        with:
-          repository: kennedyjasondavid-eng/conc-kitchen-expo
-          path: _siblings/conc-kitchen-expo
-      - uses: actions/checkout@v4
-        with:
-          repository: kennedyjasondavid-eng/conc-kitchen-hub
-          path: _siblings/conc-kitchen-hub
-      - uses: actions/checkout@v4
-        with:
-          repository: kennedyjasondavid-eng/conc-recipe-hub
-          path: _siblings/conc-recipe-hub
-      - uses: actions/checkout@v4
-        with:
-          repository: kennedyjasondavid-eng/conc-kitchen-proof
-          path: _siblings/conc-kitchen-proof
-
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      - name: Verify the registry against the siblings
-        run: SEAMS_REQUIRE_ALL=1 node tests/proven_seams_gate.mjs
+      - name: Verify the registry against the siblings (Pages mode)
+        run: SEAMS_FETCH=pages SEAMS_REQUIRE_ALL=1 node tests/proven_seams_gate.mjs
 
       - name: Raise a loud flag on a red non-PR run
         if: failure() && github.event_name != 'pull_request'
@@ -68,7 +55,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           body="Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
-          body="$body"$'\n\n'"The proven-seams verifier went red — read the run log for which class:"$'\n'"- ANCHOR ROT: a seam implementation moved/renamed at its origin → re-anchor the row in HOUSE_PROVEN_SEAMS.md."$'\n'"- STALE CELL: a \"who still lacks it\" claim is no longer true (a port likely landed) → update the cell."$'\n\n'"Either way the fix is a doc edit in this repo (table + machine-anchors block in the same change). Nothing in the apps is wrong. Close this issue when the gate is green again."
+          body="$body"$'\n\n'"The proven-seams verifier went red — read the run log for which class:"$'\n'"- ANCHOR ROT: a seam implementation moved/renamed at its origin → re-anchor the row in HOUSE_PROVEN_SEAMS.md."$'\n'"- STALE CELL: a \"who still lacks it\" claim is no longer true (a port likely landed) → update the cell."$'\n'"- FETCH ERROR: a sibling Pages site was unreachable → transient, or a Pages config change."$'\n\n'"For rot/stale the fix is a doc edit in this repo (table + machine-anchors block in the same change); nothing in the apps is wrong. Close this issue when the gate is green again."
           gh issue create --repo "$GITHUB_REPOSITORY" \
             --title "⚠ Proven-seams registry drift @ ${GITHUB_SHA:0:7}" \
             --body "$body"
