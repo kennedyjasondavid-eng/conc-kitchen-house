@@ -21,7 +21,65 @@
 | 7 | **Escape-helper coverage** — one `innerHTML`/inline-handler sink taking user or imported text unescaped is stored XSS; a 3-entity escaper in an attribute context is a hole, not a helper (549 innerHTML sinks house-wide per the sweep) | Two-tier family: a 4-entity text/attr escaper (`& < > "`) plus a dedicated **onclick-arg** escaper adding `\` and `'` for `onclick="fn('VALUE')"` sinks. MISE: `_esc` + `_escJsAttr`. EXPO's J1 unification: `_htmlEsc` / `_jsSingleQuoteString` / `_htmlJsSingleQuoteArg` (5-entity, gate-enforced). DOOR: escaped at every display sink (2026-06-18 hardening) | MISE `index.html` `_escJsAttr` (~:17957) · EXPO J1 family (`escape_helper_unification_gate` pins it) | **HUB's `escH` (~:3100) escapes only `& < >`** — no `"`, so a double-quoted attribute context is injectable; its `escJ` covers JS strings but nothing covers the combined attr+JS sink. PROOF is small but unaudited for sink coverage |
 | 8 | **Site vocabulary registry** — site names smeared through code as string literals drift into incompatible vocabularies (the sweep found 3 vocabularies + extra inline lists + 10 MISE label maps); membership questions ("which sites are kitchens?") get answered by hardcoded lists that go stale when operations change | `HUB_HOME_SITES`: one `Object.freeze`d table owning code / display label / URL aliases / **capability facts** (`kitchen:true`), with membership **derived** from the capability flag (the F7 ruling: the Kitchen role reads `kitchen:true`, not a reno-era hardcoded `['Bloor','LAN']` that hid Rex's standard-mode cooking). Dedicated matchers (`sliceMatch`, `movementMatch`) own comparison; one device-local pref key | HUB `CONC_Production_Hub.html` `HUB_HOME_SITES` (~:1286); gate `tests/home_site_slice.mjs` | The *pattern* (one frozen registry, capability flags, derived membership) is what ports — each app keeps its own vocabulary. EXPO (`SITES` + profile), DOOR, and especially MISE (10 label maps) still answer site questions from scattered literals |
 | 9 | **Closed-enum guard on ingested artifacts** — a tolerant reader that silently drops unknown keys turns upstream vocabulary drift into invisible data loss (a renamed routing section just vanishes from the report) | PROOF's routing reader: every section key checked against the closed enum `P.DICT.section` → **error flag naming the unknown key**; values validated too (non-numeric/negative = error — "validate values, not just keys, else a corrupt denominator slips through"); zero cells = error (an empty/truncated fetch must not validate clean); a missing version = warn, not error (routine bumps aren't drift) | PROOF `proof.html` `P.DICT.section` enum guard (~:373; skip census ~:647) | EXPO's DOOR-artifact readers and HUB's payload readers are deliberately tolerant (graceful degradation is a house rule) — but tolerant-with-a-census is the portable middle: count and surface what you skipped, never silently drop it |
-| 10 | **Zero-config test discovery** — a hand-enumerated CI gate list strands every test someone authors but forgets to enroll; the stranded gate then rots against a moving app (exactly how EXPO's two known-red gates drifted, E-3-2) | `tests/all.mjs`: `readdirSync` glob — every `tests/*.mjs` runs as its own **subprocess** (state isolation, real per-file pass/fail), per-test 120s wall-clock cap (a hung test fails loudly), OneDrive conflict-copies excluded by pattern, new tests auto-enroll with **no CI edit** | MISE `tests/all.mjs` (:11 discovery, :23 filter); DOOR's `node --test tests/*.mjs` is the same property via the built-in runner | **EXPO** hand-enumerates `verb-gates` in `schedule-gate.yml` — a direct glob is NOT a drop-in there (diagnostics like `route_via_crosstab` must not gate; documented cumulative-load flakes), so the port needs an exclusion convention (e.g. `_`-prefix for non-gates) first. **PROOF and the HOUSE portal have no CI at all** — tests exist (PROOF) but nothing runs them |
+| 10 | **Zero-config test discovery** — a hand-enumerated CI gate list strands every test someone authors but forgets to enroll; the stranded gate then rots against a moving app (exactly how EXPO's two known-red gates drifted, E-3-2) | `tests/all.mjs`: `readdirSync` glob — every `tests/*.mjs` runs as its own **subprocess** (state isolation, real per-file pass/fail), per-test 120s wall-clock cap (a hung test fails loudly), OneDrive conflict-copies excluded by pattern, new tests auto-enroll with **no CI edit** | MISE `tests/all.mjs` (:11 discovery, :23 filter); DOOR's `node --test tests/*.mjs` is the same property via the built-in runner | **EXPO** hand-enumerates `verb-gates` in `schedule-gate.yml` — a direct glob is NOT a drop-in there (diagnostics like `route_via_crosstab` must not gate; documented cumulative-load flakes), so the port needs an exclusion convention (e.g. `_`-prefix for non-gates) first. *(Cell corrected 2026-08-16: the sweep-era "PROOF has no CI" claim closed post-sweep — PROOF gained `proof-gates.yml` running the full suite on push + PR, the P-1-10 close. The HOUSE portal's only CI is this registry's own verifier, `seams-gate.yml`.)* |
+
+---
+
+## Machine anchors — the verifier's input
+
+The machine-checkable **subset** of the table above (not a restatement — prose claims a script can't grep stay prose-only). `tests/proven_seams_gate.mjs` parses this block and checks it against the sibling repo checkouts in both directions: a `seam` check failing = **anchor rot** (the implementation moved/renamed — re-anchor the row); a `gap` check failing = **stale cell** (the "who still lacks it" claim is no longer true — update the cell). **Edit the table → edit these anchors in the same change.** Check entries are literal substrings, or `{"re": "…"}` for a regex; a target with `"exists"` asserts file presence/absence instead of content.
+
+<!-- SEAMS-ANCHORS-START -->
+```json
+{
+  "rows": [
+    { "row": 1, "class": "quota-safe localStorage write",
+      "seam": [ { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["function setItemSafe(key, value)", "ensureStorageHeadroom("] } ],
+      "gap": [
+        { "repo": "conc-kitchen-door",  "file": "index.html", "lacks": ["setItemSafe"] },
+        { "repo": "conc-kitchen-hub",   "file": "CONC_Production_Hub.html", "lacks": ["setItemSafe"] },
+        { "repo": "conc-recipe-hub",    "file": "index.html", "lacks": ["setItemSafe"] },
+        { "repo": "conc-kitchen-proof", "file": "proof.html", "lacks": ["setItemSafe"] }
+      ] },
+    { "row": 2, "class": "cache-busted cross-app fetch",
+      "seam": [ { "repo": "conc-kitchen-hub", "file": "CONC_Production_Hub.html", "has": ["async function _fetchJSON", "+ 't=' + Date.now()", { "re": "cache:\\s*'no-store'" }] } ],
+      "gap": [ { "repo": "conc-kitchen-expo", "file": "index.html", "has": [{ "re": "cache:\\s*'no-store'" }] } ] },
+    { "row": 3, "class": "GH token sanitizer",
+      "seam": [ { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["function getGHToken()", "strip non-ASCII"] } ],
+      "gap": [ { "repo": "conc-kitchen-door", "file": "index.html", "has": ["return (appSettings['gh-token'] || '').trim();"] } ] },
+    { "row": 4, "class": "publish credential lifecycle",
+      "seam": [
+        { "repo": "conc-kitchen-door", "file": "index.html", "has": ["const PublishAuth = {"] },
+        { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["testGHConnection"] }
+      ] },
+    { "row": 5, "class": "atomic multi-file publish",
+      "seam": [ { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["async function pushFilesToGitHubAtomic("] } ],
+      "gap": [ { "repo": "conc-kitchen-door", "file": "index.html", "has": ["_ghPushFileNow"], "lacks": ["pushFilesToGitHubAtomic"] } ] },
+    { "row": 6, "class": "noon-anchored local dates",
+      "seam": [
+        { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["new Date(dateStr + 'T12:00:00')"] },
+        { "repo": "conc-kitchen-hub", "file": "CONC_Production_Hub.html", "has": ["function _localDate(y,m,d){return new Date(y,m,d,12,0,0,0);}"] }
+      ] },
+    { "row": 7, "class": "escape-helper coverage",
+      "seam": [
+        { "repo": "conc-recipe-hub", "file": "index.html", "has": ["function _escJsAttr(s)"] },
+        { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["_htmlJsSingleQuoteArg"] }
+      ],
+      "gap": [ { "repo": "conc-kitchen-hub", "file": "CONC_Production_Hub.html", "has": ["function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}"] } ] },
+    { "row": 8, "class": "site vocabulary registry",
+      "seam": [ { "repo": "conc-kitchen-hub", "file": "CONC_Production_Hub.html", "has": ["const HUB_HOME_SITES=Object.freeze("] } ] },
+    { "row": 9, "class": "closed-enum guard on ingested artifacts",
+      "seam": [ { "repo": "conc-kitchen-proof", "file": "proof.html", "has": ["P.DICT.section.includes(", "routing.section.enum"] } ] },
+    { "row": 10, "class": "zero-config test discovery",
+      "seam": [
+        { "repo": "conc-recipe-hub", "file": "tests/all.mjs", "has": ["readdirSync("] },
+        { "repo": "conc-kitchen-proof", "file": ".github/workflows/proof-gates.yml", "has": ["node tests/all.mjs"] }
+      ],
+      "gap": [ { "repo": "conc-kitchen-expo", "file": "tests/all.mjs", "exists": false } ] }
+  ]
+}
+```
+<!-- SEAMS-ANCHORS-END -->
 
 ---
 
@@ -29,5 +87,7 @@
 
 - **Add a row** when a problem class gets solved well for the *second* time — that duplication is the signal it belongs here. Prefer promoting the better implementation to "the seam" and citing the other as a port.
 - **Update, don't append:** a row's "who still lacks it" cell shrinks as ports land — edit the cell (with a date) rather than adding a second row. When a cell reaches "nobody", keep the row: it's still the pointer for the *next* new app or surface.
+- **Enforcement (added 2026-08-16):** `tests/proven_seams_gate.mjs` verifies the machine-anchors block against the sibling checkouts; `.github/workflows/seams-gate.yml` runs it on push + PR **and a weekly cron** — the cron matters because this registry rots against *other* repos' changes, not its own pushes. A red non-PR run auto-opens a repo issue (the loud-flag step ported from HUB `contract-gates.yml` — this registry's own rule applied to itself). A **stale-cell red is registry maintenance, never an app regression**: the app improved; update the cell.
+- **Pending ride-alongs (2026-08-16):** a one-line registry pointer beside each app orientation doc's existing INSIGHTS pointer (EXPO · DOOR · HUB · MISE CLAUDE.md; PROOF's INSIGHTS.md) — fold into the next PR that touches each repo; note it here as they land.
 - **This doc owns the seam table** (single owner per fact, per `HOUSE_Doc_Governance_Plan.md`). `INSIGHTS.md` points here; app docs may cite a row but never restate the table.
 - Line-number anchors are as-of snapshots — re-grep the symbol name before editing at a cited location.
