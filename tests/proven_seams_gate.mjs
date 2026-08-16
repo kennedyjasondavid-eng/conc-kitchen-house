@@ -119,12 +119,16 @@ function checkEntry(text, entry) {
 const fmt = e => (typeof e === 'string' ? JSON.stringify(e) : '/' + e.re + '/');
 
 async function runTarget(row, t, kind) {
-  const where = `${t.repo}/${t.file}`;
+  // pagesFile: the path a curated Pages deploy serves this file under (e.g.
+  // HUB's deploy.yml ships CONC_Production_Hub.html as index.html). Git mode
+  // always reads the repo path.
+  const file = (MODE === 'pages' && t.pagesFile) ? t.pagesFile : t.file;
+  const where = `${t.repo}/${t.file}` + (file !== t.file ? ` (Pages: ${file})` : '');
   if (t.gitOnly && MODE === 'pages') {
-    skips.push(`SKIP — row ${row.row} (${kind}): ${where} is gitOnly (Jekyll never serves this path; enforced in git-mode runs)`);
+    skips.push(`SKIP — row ${row.row} (${kind}): ${where} is gitOnly (not Pages-served; enforced in git-mode runs)`);
     return;
   }
-  const got = await getFile(t.repo, t.file);
+  const got = await getFile(t.repo, file);
 
   if (got.status === 'norepo') {
     const msg = `row ${row.row} (${kind}): sibling checkout for ${t.repo} not found`;

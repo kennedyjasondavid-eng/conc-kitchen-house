@@ -27,7 +27,7 @@
 
 ## Machine anchors — the verifier's input
 
-The machine-checkable **subset** of the table above (not a restatement — prose claims a script can't grep stay prose-only). `tests/proven_seams_gate.mjs` parses this block and checks it against the sibling repos in both directions: a `seam` check failing = **anchor rot** (the implementation moved/renamed — re-anchor the row); a `gap` check failing = **stale cell** (the "who still lacks it" claim is no longer true — update the cell). **Edit the table → edit these anchors in the same change.** Check entries are literal substrings, or `{"re": "…"}` for a regex; a target with `"exists"` asserts file presence/absence instead of content; `"gitOnly": true` marks a path Pages never serves (dot-dirs) — enforced in git-mode runs, loudly skipped in Pages mode.
+The machine-checkable **subset** of the table above (not a restatement — prose claims a script can't grep stay prose-only). `tests/proven_seams_gate.mjs` parses this block and checks it against the sibling repos in both directions: a `seam` check failing = **anchor rot** (the implementation moved/renamed — re-anchor the row); a `gap` check failing = **stale cell** (the "who still lacks it" claim is no longer true — update the cell). **Edit the table → edit these anchors in the same change.** Check entries are literal substrings, or `{"re": "…"}` for a regex; a target with `"exists"` asserts file presence/absence instead of content; `"gitOnly": true` marks a target Pages can't serve (dot-dirs; all of PROOF, which has no Pages site) — enforced in git-mode runs, loudly skipped in Pages mode; `"pagesFile"` names the path a curated Pages deploy serves the file under (HUB's `deploy.yml` ships `CONC_Production_Hub.html` as `index.html`).
 
 <!-- SEAMS-ANCHORS-START -->
 ```json
@@ -37,12 +37,12 @@ The machine-checkable **subset** of the table above (not a restatement — prose
       "seam": [ { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["function setItemSafe(key, value)", "ensureStorageHeadroom("] } ],
       "gap": [
         { "repo": "conc-kitchen-door",  "file": "index.html", "lacks": ["setItemSafe"] },
-        { "repo": "conc-kitchen-hub",   "file": "CONC_Production_Hub.html", "lacks": ["setItemSafe"] },
+        { "repo": "conc-kitchen-hub",   "file": "CONC_Production_Hub.html", "pagesFile": "index.html", "lacks": ["setItemSafe"] },
         { "repo": "conc-recipe-hub",    "file": "index.html", "lacks": ["setItemSafe"] },
-        { "repo": "conc-kitchen-proof", "file": "proof.html", "lacks": ["setItemSafe"] }
+        { "repo": "conc-kitchen-proof", "file": "proof.html", "gitOnly": true, "lacks": ["setItemSafe"] }
       ] },
     { "row": 2, "class": "cache-busted cross-app fetch",
-      "seam": [ { "repo": "conc-kitchen-hub", "file": "CONC_Production_Hub.html", "has": ["async function _fetchJSON", "+ 't=' + Date.now()", { "re": "cache:\\s*'no-store'" }] } ],
+      "seam": [ { "repo": "conc-kitchen-hub", "file": "CONC_Production_Hub.html", "pagesFile": "index.html", "has": ["async function _fetchJSON", "+ 't=' + Date.now()", { "re": "cache:\\s*'no-store'" }] } ],
       "gap": [ { "repo": "conc-kitchen-expo", "file": "index.html", "has": [{ "re": "cache:\\s*'no-store'" }] } ] },
     { "row": 3, "class": "GH token sanitizer",
       "seam": [ { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["function getGHToken()", "strip non-ASCII"] } ],
@@ -58,18 +58,18 @@ The machine-checkable **subset** of the table above (not a restatement — prose
     { "row": 6, "class": "noon-anchored local dates",
       "seam": [
         { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["new Date(dateStr + 'T12:00:00')"] },
-        { "repo": "conc-kitchen-hub", "file": "CONC_Production_Hub.html", "has": ["function _localDate(y,m,d){return new Date(y,m,d,12,0,0,0);}"] }
+        { "repo": "conc-kitchen-hub", "file": "CONC_Production_Hub.html", "pagesFile": "index.html", "has": ["function _localDate(y,m,d){return new Date(y,m,d,12,0,0,0);}"] }
       ] },
     { "row": 7, "class": "escape-helper coverage",
       "seam": [
         { "repo": "conc-recipe-hub", "file": "index.html", "has": ["function _escJsAttr(s)"] },
         { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["_htmlJsSingleQuoteArg"] }
       ],
-      "gap": [ { "repo": "conc-kitchen-hub", "file": "CONC_Production_Hub.html", "has": ["function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}"] } ] },
+      "gap": [ { "repo": "conc-kitchen-hub", "file": "CONC_Production_Hub.html", "pagesFile": "index.html", "has": ["function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}"] } ] },
     { "row": 8, "class": "site vocabulary registry",
-      "seam": [ { "repo": "conc-kitchen-hub", "file": "CONC_Production_Hub.html", "has": ["const HUB_HOME_SITES=Object.freeze("] } ] },
+      "seam": [ { "repo": "conc-kitchen-hub", "file": "CONC_Production_Hub.html", "pagesFile": "index.html", "has": ["const HUB_HOME_SITES=Object.freeze("] } ] },
     { "row": 9, "class": "closed-enum guard on ingested artifacts",
-      "seam": [ { "repo": "conc-kitchen-proof", "file": "proof.html", "has": ["P.DICT.section.includes(", "routing.section.enum"] } ] },
+      "seam": [ { "repo": "conc-kitchen-proof", "file": "proof.html", "gitOnly": true, "has": ["P.DICT.section.includes(", "routing.section.enum"] } ] },
     { "row": 10, "class": "zero-config test discovery",
       "seam": [
         { "repo": "conc-recipe-hub", "file": "tests/all.mjs", "has": ["readdirSync("] },
@@ -87,7 +87,7 @@ The machine-checkable **subset** of the table above (not a restatement — prose
 
 - **Add a row** when a problem class gets solved well for the *second* time — that duplication is the signal it belongs here. Prefer promoting the better implementation to "the seam" and citing the other as a port.
 - **Update, don't append:** a row's "who still lacks it" cell shrinks as ports land — edit the cell (with a date) rather than adding a second row. When a cell reaches "nobody", keep the row: it's still the pointer for the *next* new app or surface.
-- **Enforcement (added 2026-08-16):** `tests/proven_seams_gate.mjs` verifies the machine-anchors block against the sibling repos; `.github/workflows/seams-gate.yml` runs it on push + PR **and a weekly cron** — the cron matters because this registry rots against *other* repos' changes, not its own pushes. A red non-PR run auto-opens a repo issue (the loud-flag step ported from HUB `contract-gates.yml` — this registry's own rule applied to itself). A **stale-cell red is registry maintenance, never an app regression**: the app improved; update the cell. Two acquisition modes: local multi-repo sessions verify **git checkouts** (byte-true, incl. `gitOnly` targets); CI verifies over the repos' **public Pages sites** — four of the five siblings are private repos with public Pages, and the anti-decay gate must not itself carry an expiring credential (row 4's lesson), so CI reads the same public data plane the apps already use to read each other.
+- **Enforcement (added 2026-08-16):** `tests/proven_seams_gate.mjs` verifies the machine-anchors block against the sibling repos; `.github/workflows/seams-gate.yml` runs it on push + PR **and a weekly cron** — the cron matters because this registry rots against *other* repos' changes, not its own pushes. A red non-PR run auto-opens a repo issue (the loud-flag step ported from HUB `contract-gates.yml` — this registry's own rule applied to itself). A **stale-cell red is registry maintenance, never an app regression**: the app improved; update the cell. Two acquisition modes: local multi-repo sessions verify **git checkouts** (byte-true, incl. `gitOnly` targets); CI verifies over the repos' **public Pages sites** — EXPO/HUB/MISE are private repos with public Pages, and the anti-decay gate must not itself carry an expiring credential (row 4's lesson), so CI reads the same public data plane the apps already use to read each other. PROOF is private with **no Pages site**, so its anchors are `gitOnly` — CI-invisible by necessity, covered by local git-mode runs; HUB's curated deploy serves its app as `index.html` (`pagesFile`).
 - **Pending ride-alongs (2026-08-16):** a one-line registry pointer beside each app orientation doc's existing INSIGHTS pointer (EXPO · DOOR · HUB · MISE CLAUDE.md; PROOF's INSIGHTS.md) — fold into the next PR that touches each repo; note it here as they land.
 - **This doc owns the seam table** (single owner per fact, per `HOUSE_Doc_Governance_Plan.md`). `INSIGHTS.md` points here; app docs may cite a row but never restate the table.
 - Line-number anchors are as-of snapshots — re-grep the symbol name before editing at a cited location.
