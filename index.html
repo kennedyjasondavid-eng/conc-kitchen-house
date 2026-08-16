@@ -236,6 +236,12 @@
         .numpad button:hover { background: rgba(255,255,255,0.08); }
         .numpad button:active { transform: scale(0.93); background: rgba(74,222,128,0.12); }
 
+        .pin-note {
+            color: rgba(255,255,255,0.45);
+            font-size: 0.72rem;
+            margin-top: 0.55rem;
+            line-height: 1.4;
+        }
         .pin-error {
             color: #ff5555;
             font-size: 0.78rem;
@@ -278,7 +284,7 @@
 
 <main>
     <div class="grid">
-        <div class="card" id="door-card" role="button" tabindex="0" aria-label="Open DOOR (PIN required)">
+        <div class="card" id="door-card" role="button" tabindex="0" aria-label="Open DOOR (staff check)">
             <svg class="card__lock" id="door-lock-icon" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2"/>
@@ -288,7 +294,7 @@
             <div class="card__desc">Intake, Active Menu, Plating Sheets, and Reporting</div>
         </div>
 
-        <div class="card" id="codex-card" role="button" tabindex="0" aria-label="Open CODEX (PIN required)">
+        <div class="card" id="codex-card" role="button" tabindex="0" aria-label="Open CODEX (staff check)">
             <svg class="card__lock" id="codex-lock-icon" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2"/>
@@ -304,7 +310,7 @@
             <div class="card__desc">Unified Kitchen Whiteboard</div>
         </a>
 
-        <div class="card" id="expo-card" role="button" tabindex="0" aria-label="Open EXPO (PIN required)">
+        <div class="card" id="expo-card" role="button" tabindex="0" aria-label="Open EXPO (staff check)">
             <svg class="card__lock" id="lock-icon" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2"/>
@@ -319,7 +325,7 @@
 <!-- PIN Modal -->
 <div class="overlay" id="pin-overlay">
     <div class="pin-modal" id="pin-modal">
-        <h2 id="pin-title">EXPO ACCESS</h2>
+        <h2 id="pin-title">Staff check — EXPO</h2>
         <div class="pin-dots" id="pin-dots">
             <div class="pin-dot"></div>
             <div class="pin-dot"></div>
@@ -341,6 +347,7 @@
             <button type="button" data-a="clear">C</button>
         </div>
         <div class="pin-error" id="pin-error"></div>
+        <p class="pin-note">A quick staff check so these tools aren't opened by accident.<br>It is not a lock — the apps themselves have no login.</p>
         <button type="button" class="pin-cancel" id="pin-cancel">CANCEL</button>
     </div>
 </div>
@@ -354,6 +361,11 @@
 (function () {
     'use strict';
 
+    // F5 ruling (2026-08-16, HOUSE sweep P-1-7): this PIN is a STAFF SPEED BUMP,
+    // not access control — all three apps are public GitHub Pages sites at the URLs
+    // right below, reachable with no PIN. Keep the language honest ("staff check",
+    // never "ACCESS"/"required"). Real access control is the Entra/SharePoint
+    // integration named in HOUSE_SHAREPOINT_IT_BRIEF_2026-07-07.md, not this dialog.
     var GATED_APPS = [
         {
             cardId:     'expo-card',
@@ -362,7 +374,7 @@
             shackleId:  'lock-shackle',
             sessionKey: 'house_expo_auth',
             pinHash:    'c1f330d0aff31c1c87403f1e4347bcc21aff7c179908723535f2b31723702525',
-            title:      'EXPO ACCESS'
+            title:      'Staff check — EXPO'
         },
         {
             cardId:     'door-card',
@@ -371,7 +383,7 @@
             shackleId:  'door-lock-shackle',
             sessionKey: 'house_door_auth',
             pinHash:    '0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c',
-            title:      'DOOR ACCESS'
+            title:      'Staff check — DOOR'
         },
         {
             cardId:     'codex-card',
@@ -380,7 +392,7 @@
             shackleId:  'codex-lock-shackle',
             sessionKey: 'house_codex_auth',
             pinHash:    'edee29f882543b956620b26d0ee0e7e950399b1c4222f5de05e06425b4c995e9',
-            title:      'CODEX ACCESS'
+            title:      'Staff check — CODEX'
         }
     ];
 
