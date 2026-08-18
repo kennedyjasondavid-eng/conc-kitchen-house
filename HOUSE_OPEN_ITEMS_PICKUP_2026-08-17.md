@@ -46,6 +46,9 @@
 ### B4 · EXPO S5b — PARKED / OVERTAKEN (do not assume it's the priority)
 → `conc-kitchen-expo/EXPO_SCHEDULER_REFINEMENT_S5B_IMPLEMENTATION_PLAN_2026-07-17.md`. Reviewed and "awaiting §10 acceptance" on 2026-07-17, but **~6 weeks of newer EXPO work landed since without it** (baseline-promotion, New-Dishes consolidation, Nigerian/Blackened corrections). Treat as **dormant**; confirm with Jason it's still wanted before reviving. Its §10 acceptance is a hard gate — no S5b build until he explicitly accepts.
 
+### B5 · Recipe-attach rename-survival — TRIGGER-GATED (CROSS-APP CODEX+DOOR+HUB) — added 2026-08-18
+→ **`conc-kitchen-door/DOOR_RECIPE_ATTACH_PHASE2_PLAN_2026-08-18.md` §0a/§3** (owner). **Shipped (DOOR PR #85, merged):** a bound menu slot now stores + publishes the recipe's `recipeId` in `menu_current.json` `_slots` (additive/opt-in/allergen-neutral; HUB is the future consumer of an exact `?recipe=` deep-link — not yet wired). **Deferred — do NOT build speculatively:** a slot's binding does not yet *survive a CODEX rename*, because `recipeId = _cxSlug(canonicalName)` re-slugs on rename and **no feed recipe is frozen**. The durable, zero-curation fix is CODEX publishing its already-tracked `previousNames` in the DOOR feed (~1 line in `projectRecipeForDoor`, `conc-recipe-hub/index.html:30673`, + a re-bless cycle) so an old id/slug still resolves; DOOR then resolves dual-key (id → previous-slug → name), and HUB gains exact deep-links. **Trigger to build: a real rename actually orphans a live binding** — until then the id merely travelling is the whole win. Preferred over locking CODEX ids (a curation burden that fights the self-maintaining slug).
+
 ---
 
 ## C — Jason's operational hands (a session can scope, not decide)
