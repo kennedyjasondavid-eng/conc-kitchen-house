@@ -12,7 +12,7 @@
 
 | # | Problem class | Hardened implementation | Where it lives | Who still lacks it |
 |---|---|---|---|---|
-| 1 | **Quota-safe localStorage write** — a full origin (shared by all six apps) makes `setItem` throw; a bare try/catch swallow turns that into silent non-persistence | `setItemSafe(key, value)`: synchronous happy path (byte-identical timing to a bare `setItem`, so fire-and-forget callers still see the write land); only the quota path goes async — `ensureStorageHeadroom()` → retry once → **loud** console fail + `return false`. Deliberately NOT used for the one write that must fail loudly on its own terms (EXPO's `pp_canonical_save` keeps its toast-and-return-null contract) — the seam includes knowing which write to exempt | EXPO `index.html` `setItemSafe` (~:31556) + `ensureStorageHeadroom` · **DOOR `doorSetItemSafe` (2026-09-11, publish-resilience P3, PR #92)** — partial port: no storage map/upkeep, so on quota it drops only `DOOR_EXPENDABLE_KEYS` (the pre-Generate undo snapshot) and retries once; used for the publish outbox | HUB / MISE / PROOF still write localStorage behind bare swallows (sweep empty-catch counts: HUB 17 · MISE 64 · PROOF 3). DOOR's other 30-odd swallows are untouched — only the outbox write uses the seam |
+| 1 | **Quota-safe localStorage write** — a full origin (shared by all six apps) makes `setItem` throw; a bare try/catch swallow turns that into silent non-persistence | `setItemSafe(key, value)`: synchronous happy path (byte-identical timing to a bare `setItem`, so fire-and-forget callers still see the write land); only the quota path goes async — `ensureStorageHeadroom()` → retry once → **loud** console fail + `return false`. Deliberately NOT used for the one write that must fail loudly on its own terms (EXPO's `pp_canonical_save` keeps its toast-and-return-null contract) — the seam includes knowing which write to exempt | EXPO `index.html` `setItemSafe` (~:31556) + `ensureStorageHeadroom` · **DOOR `doorSetItemSafe` (2026-09-11, publish-resilience P3, PR #92)** — partial port: no storage map/upkeep, so on quota it drops only `DOOR_EXPENDABLE_KEYS` (the pre-Generate undo snapshot) and retries once; used for the publish outbox · **MISE `setItemSafe` (2026-09-12, Cooked-From K7)** — the recipe-library writes (`saveToRecipeLibrary`, `saveRecipeEdit`, `renameRecipe`, `saveRecipeToLog`) never claim success on a refused write | HUB / PROOF still write localStorage behind bare swallows (sweep empty-catch counts: HUB 17 · PROOF 3); MISE's writes outside the recipe library still swallow (64 at the sweep). DOOR's other 30-odd swallows are untouched — only the outbox write uses the seam |
 | 2 | **Cache-busted cross-app fetch** — GitHub Pages + CDN serve stale JSON; a "successful" fetch of an old artifact is worse than a failed one | `_fetchJSON(url)`: appends `?t=Date.now()` **and** `{ cache: 'no-store' }` (belt and suspenders — the query bust defeats CDN/proxy layers `no-store` alone can miss), null-swallows so callers degrade to their cache tier | HUB `CONC_Production_Hub.html` `_fetchJSON` (~:4277) | EXPO's five cross-app fetches gained `cache:'no-store'` in #235 but not the query bust; DOOR/MISE/PROOF cross-app reads vary — check the specific fetch before trusting its freshness |
 | 3 | **GH token sanitizer** — a token pasted from rich text carries smart quotes / invisible whitespace; non-ISO-8859-1 bytes make the `Authorization` header constructor throw | `getGHToken()`: strip non-ASCII + trim **at the read seam**, so every consumer downstream gets a header-safe token (v9.29 lesson — the push failed with an opaque header error, not "bad token") | EXPO `index.html` `getGHToken` (~:22363) | **DOOR closed 2026-09-11** (publish-resilience P2, PR #91): `doorSanitizeConnectionKey` applied in `PublishAuth.getSavedToken` / `getTypedToken` / `saveValidatedToken` — on read as well as on save. HUB (notes PUT) and MISE (publish path) still read tokens with no sanitize. Same paste, same opaque failure |
 | 4 | **Publish credential lifecycle** — tokens that silently expire, resurrect from embedded defaults, or persist untested erode trust in the whole publish lane | `PublishAuth`: one object owning token/repo/expiry metadata; **Test & Save** (probe GitHub before persisting), no embedded-default resurrect on empty storage, expiry surfaced before it bites. EXPO's save-trust PR-B (`testGHConnection`/`_ghConnState`) is a partial port of this, modeled on it explicitly | DOOR `index.html` `PublishAuth` (~:11369; `window` export ~:11570) | EXPO's port lacks expiry metadata; MISE's publish path (manual-first, C9-gated) and HUB's notes-save token handling are ad hoc — no probe-before-persist |
@@ -34,19 +34,23 @@ The machine-checkable **subset** of the table above (not a restatement — prose
 {
   "rows": [
     { "row": 1, "class": "quota-safe localStorage write",
-      "seam": [ { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["function setItemSafe(key, value)", "ensureStorageHeadroom("] } ],
+      "seam": [
+        { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["function setItemSafe(key, value)", "ensureStorageHeadroom("] },
+        { "repo": "conc-recipe-hub",   "file": "index.html", "has": ["function setItemSafe(key, value)"] }
+      ],
       "gap": [
         { "repo": "conc-kitchen-door",  "file": "index.html", "lacks": ["setItemSafe"] },
         { "repo": "conc-kitchen-hub",   "file": "CONC_Production_Hub.html", "pagesFile": "index.html", "lacks": ["setItemSafe"] },
-        { "repo": "conc-recipe-hub",    "file": "index.html", "lacks": ["setItemSafe"] },
         { "repo": "conc-kitchen-proof", "file": "proof.html", "gitOnly": true, "lacks": ["setItemSafe"] }
       ] },
     { "row": 2, "class": "cache-busted cross-app fetch",
       "seam": [ { "repo": "conc-kitchen-hub", "file": "CONC_Production_Hub.html", "pagesFile": "index.html", "has": ["async function _fetchJSON", "+ 't=' + Date.now()", { "re": "cache:\\s*'no-store'" }] } ],
       "gap": [ { "repo": "conc-kitchen-expo", "file": "index.html", "has": [{ "re": "cache:\\s*'no-store'" }] } ] },
     { "row": 3, "class": "GH token sanitizer",
-      "seam": [ { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["function getGHToken()", "strip non-ASCII"] } ],
-      "gap": [ { "repo": "conc-kitchen-door", "file": "index.html", "has": ["return (appSettings['gh-token'] || '').trim();"] } ] },
+      "seam": [
+        { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["function getGHToken()", "strip non-ASCII"] },
+        { "repo": "conc-kitchen-door", "file": "index.html", "has": ["function doorSanitizeConnectionKey(raw)"] }
+      ] },
     { "row": 4, "class": "publish credential lifecycle",
       "seam": [
         { "repo": "conc-kitchen-door", "file": "index.html", "has": ["const PublishAuth = {"] },
