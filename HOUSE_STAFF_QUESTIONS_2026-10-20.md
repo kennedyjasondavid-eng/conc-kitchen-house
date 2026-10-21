@@ -351,6 +351,22 @@ Each question below is a fact only kitchen, program or ordering staff can supply
 - **Source:** CODEX card "Curried Tofu"; `recipe_production.json` (`chainType` "tofu", `cookSite` "Rex", `archetype` "rawTofuSend"); CODEX `docs/CODEX_RAW_SEND_CARD_2026-10-21.md` §5, §8.
 - **Goes to:** the card's route, or its method if part of it is done ahead.
 
+### 1k. From the CODEX walkthrough (added 2026-10-21)
+
+**R27. Pineapple Rice: does liquid egg go in?** *(added 2026-10-21)* Served Wk3 SAT lunch, vegan line.
+- **Ask:** is liquid egg fried and folded into the rice, as the card's method says? Is the vegan pan made the same way?
+- **Why:** the card is on the vegan line. Its method fries liquid egg and folds it into the rice ("Except the liquid egg"; "Pan fry the liquid egg"; "fold the pan fried egg into the rice"), but its ingredient table has no egg row and its allergens don't list Eggs. Jason ruled to ask Rexdale before changing anything (the CODEX walkthrough plan, call 7a).
+- **Source:** CODEX card "Pineapple Rice" (method steps 1, 4 and 5); `CODEX_UX_WALKTHROUGH_2026-10-21.md` P1-11; `CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md` §4 Q1.
+- **Goes to:** if yes, an egg row and "Eggs (Liquid Egg)" on the card, and the dish off the vegan line (DOOR's vegan plate). If no, the egg steps come out of the method.
+
+**R28. Johnny Cakes: how much vanilla?** *(added 2026-10-21)*
+- **Ask:** the card holds 1,760 g of vanilla ("Vanilla · 2 Lt" on the Rexdale card) for 115 pieces. What is the real amount, and which product (extract or flavouring)?
+- **Why:** about 15 g a piece looks like a slip; the cost and the printed card both read it.
+- **Source:** CODEX card "Johnny Cakes"; `CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md` §4 Q6.
+- **Goes to:** the amount and product on the card.
+
+The walkthrough's other questions are already here: the Quinoa Cakes' flour (R4), the rows for Side Salad and Garlic Corn and Bean (R12), Roasted Sweet Potato (R11) and the Soy-Free Mushroom Fried Rice (B4), and the four labels (O2).
+
 ---
 
 ## 2. Bloor kitchen
@@ -426,6 +442,18 @@ Each question below is a fact only kitchen, program or ordering staff can supply
 - **Why:** EXPO sends both raw for Rex to cook on the service day: Bloor mixes them (and trays the meatloaf), and Rex shapes the meatballs. The meatball card's own method notes "mix now goes to Rex in this form". But both CODEX methods still cook them ahead ("Cool and bag with Simple Tomato Sauce"; "Cool and portion … Reheat covered"). So their HACCP card keeps the full cook-chill set with "verify on-site", while the other raw sends print the same-day card.
 - **Source:** CODEX cards "Meatballs" (steps 4 and 7) and "Meatloaf" (steps 6–8); EXPO `RECIPE_DB` "Halal Beef Meatballs" and "Beef Meatloaf — Bake" (`rawMeatSend`, cooked at Rex); CODEX `docs/CODEX_RAW_SEND_CARD_2026-10-21.md` §1, §8.
 - **Goes to:** the two cards' methods, then their HACCP card (same-day if Rex cooks them on the day).
+
+**B9. Butter Chickpeas: the amounts.** *(added 2026-10-21)*
+- **Ask:** the card makes 20 portions from 10 lbs of onions, 1 can of chickpeas, 250 mL of coconut milk and a quarter can of diced tomatoes. What are the real amounts for one batch, and how many portions does it make?
+- **Why:** the onions outweigh the chickpeas many times over. The card scales from these numbers, so a cook who scales it gets the same mismatch.
+- **Source:** CODEX card "Butter Chickpeas" (Bloor); `CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md` §4 Q8.
+- **Goes to:** the card's rows and batch.
+
+**B10. Seasonal Soup and Cut Fruit: what goes in them?** *(added 2026-10-21)*
+- **Ask:** what goes in each, and how much for one service? For the soup: water or stock (if stock, chicken or vegetable)? Any cream, butter or flour?
+- **Why:** both CODEX records list no ingredients. Their allergens say "None", but CODEX can't check that without rows, so they stay "Not verified".
+- **Source:** CODEX records "Seasonal Soup" and "Cut Fruit" (Bloor, no ingredients); `CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md` §3 call 6 and §4 Q9.
+- **Goes to:** each record's rows; then CODEX shows "No allergens · checked", or the families its rows bring.
 ---
 
 ## 3. Lansdowne and Bloor's own residents (when they come into HOUSE)
@@ -534,6 +562,10 @@ These questions name residents' rooms with their allergies and health needs, so 
 | Canned baked beans | pork, lard, honey, milk, gelatin | Chakalaka (both lines, Wk3 THU dinner) |
 | Teriyaki sauce | honey, fish, milk | Teriyaki Tofu (Wk4 THU vegan dinner), Sesame Sauce |
 | Coconut milk powder | milk or caseinate | Rice and Beans (Wk1 MON dinner, both lines) |
+| Bottled lemon juice and lime juice *(added 2026-10-21)* | a sulphite preservative (metabisulphite, bisulphite) | 29 CODEX recipes, among them the marinades, Tzatziki, Garlic Sauce, both tuna mixes and Refried Beans. Jason ruled the safe side (2026-10-21): CODEX lists Sulphites on all 29. They come off, with a stamped removal, if the labels show none |
+| Cattlemen's BBQ sauce *(added 2026-10-21)* | tomato, paprika or chili (nightshades); anything else | Honey BBQ Sauce. CODEX lists Nightshades on the safe side |
+| Lemon pepper seasoning *(added 2026-10-21)* | paprika, red pepper or chili (nightshades); anything else. Is the "Lemon Pepper Seasoning Mix" in the chimichurri dishes the same product as the one in Lime-Spiced Chicken Legs? | Chimichurri Chicken Legs, Chimichurri Tofu, Lime-Spiced Chicken Legs. CODEX lists Nightshades on all three |
+| Beef jus *(added 2026-10-21)* | wheat or gluten; soy | Beef CONC Salad Mix. CODEX lists Gluten on the safe side |
 
 - **Why:** these decide published allergens and the vegan-friendly flag; each is listed as waiting on its label.
 - **Source:** CODEX one-allergen receipt §11 (l.493, "Label checks, open"); C8 receipt "For Jason" #1 (l.51); bouillon ruling (v22).
