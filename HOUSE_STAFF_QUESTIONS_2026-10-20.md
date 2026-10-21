@@ -341,6 +341,16 @@ Each question below is a fact only kitchen, program or ordering staff can supply
 - **Source:** CODEX cards "Red Red Beans", "Jollof Rice" and "Plain Rice - Regular oven method (Rexdale)"; `docs/CODEX_V27_ROUTES_2026-10-20.md` §5, §9 (the v27 review, P3-1).
 - **Goes to:** the three cards' route; a cooling and reheating step if they are made ahead.
 
+### 1j. From the raw-send HACCP card (added 2026-10-21)
+
+**R26. Curried Tofu: made at Rex on the day?** *(added 2026-10-21)*
+- **Ask:**
+  - Is it made at Rex the day it's served: the tofu and peppers diced and spiced, baked in the combi and kept in the hot box?
+  - Is any of it done the day before? If the tofu is diced and spiced ahead, is it kept in the fridge until it's baked?
+- **Why:** its route came from the May 2026 Rexdale import (the tofu route, made at Rex), and EXPO has no record of it. CODEX's HACCP card now reads the tofu route as a raw send: cooked and hot-held on the day, with the raw tofu held at ≤4 °C before cooking. Its method describes a same-day cook at Rex.
+- **Source:** CODEX card "Curried Tofu"; `recipe_production.json` (`chainType` "tofu", `cookSite` "Rex", `archetype` "rawTofuSend"); CODEX `docs/CODEX_RAW_SEND_CARD_2026-10-21.md` §5, §8.
+- **Goes to:** the card's route, or its method if part of it is done ahead.
+
 ---
 
 ## 2. Bloor kitchen
@@ -408,6 +418,14 @@ Each question below is a fact only kitchen, program or ordering staff can supply
 - **Source:** `docs/CODEX_COSTING_C7B_RESIDUAL_CLEANUP_HANDOFF_2026-07-16.md` §4.
 - **Goes to:** the unit on the CODEX card.
 
+
+**B8. Meatballs and Meatloaf: who cooks them, and when?** *(added 2026-10-21)*
+- **Ask:**
+  - Does Bloor still roast the meatballs, cool them and bag them with the Simple Tomato Sauce? Does it still bake the meatloaf, cool it and portion it for Rex to reheat?
+  - Or does Bloor send the raw mix, and Rex shapes and cooks them on the day? If so, is the raw mix kept in the fridge until it's cooked?
+- **Why:** EXPO sends both raw for Rex to cook on the service day: Bloor mixes them (and trays the meatloaf), and Rex shapes the meatballs. The meatball card's own method notes "mix now goes to Rex in this form". But both CODEX methods still cook them ahead ("Cool and bag with Simple Tomato Sauce"; "Cool and portion … Reheat covered"). So their HACCP card keeps the full cook-chill set with "verify on-site", while the other raw sends print the same-day card.
+- **Source:** CODEX cards "Meatballs" (steps 4 and 7) and "Meatloaf" (steps 6–8); EXPO `RECIPE_DB` "Halal Beef Meatballs" and "Beef Meatloaf — Bake" (`rawMeatSend`, cooked at Rex); CODEX `docs/CODEX_RAW_SEND_CARD_2026-10-21.md` §1, §8.
+- **Goes to:** the two cards' methods, then their HACCP card (same-day if Rex cooks them on the day).
 ---
 
 ## 3. Lansdowne and Bloor's own residents (when they come into HOUSE)
