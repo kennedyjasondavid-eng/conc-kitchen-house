@@ -371,11 +371,11 @@ Each question below is a fact only kitchen, program or ordering staff can supply
 - **Source:** CODEX card "Vegan  Pie Filling" (row "Vegan crumble"); conc-recipe-hub `docs/CODEX_V29_SAFE_SIDE_ALLERGENS_2026-10-21.md` §9.
 - **Goes to:** if bought with soy, "Soy (Vegan Crumble)" on the card (and DOOR's vegan plate through the feed); if it's the Vegan Meat Replacement, the row links to that recipe.
 
-**R30. Cranberry Orange Scones: fresh or dried cranberries?** *(added 2026-10-22)*
-- **Ask:** is the "Cranberry" in the scones fresh, frozen or dried? If dried, its label: does it list a sulphite preservative?
-- **Why:** dried fruit often carries sulphites. Jason ruled the safe side for the raisins and dried cranberries in six Rexdale recipes (2026-10-22: CODEX lists Sulphites on them, v30); the scones' row doesn't say which cranberry, so they wait on this answer.
-- **Source:** CODEX card "Cranberry Orange Scones"; conc-recipe-hub v30 receipt.
-- **Goes to:** if dried, "Sulphites (Dried Cranberries)" on the card unless the label shows none.
+**R30. Cranberry Orange Scones and Cranberry Sour Cream Cake: fresh or dried cranberries?** *(added 2026-10-22)*
+- **Ask:** are the cranberries in the scones ("Cranberry") and in the cake ("Cranberries", 4 kg stirred into the batter) fresh, frozen or dried? If dried, their label: does it list a sulphite preservative?
+- **Why:** dried fruit often carries sulphites. Jason ruled the safe side for the raisins and dried cranberries in six Rexdale recipes (2026-10-22: CODEX lists Sulphites on them, v30). These two rows don't say which cranberry, so they wait on this answer. The cake already lists Sulphites for its lemon juice; its label would then name the cranberries too.
+- **Source:** CODEX cards "Cranberry Orange Scones" and "Cranberry Sour Cream Cake"; conc-recipe-hub v30 receipt.
+- **Goes to:** if dried, "Sulphites (Dried Cranberries)" on the scones, and the cake's Sulphites label naming them, unless the label shows none.
 
 The walkthrough's other questions are already here: the Quinoa Cakes' flour (R4), the rows for Side Salad and Garlic Corn and Bean (R12), Roasted Sweet Potato (R11) and the Soy-Free Mushroom Fried Rice (B4), and the four labels (O2).
 
