@@ -565,7 +565,7 @@ These questions name residents' rooms with their allergies and health needs, so 
 | Bottled lemon juice and lime juice *(added 2026-10-21)* | a sulphite preservative (metabisulphite, bisulphite) | 29 CODEX recipes, among them the marinades, Tzatziki, Garlic Sauce, both tuna mixes and Refried Beans. Jason ruled the safe side (2026-10-21): CODEX lists Sulphites on all 29. They come off, with a stamped removal, if the labels show none |
 | Cattlemen's BBQ sauce *(added 2026-10-21)* | tomato, paprika or chili (nightshades); anything else | Honey BBQ Sauce. CODEX lists Nightshades on the safe side |
 | Lemon pepper seasoning *(added 2026-10-21)* | paprika, red pepper or chili (nightshades); anything else. Is the "Lemon Pepper Seasoning Mix" in the chimichurri dishes the same product as the one in Lime-Spiced Chicken Legs? | Chimichurri Chicken Legs, Chimichurri Tofu, Lime-Spiced Chicken Legs. CODEX lists Nightshades on all three |
-| Beef jus *(added 2026-10-21)* | wheat or gluten; soy | Beef CONC Salad Mix. CODEX lists Gluten on the safe side |
+| Beef jus *(added 2026-10-21)* | First: is it bought, or the beef's own cooking liquid? The recipe's method pours it off the browned beef ("Beef Jus (Cooking Liquid)"), as Beef Nacho Mix does with no Gluten listed. If bought: wheat or gluten; soy *(question sharpened 2026-10-22, from the W1 review)* | Beef CONC Salad Mix. CODEX lists Gluten on the safe side; it comes off, with a stamped removal, if the jus is the pan liquid |
 
 - **Why:** these decide published allergens and the vegan-friendly flag; each is listed as waiting on its label.
 - **Source:** CODEX one-allergen receipt §11 (l.493, "Label checks, open"); C8 receipt "For Jason" #1 (l.51); bouillon ruling (v22).
