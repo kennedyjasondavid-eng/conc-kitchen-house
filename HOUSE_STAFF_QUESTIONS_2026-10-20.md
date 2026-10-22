@@ -365,6 +365,18 @@ Each question below is a fact only kitchen, program or ordering staff can supply
 - **Source:** CODEX card "Johnny Cakes"; `CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md` §4 Q6.
 - **Goes to:** the amount and product on the card.
 
+**R29. Vegan Pie Filling: what is the "Vegan crumble"?** *(added 2026-10-22)* Served Wk4 WED vegan dinner (Vegan Pot Pie).
+- **Ask:** is the crumble bought (which product?) or CONC's own Vegan Meat Replacement? If bought, does its label list soy or wheat?
+- **Why:** the card lists Gluten, Oats, Nightshades and Sulphites but no Soy. Bought vegan crumbles are usually soy, and DOOR has a No Soy resident. CONC's Vegan Meat Replacement (mushrooms, chickpeas, brown rice, cornmeal, panko) has no soy, and its families are already on the card. Jason ruled to ask Rexdale first (2026-10-22).
+- **Source:** CODEX card "Vegan  Pie Filling" (row "Vegan crumble"); conc-recipe-hub `docs/CODEX_V29_SAFE_SIDE_ALLERGENS_2026-10-21.md` §9.
+- **Goes to:** if bought with soy, "Soy (Vegan Crumble)" on the card (and DOOR's vegan plate through the feed); if it's the Vegan Meat Replacement, the row links to that recipe.
+
+**R30. Cranberry Orange Scones: fresh or dried cranberries?** *(added 2026-10-22)*
+- **Ask:** is the "Cranberry" in the scones fresh, frozen or dried? If dried, its label: does it list a sulphite preservative?
+- **Why:** dried fruit often carries sulphites. Jason ruled the safe side for the raisins and dried cranberries in six Rexdale recipes (2026-10-22: CODEX lists Sulphites on them, v30); the scones' row doesn't say which cranberry, so they wait on this answer.
+- **Source:** CODEX card "Cranberry Orange Scones"; conc-recipe-hub v30 receipt.
+- **Goes to:** if dried, "Sulphites (Dried Cranberries)" on the card unless the label shows none.
+
 The walkthrough's other questions are already here: the Quinoa Cakes' flour (R4), the rows for Side Salad and Garlic Corn and Bean (R12), Roasted Sweet Potato (R11) and the Soy-Free Mushroom Fried Rice (B4), and the four labels (O2).
 
 ---
@@ -563,9 +575,10 @@ These questions name residents' rooms with their allergies and health needs, so 
 | Teriyaki sauce | honey, fish, milk | Teriyaki Tofu (Wk4 THU vegan dinner), Sesame Sauce |
 | Coconut milk powder | milk or caseinate | Rice and Beans (Wk1 MON dinner, both lines) |
 | Bottled lemon juice and lime juice *(added 2026-10-21)* | a sulphite preservative (metabisulphite, bisulphite) | 29 CODEX recipes, among them the marinades, Tzatziki, Garlic Sauce, both tuna mixes and Refried Beans. Jason ruled the safe side (2026-10-21): CODEX lists Sulphites on all 29. They come off, with a stamped removal, if the labels show none |
-| Cattlemen's BBQ sauce *(added 2026-10-21)* | tomato, paprika or chili (nightshades); anything else | Honey BBQ Sauce. CODEX lists Nightshades on the safe side |
+| Cattlemen's BBQ sauce *(added 2026-10-21)* | tomato, paprika or chili (nightshades); molasses (sulphites); mustard; Worcestershire (fish, gluten, soy); anything else. And: which BBQ sauce do the BBQ Chicken Legs use? If another, read its label too *(BBQ Chicken Legs added 2026-10-22)* | Honey BBQ Sauce; BBQ Chicken Legs (Bloor). CODEX lists Nightshades on both, on the safe side; nothing else is added until a label is read (Jason, 2026-10-22) |
+| Raisins and dried cranberries *(added 2026-10-22)* | a sulphite preservative (sulphur dioxide, sulphite, metabisulphite) | Rexdale's Butter Tarts, Vegan Butter Tart, Coconut Drop Cookies, Granola, Overnight Oats and Fiona's Oatmeal Cookies. Jason ruled the safe side (2026-10-22): CODEX lists Sulphites naming the fruit on all six (v30). They come off, with a stamped removal, if the labels show none |
 | Lemon pepper seasoning *(added 2026-10-21)* | paprika, red pepper or chili (nightshades); anything else. Is the "Lemon Pepper Seasoning Mix" in the chimichurri dishes the same product as the one in Lime-Spiced Chicken Legs? | Chimichurri Chicken Legs, Chimichurri Tofu, Lime-Spiced Chicken Legs. CODEX lists Nightshades on all three |
-| Beef jus *(added 2026-10-21)* | First: is it bought, or the beef's own cooking liquid? The recipe's method pours it off the browned beef ("Beef Jus (Cooking Liquid)"), as Beef Nacho Mix does with no Gluten listed. If bought: wheat or gluten; soy *(question sharpened 2026-10-22, from the W1 review)* | Beef CONC Salad Mix. CODEX lists Gluten on the safe side; it comes off, with a stamped removal, if the jus is the pan liquid |
+| Beef jus *(added 2026-10-21)* | First: is it bought, or the beef's own cooking liquid? The recipe's method pours it off the browned beef ("Beef Jus (Cooking Liquid)"), as Beef Nacho Mix does with no Gluten listed. If bought: wheat or gluten; soy *(question sharpened 2026-10-22, from the W1 review)*. **Answered 2026-10-22 (Jason): the method's own words — it's the pan liquid.** Bloor only needs to say if a bought jus is ever used | Beef CONC Salad Mix. CODEX takes the Gluten off, with a stamped removal (v30) |
 
 - **Why:** these decide published allergens and the vegan-friendly flag; each is listed as waiting on its label.
 - **Source:** CODEX one-allergen receipt §11 (l.493, "Label checks, open"); C8 receipt "For Jason" #1 (l.51); bouillon ruling (v22).
