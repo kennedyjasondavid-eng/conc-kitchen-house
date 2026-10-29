@@ -1,6 +1,6 @@
 # HOUSE — umbrella repo
 
-> **Cross-app status may be stale here — single source of truth for cross-app facts (versions, phases, schema seams) is the HOUSE status ledger in `~/.claude/CLAUDE.md`.**
+> **Cross-app status may be stale here — single source of truth for cross-app facts (versions, phases, schema seams) is the HOUSE status ledger, [`HOUSE_STATUS_LEDGER.md`](HOUSE_STATUS_LEDGER.md) in this repo.**
 
 ## What this is
 `conc-kitchen-house` is the **HOUSE umbrella repo**: the landing page (`index.html`) that links the apps, and — as of 2026-06-21 — the **home of the HOUSE-level governance + knowledge docs** that apply to every app (they were previously accreted in the HUB repo and relocated here, where a cross-HOUSE fact's owner should live).
@@ -17,6 +17,7 @@ Pipeline: **MISE/CODEX → DOOR/EXPO → HUB**; DOOR is upstream of EXPO, HUB do
 ## HOUSE-level docs this repo owns (single owner per fact)
 | Doc | Role |
 |---|---|
+| `HOUSE_STATUS_LEDGER.md` | **The cross-HOUSE STATUS owner** — versions, phases, schema seams, the version contract, open cross-app lines, operating rules. Every app's `CLAUDE.md` points here for cross-app status. Moved here from `~/.claude/CLAUDE.md` on 2026-10-29 so cloud sessions can read it. |
 | `INSIGHTS.md` | **The cross-HOUSE KNOWLEDGE owner** — design wisdom + lessons + telos for *every* app. Read it before any HOUSE design pass. App-specific grammar (e.g. EXPO's `EXPO_DESIGN_PRINCIPLES.md`, PROOF's `INSIGHTS.md`) **points back to it** — don't restate it. |
 | `HOUSE_PROVEN_SEAMS.md` | **The proven-seams registry** (one level below INSIGHTS): problem class → the hardened implementation → where it lives → who still lacks it. Any session touching one of those classes **ports the seam instead of reinventing or omitting it** — and cites the row. Single owner of the seam table. |
 | `HOUSE_Doc_Governance_Plan.md` | The doc-governance model + rollout (single owner per fact; the `LEDGER:`/`WRAP:` convention) |
@@ -27,7 +28,7 @@ Pipeline: **MISE/CODEX → DOOR/EXPO → HUB**; DOOR is upstream of EXPO, HUB do
 | `HOUSE_OPEN_ITEMS_PICKUP_2026-08-17.md` | **Dated open-items router for a fresh session** — triages the cross-HOUSE open work (buildable now · needs-a-Jason-ruling · Jason's operational hands · ruled) and **points to each item's owning doc or GitHub issue**, never restating them. A frozen snapshot; the pointed-to docs + issues are the live truth. |
 | `HOUSE_STAFF_QUESTIONS_2026-10-20.md` | **The questions for the sites** — the open facts HOUSE needs from the kitchens, program / Health & Wellness staff, drivers and whoever orders food, grouped by who to ask. Each item gives the question, why it matters, its source and where its answer goes. Compiled 2026-10-20 for Jason to take to staff when they are brought into HOUSE. A frozen snapshot: an answer is written under its question with a date, then applied where its **Goes to** line says. Its §4, the questions for Health & Wellness staff, names no resident: those questions name residents' rooms and health needs, so Jason holds them outside this public repo. |
 
-**What lives elsewhere (this repo points, never restates):** cross-app STATUS (versions/phases/schema seams) → the HOUSE status ledger in `~/.claude/CLAUDE.md`. The product/ecosystem "why" → the V42 vision HTML under `~CONC Project Management Tool~`.
+**What lives elsewhere (this repo points, never restates):** cross-app STATUS (versions/phases/schema seams) → `HOUSE_STATUS_LEDGER.md` (this repo's one status doc; it is not restated elsewhere). The product/ecosystem "why" → the V42 vision HTML under `~CONC Project Management Tool~`.
 
 ## Rules
 - Single-file HTML landing page; no build tools. Graceful degradation from `file://`.
