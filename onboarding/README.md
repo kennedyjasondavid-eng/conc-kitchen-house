@@ -12,7 +12,7 @@ carries only the pieces that have **no other home in git**:
 
 | File | What it is |
 |---|---|
-| `HOUSE_LEDGER.md` | Consolidated machine-global cross-app ledger → install to `~/.claude/CLAUDE.md`. Built 2026-08-10 from the six repo memories: no standalone ledger existed (the `~/.claude/CLAUDE.md` pointer was never created; `~/.codex/AGENTS.md` had been repurposed for unrelated work), so this is that ledger, authoritative going forward. |
+| `HOUSE_LEDGER.md` | A pointer only (2026-10-30). The cross-app ledger is [`../HOUSE_STATUS_LEDGER.md`](../HOUSE_STATUS_LEDGER.md), moved into the repo root on 2026-10-29; this file held its 2026-08-10 first version. |
 | `BOOTSTRAP_PROMPT.md` | Paste-into-the-new-account setup prompt (clone repos, install skills + ledger, operating rules). |
 | `skills/conc-kitchen/SKILL.md` | The CONC kitchen/ops reference skill. Skills live in `~/.claude/skills/`, not in any repo — so they're version-controlled here. |
 | `skills/production-hub/SKILL.md` | The Production Hub (HTML dashboard) skill. |
@@ -29,10 +29,9 @@ to "rebuild the HOUSE onboarding bundle." That zip is a point-in-time export, no
 - **SharePoint / M365 brief:** [`../HOUSE_SHAREPOINT_IT_BRIEF_2026-07-07.md`](../HOUSE_SHAREPOINT_IT_BRIEF_2026-07-07.md).
 - **Per-app memory:** each sibling repo's root `CLAUDE.md` (PROOF uses `AGENTS.md`):
   `conc-kitchen-door` · `conc-kitchen-expo` · `conc-kitchen-hub` · `conc-recipe-hub` · `conc-kitchen-proof`.
-- **The machine-global ledger:** `HOUSE_LEDGER.md` in this folder **is** it — install to
-  `~/.claude/CLAUDE.md`. (The repo `CLAUDE.md` pointers to a pre-existing `~/.claude/CLAUDE.md` /
-  `~/.codex/AGENTS.md` are stale: verified 2026-08-10, no such HOUSE ledger existed — the Claude path was
-  never created and the Codex path holds unrelated content — so this consolidation supersedes them.)
+- **The cross-app status ledger:** [`../HOUSE_STATUS_LEDGER.md`](../HOUSE_STATUS_LEDGER.md), in this repo's
+  root since 2026-10-29, so cloud sessions can read it too. On a computer, `~/.claude/CLAUDE.md` loads it
+  with one import line (`@/path/to/conc-kitchen-house/HOUSE_STATUS_LEDGER.md`); it is not copied there.
 
 ## The six repos
 `github.com/kennedyjasondavid-eng/` → `conc-kitchen-door` (DOOR), `conc-kitchen-expo` (EXPO),
