@@ -30,14 +30,14 @@ Please do the following setup, then confirm each step:
    - copy [bundle]/skills/production-hub/SKILL.md    -> ~/.claude/skills/production-hub/SKILL.md
    Verify they're loadable (they should show up as /conc-kitchen and /production-hub, or in the skills list).
 
-3. INSTALL the machine-global HOUSE ledger — the single source of truth for CROSS-APP facts
-   (versions, phases, schema seams), which the repo CLAUDE.md files all point to:
-   - copy [bundle]/memory/HOUSE_LEDGER.md    -> ~/.claude/CLAUDE.md
-   NOTE: this is the consolidated ledger (built 2026-08-10 from the six repo memories). No standalone
-   ledger file existed before — the old ~/.claude and ~/.codex pointers were dead/repurposed — so
-   maintain THIS file as the cross-app source of truth going forward.
+3. LOAD the HOUSE status ledger, the single source of truth for CROSS-APP facts (versions, phases,
+   schema seams), which every repo's CLAUDE.md points to. It is conc-kitchen-house/HOUSE_STATUS_LEDGER.md
+   (in the repo since 2026-10-29, so cloud sessions read it from the clone). On this computer, add one
+   import line to ~/.claude/CLAUDE.md so local sessions load it too; don't copy the file:
+   - @/path/to/conc-kitchen-house/HOUSE_STATUS_LEDGER.md
+   Check the import loads (/memory). Update the ledger in the repo, by PR, never in ~/.claude.
 
-4. READ, in this order: ~/.claude/CLAUDE.md  →  conc-kitchen-house/INSIGHTS.md  →
+4. READ, in this order: conc-kitchen-house/HOUSE_STATUS_LEDGER.md  →  conc-kitchen-house/INSIGHTS.md  →
    conc-kitchen-house/HOUSE_ASSESSMENT_2026-07-07.md + HOUSE_PLAN_OF_ACTION_2026-07-07.md  →
    the CLAUDE.md of whatever app the task touches. Use the conc-kitchen skill for kitchen/ops facts and
    the production-hub skill for the HTML dashboard.
