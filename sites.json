@@ -1,0 +1,103 @@
+{
+  "_meta": {
+    "schemaVersion": 1,
+    "owner": "conc-kitchen-house",
+    "contract": "SITES.md",
+    "generated": "2026-10-31",
+    "ruled": "Jason, 2026-10-31 (CODEX refinement plan calls S1-S4 and facts 1-8)"
+  },
+  "sites": [
+    {
+      "key": "bloor",
+      "name": "Bloor",
+      "address": "854 Bloor St W",
+      "aliases": ["854 bloor", "854"],
+      "kitchen": true,
+      "served": true,
+      "status": "active",
+      "cookedBy": ["bloor"],
+      "meals": { "weekday": ["dinner", "snack"], "weekend": ["lunch", "dinner"] },
+      "numbersFrom": null,
+      "notes": "Production kitchen (cooks ahead and sends to Rexdale) and a shelter of about 30. Weekdays: dinner and snacks at 4 and 8 pm; weekends: lunch and dinner with a cold breakfast. Bloor's own service stays outside EXPO and DOOR. The separate drop-in kitchen is not a HOUSE site."
+    },
+    {
+      "key": "rexdale",
+      "name": "Rexdale",
+      "address": null,
+      "aliases": ["rex"],
+      "kitchen": true,
+      "served": true,
+      "status": "active",
+      "cookedBy": ["bloor", "rexdale"],
+      "meals": ["breakfast", "lunch", "dinner"],
+      "numbersFrom": "conc-kitchen-door/routing_by_meal.json",
+      "notes": "Shelter of about 181 residents (about 172 plates a meal). Rexdale cooks fresh and assembles; Bloor sends what it cooks ahead."
+    },
+    {
+      "key": "lansdowne",
+      "name": "Lansdowne",
+      "address": null,
+      "aliases": ["lan"],
+      "kitchen": true,
+      "served": true,
+      "status": "active",
+      "cookedBy": ["lansdowne"],
+      "meals": ["breakfast", "lunch", "dinner", "snack"],
+      "numbersFrom": null,
+      "notes": "Kitchen with about 40 of its own residents. Cooks for 1011 Lansdowne, Roncy and, in winter, the warming centre. DOOR numbers come after the staff rollout."
+    },
+    {
+      "key": "1011-lansdowne",
+      "name": "1011 Lansdowne",
+      "address": "1011 Lansdowne Ave",
+      "aliases": ["1011"],
+      "kitchen": false,
+      "served": true,
+      "status": "active",
+      "cookedBy": ["lansdowne"],
+      "meals": ["breakfast", "lunch", "dinner", "snack"],
+      "numbersFrom": null,
+      "notes": "Housing project food-support program, about 20-30 a meal; also gets food-support items (not a plated meal). Its own kitchen is planned: then set kitchen to true, add its EXPO profile and change cookedBy."
+    },
+    {
+      "key": "roncy",
+      "name": "Roncesvalles",
+      "address": null,
+      "aliases": ["roncesvalles"],
+      "kitchen": false,
+      "served": true,
+      "status": "active",
+      "cookedBy": ["lansdowne"],
+      "meals": ["breakfast", "lunch", "dinner"],
+      "numbersFrom": null,
+      "notes": "COVID hotel, about 20-30 a meal."
+    },
+    {
+      "key": "gcnc",
+      "name": "George Chuvalo Neighbourhood Centre",
+      "address": null,
+      "aliases": ["gc", "george-chuvalo"],
+      "kitchen": true,
+      "served": false,
+      "status": "paused",
+      "cookedBy": [],
+      "meals": [],
+      "numbersFrom": null,
+      "notes": "Community-space cafe kitchen that baked for Rexdale (cakes, earlier buns). Decommissioned for now, its staff placed at Lansdowne; may start up again. HUB shows it as a pickup point."
+    },
+    {
+      "key": "warming-centre",
+      "name": "Winter warming centre",
+      "address": null,
+      "aliases": ["warming centre", "warming center"],
+      "kitchen": false,
+      "served": true,
+      "status": "active",
+      "open": [{ "from": "2026-11-15", "to": "2027-04-15" }],
+      "cookedBy": ["lansdowne"],
+      "meals": ["breakfast", "lunch", "dinner", "snack"],
+      "numbersFrom": null,
+      "notes": "About 20 in winter. The window is the usual season; correct it when this winter's dates are confirmed."
+    }
+  ]
+}

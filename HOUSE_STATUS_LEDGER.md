@@ -89,7 +89,7 @@ generic-scheduler refactor phases 0–3 (engine). "Phase 2 (HOUSE routing)" ≠ 
 | `registry_summary.json` | DOOR | (summary counts) | v30, same `_meta` + `builtFromMenu` | Headcounts and tag distribution, no names. |
 | `meal_swaps.json`, `meal_swaps_reverted.json`, `special_meals.json`, `special_meals_removed.json` | DOOR | EXPO (dated meals, #504); HUB shows `lunch_dated` / `dinner_dated` (#47/#48) | — | `meal_swaps.json` is `{}` on 2026-10-31. |
 | `hub_schedule.json` (+ `hub_schedule_version.json` `{version, generated, source, mode}`) | EXPO `_buildHubSchedulePayload` | HUB `CONC_Production_Hub.html` | `_schemaVersion` 2 | HUB re-projects dates at view time via `projectDates()`; dates in the feed are a snapshot. |
-| `sites.json` (planned) | HOUSE (`conc-kitchen-house`) | every app | — | The HOUSE site registry, ruled 2026-10-31 (S1–S4): see Open cross-app lines. |
+| `sites.json` | HOUSE (`conc-kitchen-house`, contract `SITES.md`) | CODEX first (RF4), then HUB, DOOR, EXPO | `_meta.schemaVersion` 1 | The HOUSE site registry, ruled 2026-10-31 (S1–S4); validated by `tests/sites_registry_gate.mjs` (no key ever deleted). |
 
 **Payload keys** `hub_schedule.json` (2026-10-31): `WEEKS, FRIDGE, MOVES, MEALS, RESOURCES, CONFLICTS,
 FROZEN_SERVES, _generated, _source, _mode, _menuSource, _doorMenu, _recipeData, _aliasTableHash, _codex,
@@ -123,7 +123,7 @@ This is why **HUB's freshness check compares menu _content_ slot-by-slot, never 
   where its numbers come from); counts stay live in DOOR, equipment and staff in EXPO. Sites:
   Bloor, Rexdale, Lansdowne (kitchen + ~40 residents), 1011 Lansdowne and Roncy (served, cooked by
   Lansdowne), the winter warming centre (Lansdowne, Nov 15 – Apr 15 for now), GCNC (baking, paused).
-  Design: the CODEX plan §4. Not yet built (RF4).
+  Published 2026-10-31 as `sites.json` (contract `SITES.md`); readers adopt it next (CODEX first, RF4).
 - **Silent-drift remediation (2026-07-27).** Owner: `conc-kitchen-hub/HOUSE_SILENT_DRIFT_ACTION_PLAN_2026-07-27.md`
   §10; pickup: `HOUSE_SILENT_DRIFT_HANDOFF_2026-07-27.md`. The class: a clean-fetched but stale board
   (HUB served a 14-day-old board built from DOOR menu v30 while DOOR had been on v32 for two weeks;

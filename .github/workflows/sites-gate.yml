@@ -1,0 +1,26 @@
+# HOUSE site registry gate — keeps sites.json valid against SITES.md (ruled 2026-10-31, S1–S4).
+# Plain Node, no dependencies, a few seconds. Runs when the registry, its contract or its gate change.
+name: sites-gate
+
+on:
+  push:
+    branches: [main]
+    paths: ['sites.json', 'SITES.md', 'tests/sites_registry_gate.mjs', 'tests/fixtures/site_keys_ever.json', '.github/workflows/sites-gate.yml']
+  pull_request:
+    branches: [main]
+    paths: ['sites.json', 'SITES.md', 'tests/sites_registry_gate.mjs', 'tests/fixtures/site_keys_ever.json', '.github/workflows/sites-gate.yml']
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - name: Validate sites.json
+        run: node tests/sites_registry_gate.mjs
