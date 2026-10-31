@@ -36,7 +36,7 @@ The machine-checkable **subset** of the table above (not a restatement — prose
     { "row": 1, "class": "quota-safe localStorage write",
       "seam": [
         { "repo": "conc-kitchen-expo", "file": "index.html", "has": ["function setItemSafe(key, value)", "ensureStorageHeadroom("] },
-        { "repo": "conc-recipe-hub",   "file": "index.html", "has": ["function setItemSafe(key, value)"] }
+        { "repo": "conc-recipe-hub",   "file": "index.html", "has": ["function setItemSafe(key, value, opts)", "function saveRecipeLibrary("] }
       ],
       "gap": [
         { "repo": "conc-kitchen-door",  "file": "index.html", "lacks": ["setItemSafe"] },
