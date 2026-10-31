@@ -11,7 +11,7 @@
       "key": "bloor",
       "name": "Bloor",
       "address": "854 Bloor St W",
-      "aliases": ["854 bloor", "854"],
+      "aliases": ["854 bloor", "854", "bloor_shelter"],
       "kitchen": true,
       "served": true,
       "status": "active",

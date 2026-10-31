@@ -15,7 +15,7 @@ Ruled by Jason on 2026-10-31 (CODEX refinement plan, `conc-recipe-hub/docs/plans
 | `kitchen` | true / false | The site cooks or preps. "Which sites are kitchens?" is always this flag, never a list in code. |
 | `served` | true / false | Residents are served meals there. |
 | `status` | `planned`, `active`, `paused`, `retired` | Whether the site is in use at all. |
-| `open` | list of `{from, to}` dates (optional) | When it is open (S4). Absent means open whenever it is active. `to` may be `null` (open-ended). A seasonal site gets a new window each season. |
+| `open` | list of `{from, to}` dates (optional) | When it is open (S4). Absent means open whenever it is active; an empty list means no window, so closed. Both ends are included, as local dates. `to` may be `null` (open-ended). A seasonal site gets a new window each season. |
 | `cookedBy` | list of site keys | Which kitchens feed it (itself if it cooks its own). Each must be a `kitchen: true` site. |
 | `meals` | list, or `{weekday: [...], weekend: [...]}` | Meals served: `breakfast`, `lunch`, `dinner`, `snack`. Use the object when weekdays and weekends differ. |
 | `numbersFrom` | path or `null` | Which published file holds its live plated counts, e.g. `conc-kitchen-door/routing_by_meal.json`. `null` means no numbers yet; count-based features (CODEX's batch targets) skip the site. |
@@ -40,5 +40,5 @@ Edits go through a PR for now. `tests/sites_registry_gate.mjs` checks every rule
 
 | App | Status |
 | --- | --- |
-| CODEX | First reader, planned (refinement plan RF4): replaces its 11 site-label maps. |
+| CODEX | First reader (refinement plan RF4, 2026-10-31): `_cxSites()` reads this file live, then its kept copy, then a built-in copy, in place of its 11 site-label maps. Old CODEX spellings (`bloor_shelter`) are aliases here. |
 | HUB, DOOR, EXPO | Adopt in their own follow-ups, mapping their old codes through `aliases`. DOOR's typed resident counts give way to its live counts. |
