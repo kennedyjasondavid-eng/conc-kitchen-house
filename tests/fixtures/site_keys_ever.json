@@ -1,0 +1,4 @@
+{
+  "_note": "Every site key ever published in sites.json. Add new keys here when you add a site; never remove one (SITES.md: a key is never deleted).",
+  "keys": ["bloor", "rexdale", "lansdowne", "1011-lansdowne", "roncy", "gcnc", "warming-centre"]
+}
