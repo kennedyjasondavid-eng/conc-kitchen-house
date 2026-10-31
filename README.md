@@ -1,6 +1,6 @@
 # HOUSE — CONC Kitchen Operations
 
-> **Cross-app status may be stale here — single source of truth for cross-app facts (versions, phases, schema seams) is the HOUSE status ledger in `~/.claude/CLAUDE.md` (as of 2026-06-13).**
+> **Cross-app status may be stale here — single source of truth for cross-app facts (versions, phases, schema seams) is the HOUSE status ledger, [`HOUSE_STATUS_LEDGER.md`](HOUSE_STATUS_LEDGER.md) in this repo (moved here 2026-10-29; refreshed 2026-10-31).**
 
 **HOUSE** (Hospitality Operations Unified System Engine) is the umbrella for the four single-file web apps that run the CONC (Christie Ossington Neighbourhood Centre) shelter catering operation.
 
