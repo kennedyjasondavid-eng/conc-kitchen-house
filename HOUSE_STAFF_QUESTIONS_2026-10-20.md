@@ -356,13 +356,13 @@ Each question below is a fact only kitchen, program or ordering staff can supply
 **R27. Pineapple Rice: does liquid egg go in?** *(added 2026-10-21)* Served Wk3 SAT lunch, vegan line.
 - **Ask:** is liquid egg fried and folded into the rice, as the card's method says? Is the vegan pan made the same way?
 - **Why:** the card is on the vegan line. Its method fries liquid egg and folds it into the rice ("Except the liquid egg"; "Pan fry the liquid egg"; "fold the pan fried egg into the rice"), but its ingredient table has no egg row and its allergens don't list Eggs. Jason ruled to ask Rexdale before changing anything (the CODEX walkthrough plan, call 7a).
-- **Source:** CODEX card "Pineapple Rice" (method steps 1, 4 and 5); `CODEX_UX_WALKTHROUGH_2026-10-21.md` P1-11; `CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md` §4 Q1.
+- **Source:** CODEX card "Pineapple Rice" (method steps 1, 4 and 5); `conc-recipe-hub/docs/archive/CODEX_UX_WALKTHROUGH_2026-10-21.md` P1-11; `conc-recipe-hub/docs/plans/CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md` §4 Q1.
 - **Goes to:** if yes, an egg row and "Eggs (Liquid Egg)" on the card, and the dish off the vegan line (DOOR's vegan plate). If no, the egg steps come out of the method.
 
 **R28. Johnny Cakes: how much vanilla?** *(added 2026-10-21)*
 - **Ask:** the card holds 1,760 g of vanilla ("Vanilla · 2 Lt" on the Rexdale card) for 115 pieces. What is the real amount, and which product (extract or flavouring)?
 - **Why:** about 15 g a piece looks like a slip; the cost and the printed card both read it.
-- **Source:** CODEX card "Johnny Cakes"; `CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md` §4 Q6.
+- **Source:** CODEX card "Johnny Cakes"; `conc-recipe-hub/docs/plans/CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md` §4 Q6.
 - **Goes to:** the amount and product on the card.
 
 **R29. Vegan Pie Filling: what is the "Vegan crumble"?** *(added 2026-10-22)* Served Wk4 WED vegan dinner (Vegan Pot Pie).
@@ -458,13 +458,13 @@ The walkthrough's other questions are already here: the Quinoa Cakes' flour (R4)
 **B9. Butter Chickpeas: the amounts.** *(added 2026-10-21)*
 - **Ask:** the card makes 20 portions from 10 lbs of onions, 1 can of chickpeas, 250 mL of coconut milk and a quarter can of diced tomatoes. What are the real amounts for one batch, and how many portions does it make?
 - **Why:** the onions outweigh the chickpeas many times over. The card scales from these numbers, so a cook who scales it gets the same mismatch.
-- **Source:** CODEX card "Butter Chickpeas" (Bloor); `CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md` §4 Q8.
+- **Source:** CODEX card "Butter Chickpeas" (Bloor); `conc-recipe-hub/docs/plans/CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md` §4 Q8.
 - **Goes to:** the card's rows and batch.
 
 **B10. Seasonal Soup and Cut Fruit: what goes in them?** *(added 2026-10-21)*
 - **Ask:** what goes in each, and how much for one service? For the soup: water or stock (if stock, chicken or vegetable)? Any cream, butter or flour?
 - **Why:** both CODEX records list no ingredients. Their allergens say "None", but CODEX can't check that without rows, so they stay "Not verified".
-- **Source:** CODEX records "Seasonal Soup" and "Cut Fruit" (Bloor, no ingredients); `CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md` §3 call 6 and §4 Q9.
+- **Source:** CODEX records "Seasonal Soup" and "Cut Fruit" (Bloor, no ingredients); `conc-recipe-hub/docs/plans/CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md` §3 call 6 and §4 Q9.
 - **Goes to:** each record's rows; then CODEX shows "No allergens · checked", or the families its rows bring.
 ---
 
