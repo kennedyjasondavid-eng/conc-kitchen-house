@@ -56,7 +56,7 @@ The kitchen cut over **reno → standard** on **2026-06-26** (DOOR → EXPO → 
 
 | App | `main` | Version / state | Latest |
 |---|---|---|---|
-| **DOOR** | `f54fff9` (2026-10-31) | `DOOR_APP_VERSION` **v31-standard.47** (build 2026-10-29; #146/#147 did not bump it) | #147 Wk2 THU/FRI dinners trade days, vegan Sunday lunch is the Portobello Cheese Melt; #146 Mat's Rexdale menu changes; #144 "Keep DOOR's" answers synced across computers (.47); #143 Rex's week sheet updates DOOR's menu (.46). Published stamps: `menu_current` v32, `routing_by_meal` v31, `registry_summary` and `door_state` v30, `menu_reno` v2 (frozen since 2026-06-30). |
+| **DOOR** | `e14be1c` (2026-11-01) | `DOOR_APP_VERSION` **v31-standard.49** (build 2026-11-01) | #151 DOOR reads its own files through one reader (Contents API with a key), viewing keys, and says when it can't read the resident list (.49); #150 room fields kept out of saved-key autofill; #148 Pages serves only the app and the files other apps read, and the page carries no built-in resident list (.48); #147 Wk2 THU/FRI dinners trade days; #146 Mat's Rexdale menu changes. Published stamps: `menu_current` v32, `routing_by_meal` v31, `registry_summary` and `door_state` v30, `menu_reno` v2 (frozen since 2026-06-30; no longer on Pages). Line: "DOOR resident-data privacy" below. |
 | **EXPO** | `5e909f7` (2026-10-31) | `APP_VERSION` **v9.49.85**; Standard is the only mode | #525 Publish pulls DOOR's menu and dated meals before the dialog (the built-in menu is only a fallback for a never-connected computer); #524 engine refinement R1–R10; #523 Mat's Rexdale menu changes. Detail owner: EXPO `CLAUDE.md` Recent. |
 | **HUB** | `befb15e` (2026-10-30, a board publish) | no version stamp; last code PR #52 (2026-10-25, boot no longer stops on a pinned print button) | Live board `v=-454303815`, published 2026-10-30 from EXPO v9.49.85 on DOOR menu stamp 15:44Z, before DOOR #147: expect a menu-drift flag until EXPO republishes (inferred from timestamps, not compared). Served file `CONC_Production_Hub.html` (+ `index.html`). Recipe links: `docs/RECIPE_LINK_CONTRACT.md`. |
 | **CODEX / MISE** | `3b7d5a3` (2026-10-31) | seed **`2026-10-30-v34-vegan-meat-soy`**; **241** production recipes; identity authority `fnv1a32-6fa6cb39` | #226 the refinement plan (RF1–RF10, HOUSE-1, EXPO-1, HOUSE site registry); #225 `veganBatchOf` in the production feed; #224 v34 vegan meat holds no soy. Save to the shared Library is publish (DOOR overlays it). Line owner: `conc-recipe-hub/docs/plans/CODEX_REFINEMENT_ACTION_PLAN_2026-10-31.md`. |
@@ -84,10 +84,17 @@ generic-scheduler refactor phases 0–3 (engine). "Phase 2 (HOUSE routing)" ≠ 
 | `recipe_production.json` | CODEX | EXPO, DOOR, PROOF | header v2.0 (`generated` stamp stale), 241 records, no cost fields | PROOF reads top-level `stream`. Optional `veganBatchOf` (R9; EXPO `schemas/RECIPE_SCHEMA.md`). A `_meta` provenance stamp is planned (CODEX RF3). |
 | `library_public.json` + `pages_provenance.json` | CODEX (built into Pages from the `shared-library` branch) | CODEX devices (anonymous reads), DOOR (overlay) | public `_meta.version` 1; provenance `schemaVersion` 1 (main + shared-library SHAs, public sha256) | The small shared Library (16 recipes + 1 tombstone on 2026-10-29), not the 241 production recipes. Contracts: CODEX `docs/CODEX_PUBLIC_LIBRARY_CONTRACT.md`, `docs/CODEX_SHARED_LIBRARY_CONTRACT.md`. |
 | `menu_current.json` `{_meta:{source,site,exported,version}, menu:{wk:{DAY:{…}}}}` | DOOR `buildMenuJSON` | EXPO `loadMenuFromDOOR`, HUB, CODEX `_cxDoorMenu` (RF5a, conc-recipe-hub#236: dish lines + `<period>_slots` for the menu-name lookup and the "Menu dishes with no recipe" worklist; versions 30/31/32 by membership, any other refused out loud) | `_meta.version` 32, `site: "rexdale"` | `<period>_slots` is live on 54 meals (bound `{recipeName}` or `{manual}`). Schema doc EXPO `schemas/MENU_SCHEMA.md` (its "version 30" note is stale). See the version contract below. |
-| `menu_overlay.json` | DOOR | DOOR (self, on top of `menu_current`) | — | Post-import user deltas; cutover-stamped. |
+| `menu_overlay.json` | DOOR | DOOR (self, on top of `menu_current`) | — | Post-import user deltas; cutover-stamped. Not on DOOR's Pages since 2026-11-01: DOOR reads it through the repository. |
 | `routing_by_meal.json` `{_meta:{source,site,exported,version,builtFromMenu}, routing:{wk:{DAY:{meal:{Section:n,_components:{dish:n}}}}}}` | DOOR | EXPO (portion math), HUB (portion-aware CODEX links); CODEX `_cxBatchTarget` (RF5b, conc-recipe-hub#237: dish `_components` through the menu-name lookup and its diet rails, the cycle's highest meal, rounded and held a week; `_meta.version` 31 read, newer or missing refused with a notice; sites with `numbersFrom` in `sites.json`, Rexdale today) | `_meta.version` 31, `site: "rexdale"`; `componentErrors` only on degradation | `_components` is plating-engine truth; never "reconcile" it against section counts. `builtFromMenu` is a provenance stamp (no consumer reads it yet). |
-| `registry_summary.json` | DOOR | (summary counts) | v30, same `_meta` + `builtFromMenu` | Headcounts and tag distribution, no names. |
+| `registry_summary.json` | DOOR | EXPO (headcounts, tag distribution), HUB, PROOF | v30, same `_meta` + `builtFromMenu` | Headcounts and tag distribution, no names, no rooms. |
 | `meal_swaps.json`, `meal_swaps_reverted.json`, `special_meals.json`, `special_meals_removed.json` | DOOR | EXPO (dated meals, #504); HUB shows `lunch_dated` / `dinner_dated` (#47/#48) | — | `meal_swaps.json` is `{}` on 2026-10-31. |
+
+**DOOR's Pages serve a list (since 2026-11-01, `conc-kitchen-door/.github/workflows/pages.yml`):** `index.html`,
+`favicon.ico`, `menu_current.json`, `routing_by_meal.json`, `registry_summary.json` and the four swap and special-meal
+files above. Every reader in the table reads these from Pages: EXPO, HUB, PROOF, and CODEX's RF5 readers (checked
+2026-11-01). Any other DOOR file is read through the repository with a key, as DOOR itself does. A new cross-app
+reader of a DOOR file either reads one of these, or adds it to that list in a DOOR change (it becomes public), in the
+same change set.
 | `hub_schedule.json` (+ `hub_schedule_version.json` `{version, generated, source, mode}`) | EXPO `_buildHubSchedulePayload` | HUB `CONC_Production_Hub.html` | `_schemaVersion` 2 | HUB re-projects dates at view time via `projectDates()`; dates in the feed are a snapshot. |
 | `sites.json` | HOUSE (`conc-kitchen-house`, contract `SITES.md`) | CODEX first (RF4), then HUB, DOOR, EXPO | `_meta.schemaVersion` 1 | The HOUSE site registry, ruled 2026-10-31 (S1–S4); validated by `tests/sites_registry_gate.mjs` (no key ever deleted). |
 
@@ -117,6 +124,18 @@ This is why **HUB's freshness check compares menu _content_ slot-by-slot, never 
   (paired DOOR change, after a one-resident DOOR check), CODEX reading DOOR's `routing_by_meal.json`
   for batch targets (RF5), and **EXPO-1**: a bagged dish's lead becomes a soft 7 days with the use-by
   as the hard stop (Jason: "I don't want it as a total hard line because sometimes we might require 8 days").
+- **DOOR resident-data privacy (2026-10-31).** DOOR's repository moves to private, as CODEX, HUB and EXPO already
+  are, with its Pages kept to the list above. Jason, 2026-11-01: he and his manager judge the records not identifying
+  and of low sensitivity. Phases:
+  1. **done:** Pages serves only the app and its feeds; no built-in resident list (#148, .48);
+  2. **done:** one keyed reader for DOOR's own files, viewing keys, and the "can't read the list" state (#151, .49);
+  3. **Jason:** make a viewing key, rehearse on one computer with DOOR's rehearsal switch (this confirms viewing-key
+     detection), then give viewing keys to the computers that show plating sheets;
+  4. **Jason:** make the DOOR repository private;
+  5. **a session:** remove DOOR's temporary raw-read fallback and the rehearsal switch.
+
+  No other app changes: every cross-app reader uses DOOR's Pages. EXPO's own Pages narrowing is EXPO's EX-9. The plan
+  doc is on Jason's computer (DOOR branch `claude/door-resident-data-privacy-plan`, not pushed).
 - **HOUSE site registry (ruled 2026-10-31, S1–S4).** One `conc-kitchen-house/sites.json` on Pages,
   read by every app with the 3-tier fallback; lowercase keys with every app's old codes as aliases;
   shared facts only (identity, kitchen/served flags, status, dated open windows, cooked-by, meals,
