@@ -92,7 +92,7 @@ When a JSON contract changes, update both producer and consumer in the same chan
 |---|---|---|
 | HOUSE | [conc-kitchen-house](https://github.com/kennedyjasondavid-eng/conc-kitchen-house) | git CLI |
 | DOOR | [conc-kitchen-door](https://github.com/kennedyjasondavid-eng/conc-kitchen-door) | `KitchenDOOR_Push.hta` |
-| CODEX | [conc-recipe-hub](https://github.com/kennedyjasondavid-eng/conc-recipe-hub) | `CONC_Recipe_Hub_Push.hta` |
+| CODEX | [conc-recipe-hub](https://github.com/kennedyjasondavid-eng/conc-recipe-hub) | reviewed PR (git CLI); a Library Save publishes through the shared Library |
 | HUB | [conc-kitchen-hub](https://github.com/kennedyjasondavid-eng/conc-kitchen-hub) | `CONC_Hub_Builder_Push.hta` |
 | EXPO | [conc-kitchen-expo](https://github.com/kennedyjasondavid-eng/conc-kitchen-expo) | git CLI / in-app Save button |
 
