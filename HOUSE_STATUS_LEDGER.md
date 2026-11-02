@@ -50,6 +50,7 @@ The kitchen cut over **reno → standard** on **2026-06-26** (DOOR → EXPO → 
   carries `_cycleStart 2026-06-07`.
   ⚠️ A June-2026 hot-fix corrected a wrong anchor (`2026-06-28`) to `2026-06-07`; **do not "re-fix"
   it back.** EXPO owns the anchor and emits the correct one.
+  CODEX reads it from HUB's `hub_schedule.json` (`_cycleStart`, LB4, 2026-11-02) and holds no copy of its own.
 - The 28-day menu rotation did **not** reset at go-live — only the operating model changed.
 
 ### App registry (each row checked against `origin/main` on 2026-10-31)
@@ -95,7 +96,7 @@ files above. Every reader in the table reads these from Pages: EXPO, HUB, PROOF,
 2026-11-01). Any other DOOR file is read through the repository with a key, as DOOR itself does. A new cross-app
 reader of a DOOR file either reads one of these, or adds it to that list in a DOOR change (it becomes public), in the
 same change set.
-| `hub_schedule.json` (+ `hub_schedule_version.json` `{version, generated, source, mode}`) | EXPO `_buildHubSchedulePayload` | HUB `CONC_Production_Hub.html` | `_schemaVersion` 2 | HUB re-projects dates at view time via `projectDates()`; dates in the feed are a snapshot. |
+| `hub_schedule.json` (+ `hub_schedule_version.json` `{version, generated, source, mode}`) | EXPO `_buildHubSchedulePayload` | HUB `CONC_Production_Hub.html`; CODEX `_cxHubCycle` (Library browse LB4, ruling R11, Jason 2026-11-02: reads `_cycleStart` only, for the menu week; `_schemaVersion` 2 read, any other refused with a notice and no week guessed; keeps the date in `concHubCycleStart`) | `_schemaVersion` 2 | HUB re-projects dates at view time via `projectDates()`; dates in the feed are a snapshot. |
 | `sites.json` | HOUSE (`conc-kitchen-house`, contract `SITES.md`) | CODEX first (RF4), then HUB, DOOR, EXPO | `_meta.schemaVersion` 1 | The HOUSE site registry, ruled 2026-10-31 (S1–S4); validated by `tests/sites_registry_gate.mjs` (no key ever deleted). |
 
 **Payload keys** `hub_schedule.json` (2026-10-31): `WEEKS, FRIDGE, MOVES, MEALS, RESOURCES, CONFLICTS,
