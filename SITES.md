@@ -41,4 +41,5 @@ Edits go through a PR for now. `tests/sites_registry_gate.mjs` checks every rule
 | App | Status |
 | --- | --- |
 | CODEX | First reader (refinement plan RF4, 2026-10-31): `_cxSites()` reads this file live, then its kept copy, then a built-in copy, in place of its 11 site-label maps. Old CODEX spellings (`bloor_shelter`) are aliases here. |
-| HUB, DOOR, EXPO | Adopt in their own follow-ups, mapping their old codes through `aliases`. DOOR's typed resident counts give way to its live counts. |
+| EXPO | Second reader (EXPO staff rollout EX-16, EXPO #550, 2026-11-02), read-only: Settings → "Sites this kitchen cooks for" lists each `served`, `active` site whose `cookedBy` names the kitchen (EXPO's site-profile key: `bloor`, `lansdowne`, `rexdale`), with its meals, `open` windows and DOOR's count where `numbersFrom` names DOOR; the target is the sum of those counts (165 when none). Live, then its kept copy (`pp_house_sites_cache`), then a built-in copy; a `schemaVersion` other than 1 is said on screen. Nothing on EXPO's board reads it yet. |
+| HUB, DOOR | Adopt in their own follow-ups, mapping their old codes through `aliases`. DOOR's typed resident counts give way to its live counts. |
