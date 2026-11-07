@@ -290,28 +290,33 @@
   <dl class="meta-row">
     <div><dt>For</dt><dd>CONC IT</dd></div>
     <div><dt>From</dt><dd>Jason Kennedy — Kitchen Operations</dd></div>
-    <div><dt>Date</dt><dd>July 7, 2026</dd></div>
+    <div><dt>Date</dt><dd>November 3, 2026</dd></div>
     <div><dt>The ask</dt><dd>Stages 1–2 · standard M365 admin, no code from IT</dd></div>
   </dl>
 </header>
 
+<div class="callout">
+  <p><span class="lead-in">Supersedes the July 7, 2026 brief.</span> Two things changed. Hosting moved from the last stage to the first — once staff sign in with CONC credentials, serving the apps from a personal account stops being untidy and becomes the weakest point in the design (§7). And we now ask for the narrower <code>Sites.Selected</code> permission rather than <code>Files.ReadWrite.All</code>. All figures re-verified against the live code.</p>
+</div>
+
 <section>
   <h2><span class="secnum">1</span>Summary</h2>
   <div class="measure">
-    <p>CONC's kitchen runs on <b>HOUSE</b> — five in-house browser apps that plan, route, and report shelter catering across the Bloor and Rexdale kitchens. They were built deliberately on infrastructure the organization already owns: single HTML files, no servers, no vendors, no licence costs.</p>
-    <p>Today the apps are hosted on GitHub Pages and move their shared data through GitHub, under a personal account. We want to bring the <b>data</b> home to CONC's Microsoft 365 tenant in stages, with app <b>hosting</b> as the deliberate final step.</p>
-    <p>Most of the groundwork already exists inside the apps — two ship complete Microsoft sign-in + Graph API clients that are dormant only because no Entra app registration exists yet; a third was written with named "swap to SharePoint here" seams.</p>
-  </div>
-  <div class="callout">
-    <p class="lead-in">The near-term ask is two items of standard M365 administration:</p>
-    <p><b>① A governed SharePoint document library</b> — folders, permission groups, retention labels, version history — so PROOF, DOOR, and EXPO can start putting files on the shared drive immediately, and <b>② one Entra app registration</b> (single-page app, delegated Graph permissions, no client secret) so the apps can read and write those files as the signed-in user. Nothing in this plan asks IT to run, host, or maintain software.</p>
+    <p>CONC's kitchen runs on <b>HOUSE</b> — six browser apps that plan, route and report shelter catering across the Bloor and Rexdale kitchens. They were built on infrastructure the organization already owns: single HTML files, no servers, no vendors, no licence costs.</p>
+    <p>Today the apps are hosted on GitHub Pages under a personal account, and move their data through GitHub. We want to bring that home to CONC's Microsoft 365 tenant in stages.</p>
+    <p>Most of the groundwork exists already. Two apps ship complete Microsoft sign-in and Graph clients, dormant only because no app registration exists; a third was written with named "swap to SharePoint here" seams. The near-term ask needs only standard M365 administration:</p>
+    <ol>
+      <li><b>A governed SharePoint document library</b> — folders, permission groups, retention labels, version history — so PROOF, DOOR and EXPO can put files on the shared drive immediately.</li>
+      <li><b>One Microsoft Entra app registration</b> — single-page application, delegated permissions, no client secret — so the apps can read and write those files as the signed-in user.</li>
+    </ol>
+    <p>Nothing here asks IT to run, host or maintain software. <b>IT owns tenancy, identity and governance; the kitchen team owns the apps.</b></p>
   </div>
 </section>
 
 <section>
-  <h2><span class="secnum">2</span>The system at a glance</h2>
+  <h2><span class="secnum">2</span>The system in brief</h2>
   <div class="pipe-scroll">
-    <div class="pipeline" role="img" aria-label="Data flow: CODEX feeds DOOR and EXPO; DOOR feeds EXPO; EXPO publishes to HUB; PROOF reads aggregate feeds from DOOR, HUB and CODEX, plus sensitive workbooks from SharePoint.">
+    <div class="pipeline" role="img" aria-label="Data flow: CODEX feeds DOOR and EXPO; DOOR feeds EXPO; EXPO publishes to HUB; PROOF reads aggregate feeds plus sensitive workbooks from SharePoint.">
       <div class="pipe-row">
         <div class="node"><b>MISE / CODEX</b><span>recipe library — allergen &amp; cost feed</span></div>
         <div class="arrow">→</div>
@@ -326,111 +331,45 @@
         <div class="arrow">⇢</div>
         <div class="node"><b>PROOF</b><span>board / funder reporting — aggregates only, writes nothing</span></div>
       </div>
-      <p class="pipe-note">Each solid arrow is a small JSON file published to GitHub and read over public GitHub Pages URLs. PROOF also reads the public aggregate feeds from DOOR, HUB, and CODEX.</p>
+      <p class="pipe-note">Each arrow is a small data file published by one app and read by the next. Staff enter data once and everything downstream regenerates — <b>enter once, generate everything</b> is the core property, and every stage below preserves it.</p>
     </div>
   </div>
-  <div class="measure">
-    <p>Staff enter data once — in DOOR (residents, menu) or CODEX (recipes) — and everything downstream regenerates. That "enter once, generate everything" property is the core of the system, and every stage below preserves it.</p>
-    <p><b>The data-classification story, in three lines:</b> resident data never leaves the DOOR browser — everything published is aggregate. PROOF is a lens, never a vault: it reads the sensitive workbooks into memory for one render, prints suppressed aggregates, and forgets the rows. Everything on GitHub today is operational, non-personal data — menus, schedules, recipes, costs.</p>
-  </div>
-  <h3 style="margin:1.6rem 0 0.6rem;">Where things live today → where they're going</h3>
-  <div class="tbl-scroll">
-    <table>
-      <thead><tr><th>Layer</th><th>Today</th><th>Moves at</th></tr></thead>
-      <tbody>
-        <tr><td>File outputs (xlsx · PDF · snapshots)</td><td>Manual browser downloads; some pushed to GitHub</td><td class="stage-target">Stage 1–2</td></tr>
-        <tr><td>Sensitive reporting data</td><td>PROOF's tier (staff certs, incidents, spend) is specified for SharePoint but not yet stood up</td><td class="stage-target">Stage 1</td></tr>
-        <tr><td>Per-user working state</td><td>Browser localStorage on each device</td><td class="stage-target">Stage 3</td></tr>
-        <tr><td>Credentials</td><td>GitHub tokens pasted per browser; portal PIN</td><td class="stage-target">Stage 2 → 4</td></tr>
-        <tr><td>Cross-app data transport</td><td>JSON on GitHub, read over public Pages URLs</td><td class="stage-target">Stage 3 (candidates)</td></tr>
-        <tr><td>App hosting</td><td>GitHub Pages, personal account</td><td class="stage-target">Stage 5 (last)</td></tr>
-        <tr><td>Working folders</td><td>Already OneDrive-synced (<span class="mono">OneDrive – CHRISTIE OSSINGTON…</span>)</td><td class="stage-target">already M365</td></tr>
-      </tbody>
-    </table>
+
+  <div class="callout">
+    <p><span class="lead-in">The data-classification story, in 60 seconds.</span> <b>Resident data never leaves the DOOR browser.</b> What DOOR publishes outward are counts and totals, with no names attached. Everything currently on GitHub is operational, non-personal data — menus, recipes, cook times, schedules. The genuinely sensitive material (incidents, certifications, spend) <b>does not exist yet</b>, because it was always intended to live in SharePoint under CONC's governance. That is the largest single reason for this request.</p>
   </div>
 </section>
 
 <section>
   <h2><span class="secnum">3</span>SharePoint already touches HOUSE</h2>
-  <p class="measure">This is not a greenfield ask — the integration surface already exists:</p>
+  <div class="measure"><p>This is not a greenfield ask. The integration surface is already in place and in daily use:</p></div>
   <div class="facts">
-    <div class="fact"><b>~148 recipe links in HUB</b> point at Excel recipe cards in <code>conctoronto.sharepoint.com/sites/Kitchen/…/Bloor/Recipes/</code>. Staff follow HUB → SharePoint every day.</div>
-    <div class="fact"><b>DOOR carries SharePoint settings</b> — a tenant base URL and a pilot output-folder deep link under the Kitchen site — plus staff-facing copy already promising "automatic archiving to SharePoint."</div>
+    <div class="fact"><b>143 recipe links in HUB</b> point at Excel recipe cards on the Kitchen site. Staff follow HUB → SharePoint every day, today.</div>
+    <div class="fact"><b>DOOR carries SharePoint settings</b> — a tenant base URL and a pilot output-folder deep link — plus staff-facing copy already promising "automatic archiving to SharePoint."</div>
     <div class="fact"><b>HUB &amp; CODEX ship complete Graph clients</b> — Microsoft sign-in (MSAL, single-page-app flow, no secrets), site-profile sync, recipe archive upload, a shared review queue. All dormant awaiting a Client ID.</div>
-    <div class="fact"><b>A written provisioning request exists</b> — CODEX's repo has carried an Entra app-registration request since June 20, 2026. Section 5-B here generalizes it to all the apps.</div>
+    <div class="fact"><b>A written provisioning request has been open since June 20, 2026</b> — over four months. It stalled because there was no clear owner and no obvious place to start, which this brief is meant to fix.</div>
     <div class="fact"><b>DOOR has named swap seams</b> — three isolated persistence functions whose comments read "swap this for a SharePoint write via Microsoft Graph — call sites don't change."</div>
-    <div class="fact"><b>PROOF's sensitive tier is fully specified</b> — exact workbook schemas, permission groups, and retention labels are documented and waiting. Zero code needed; only the Stage-1 setup.</div>
+    <div class="fact"><b>PROOF's sensitive tier is fully specified</b> — exact workbook schemas, permission groups and retention labels documented and waiting. Zero code needed; only the Stage-1 setup.</div>
   </div>
+
   <div class="callout warn">
-    <p><span class="lead-in">One inconsistency to resolve:</span> two tenant hostnames appear in app configuration — <code>conctoronto.sharepoint.com</code> (hardcoded recipe links, DOOR's default) and <code>conc.sharepoint.com</code> (the configurable default in HUB and CODEX settings). Please confirm the canonical tenant and site so we can align the defaults.</p>
+    <p><span class="lead-in">One inconsistency for IT to resolve.</span> Two tenant hostnames appear across the apps, and they disagree — HUB carries 430 references to <code>conctoronto.sharepoint.com</code> and DOOR 10, while CODEX uses <code>conc.sharepoint.com</code> in all 56 of its references. This is not a stray default: two apps assume one address and a third assumes the other. Whichever is canonical, the other needs a sweep. <b>This is the cheapest question here and it blocks the rest.</b></p>
   </div>
 </section>
 
 <section>
-  <h2><span class="secnum">4</span>Per-app touchpoints</h2>
-  <div class="apps">
-    <div class="app">
-      <h3>DOOR <small>conc-kitchen-door</small></h3>
-      <p class="role">Resident registry · routing · plating · allergen compliance</p>
-      <dl>
-        <dt>Reads</dt><dd>CODEX recipe/allergen feed</dd>
-        <dt>Writes</dt><dd>~9 JSON artifacts (menu, routing, registry summary, change log) to GitHub for the sibling apps</dd>
-        <dt>Sensitive</dt><dd><b>The only home of resident-level data</b> — browser-local, never published</dd>
-        <dt>SP today</dt><dd>Tenant URL + pilot-folder links in settings; three Graph-ready persistence seams</dd>
-        <dt>Gains</dt><dd><b>St 1:</b> compliance/plating exports on the shared drive · <b>St 2:</b> change-log &amp; compliance archiving written directly to SharePoint · <b>St 3:</b> registry state shared across devices</dd>
-      </dl>
-    </div>
-    <div class="app">
-      <h3>EXPO <small>conc-kitchen-expo</small></h3>
-      <p class="role">Production scheduler — menu → multi-site cook/prep/send plan</p>
-      <dl>
-        <dt>Reads</dt><dd>DOOR menu/routing/registry; CODEX production feed</dd>
-        <dt>Writes</dt><dd>Live staff schedule to the HUB repo (atomic commit); state snapshots to its own repo</dd>
-        <dt>SP today</dt><dd>None in code (working folder is OneDrive-synced)</dd>
-        <dt>Gains</dt><dd><b>St 1:</b> order sheets &amp; driver manifests on the shared drive · <b>St 2:</b> snapshots written to SharePoint — durable, org-owned backup of the planner's state · <b>St 3:</b> multi-device planning state</dd>
-      </dl>
-    </div>
-    <div class="app">
-      <h3>HUB <small>conc-kitchen-hub</small></h3>
-      <p class="role">Staff-facing daily board — deliberately anonymous-read on shared tablets</p>
-      <dl>
-        <dt>Reads</dt><dd>EXPO schedule; DOOR routing/registry; CODEX recipe names — cached for offline</dd>
-        <dt>Writes</dt><dd>Supervisor day-notes to GitHub; site profiles to SharePoint <b>via Graph (built, dormant)</b></dd>
-        <dt>SP today</dt><dd>~148 recipe deep-links + Recipe Booklet; a "SharePoint Sync" settings tab awaiting a Client ID</dd>
-        <dt>Gains</dt><dd><b>St 2:</b> site-profile sync goes live · <b>St 3+:</b> decision point — keep the aggregate feed public for anonymous tablets, or adopt shared-device sign-in (§6)</dd>
-      </dl>
-    </div>
-    <div class="app">
-      <h3>MISE / CODEX <small>conc-recipe-hub</small></h3>
-      <p class="role">Recipe library + the allergen/cost feed the other apps consume</p>
-      <dl>
-        <dt>Reads</dt><dd>Self-contained (co-located data layer)</dd>
-        <dt>Writes</dt><dd>4-file recipe feed to GitHub; recipe archives + review-queue JSON to SharePoint <b>via Graph (built, dormant)</b>; optional AI-translation calls (user-supplied key)</dd>
-        <dt>SP today</dt><dd>Dormant archive upload + review queue under the Kitchen site; the written Client-ID request</dd>
-        <dt>Gains</dt><dd><b>St 2:</b> recipe archive &amp; the multi-user review workflow go live. Scopes: delegated <code>Files.ReadWrite.All</code> (+ optional <code>Mail.Send</code>)</dd>
-      </dl>
-    </div>
-    <div class="app">
-      <h3>PROOF <small>conc-kitchen-proof</small></h3>
-      <p class="role">Board / funder reporting — a lens, never a vault</p>
-      <dl>
-        <dt>Reads</dt><dd>Five public aggregate feeds + three sensitive workbooks file-picked from the OneDrive-synced SharePoint folder — in memory only</dd>
-        <dt>Writes</dt><dd>Nothing. Output is printed PDF with suppressed aggregates + provenance footer</dd>
-        <dt>SP today</dt><dd>The entire sensitive tier is specified for SharePoint; workbooks don't exist yet</dd>
-        <dt>Gains</dt><dd><b>St 1 makes PROOF fully operational.</b></dd>
-      </dl>
-    </div>
-    <div class="app">
-      <h3>Portal <small>conc-kitchen-house</small></h3>
-      <p class="role">Landing page linking the apps</p>
-      <dl>
-        <dt>Today</dt><dd>Static page, PIN-gated app links</dd>
-        <dt>Gains</dt><dd><b>St 4:</b> Entra sign-in replaces the PIN · <b>St 5:</b> moves with everything else</dd>
-      </dl>
-    </div>
-  </div>
-  <div class="callout warn" style="margin-top:1.1rem;">
-    <p><span class="lead-in">Time-sensitive:</span> PROOF's incident log (<code>LOG.xlsx</code>) is forward-only — incidents and near-misses from days before it exists cannot be honestly reconstructed. Every week without the Stage-1 setup is reporting history lost.</p>
+  <h2><span class="secnum">4</span>Where things stand</h2>
+  <div class="tbl-scroll">
+    <table>
+      <thead><tr><th>Item</th><th>Status as of November 3, 2026</th></tr></thead>
+      <tbody>
+        <tr><td>SharePoint library &amp; folders</td><td>Not created. No Kitchen site library synced to the kitchen machine.</td></tr>
+        <tr><td>PROOF's three workbooks</td><td>Not created. They exist only as blank templates in the code.</td></tr>
+        <tr><td>Entra app registration</td><td>Does not exist. No Client ID issued.</td></tr>
+        <tr><td>Sign-in code in HUB &amp; CODEX</td><td>Written, tested, shipped. Dormant, awaiting the Client ID.</td></tr>
+        <tr><td>Recipe links into SharePoint</td><td>143 live links, followed by staff daily.</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
@@ -438,11 +377,20 @@
   <h2><span class="secnum">5</span>The staged plan</h2>
   <div class="stages">
     <div class="stage">
+      <div class="stage-n">0</div>
+      <div class="stage-body">
+        <h3>CONC takes ownership of the code <em>kitchen-team work — new, and now first</em></h3>
+        <p>Create a GitHub <b>organization</b> owned by CONC and transfer all six repositories into it. An organization rather than an account in CONC's name: several owners, a membership roster, an audit log, and the code belongs to the organization rather than a person. Transfer rather than copy, so history, issues and the reasoning behind every change survive, and the old addresses redirect.</p>
+        <p>The work is in the addresses, not the move — <b>132 web addresses are written into the code</b> across the six repositories and must change together. It is a planned cutover, done out of service hours, because HUB is the board staff read during service.</p>
+        <p class="outcome"><b>Outcome:</b> nothing load-bearing sits on a personal account, and the redirect address Microsoft is told to trust is one CONC controls. <b>From IT we need only a decision on the owner address</b> — ideally a role mailbox, with two owners.</p>
+      </div>
+    </div>
+    <div class="stage">
       <div class="stage-n">1</div>
       <div class="stage-body">
         <h3>A governed SharePoint home <em>no code — pure M365 administration</em></h3>
-        <p>Create the document library structure, permission groups, retention labels, and version history (details right), and provision OneDrive sync on the named kitchen machines.</p>
-        <p class="outcome"><b>Outcome:</b> PROOF goes live against real workbooks; DOOR/EXPO/PROOF file outputs land on the shared drive through the sync client — the file-drop capability with zero code changes.</p>
+        <p>Create the document library structure, permission groups, retention labels and version history (details in §6), and provision OneDrive sync on the named kitchen machines.</p>
+        <p class="outcome"><b>Outcome:</b> PROOF goes live against real workbooks; DOOR/EXPO/PROOF file outputs land on the shared drive through the sync client — with zero code changes. <b>Nothing in this stage waits on anything else in this brief.</b></p>
       </div>
     </div>
     <div class="stage">
@@ -457,34 +405,35 @@
       <div class="stage-n">3</div>
       <div class="stage-body">
         <h3>Runtime data moves home <em>multi-device sync</em></h3>
-        <p>Swap browser-local state to Graph-backed storage at the named seams, one function at a time, app by app. The GitHub JSON transport between apps can remain during this stage; candidates migrate as they prove out.</p>
+        <p>Swap browser-local state to Graph-backed storage at the named seams, one function at a time. The existing transport keeps working throughout, so there is no flag day.</p>
+        <p class="outcome"><b>Outcome:</b> the schedule stops living on a particular computer. Any supervisor, on any machine, sees the same current state.</p>
       </div>
     </div>
     <div class="stage later">
       <div class="stage-n">4</div>
       <div class="stage-body">
-        <h3>Identity everywhere</h3>
-        <p>Staff sign in with CONC Microsoft accounts; pasted GitHub tokens and the portal PIN retire from day-to-day flows. All staff already hold M365 credentials, so this is configuration, not provisioning. Needs IT's input on conditional access and shared-device policy for kitchen tablets.</p>
+        <h3>Identity everywhere <em>retires the current credential arrangement</em></h3>
+        <p>Staff sign in with CONC Microsoft accounts. Today's arrangement — GitHub tokens pasted into a browser in plain text, long-lived, invisible to CONC and unrevocable by IT, plus a shared portal PIN — goes away. All staff already hold M365 credentials, so this is configuration, not provisioning.</p>
+        <p class="outcome"><b>Outcome:</b> short-lived tokens issued by Microsoft, central revocation, MFA available, sign-in activity visible. <b>IT input needed</b> on conditional access and shared-device policy.</p>
       </div>
     </div>
     <div class="stage later">
       <div class="stage-n">5</div>
       <div class="stage-body">
-        <h3>Hosting <em>last, by design</em></h3>
-        <p>Move the apps off the personal GitHub Pages account. They are static files, so the requirement is modest: HTTPS static hosting + the JSON feeds served alongside. Options to discuss: an org-owned GitHub organization, Azure Static Web Apps on CONC's tenant, or existing org infrastructure — your call, not ours to prescribe.</p>
+        <h3>Hosting, finished <em>largely resolved by Stage 0</em></h3>
+        <p>With the repositories in a CONC organization, what remains is a choice of where the static files are served from — the org's own GitHub Pages (smallest change) or Azure Static Web Apps on CONC's tenant (Entra auth built in, nonprofit credits apply). SharePoint page hosting is likely a poor fit for full JavaScript apps, but that is IT's call.</p>
       </div>
     </div>
   </div>
-  <p class="measure" style="margin-top:1rem; font-size:0.95rem; color:var(--ink-soft);">Sequencing rationale: Stages 1–2 capture most of the governance value — sensitive data under M365 controls, org-owned copies of operational outputs — at near-zero risk, while the apps keep running exactly as they do today. Hosting moves last because it's the most disruptive change and the least urgent: the public static pages expose no sensitive data.</p>
 </section>
 
 <section>
-  <h2><span class="secnum">6</span>The concrete ask — Stages 1–2</h2>
+  <h2><span class="secnum">6</span>The concrete ask</h2>
   <div class="ask">
     <div class="panel">
       <h3>A · SharePoint site &amp; library <span style="font-weight:500; font-size:0.78rem; color:var(--ink-faint);">(Stage 1)</span></h3>
       <ol>
-        <li><b>Confirm the canonical tenant + site</b> — we believe <code>conctoronto.sharepoint.com</code>, site <code>/sites/Kitchen</code>.</li>
+        <li><b>Confirm the canonical tenant + site</b> — see the inconsistency note in §3.</li>
         <li><b>Create the folder structure:</b>
 <pre class="tree">Operations Reporting/
   PROOF Tier-2/
@@ -493,57 +442,74 @@
     Outputs/     <span class="cm">← generated report PDFs</span>
 Kitchen Ops/
   DOOR Outputs/  <span class="cm">← compliance exports · change-log</span>
-  EXPO Outputs/  <span class="cm">← order sheets · schedule snapshots</span></pre>
-        Workbook schemas, columns, and dropdowns are fully specified in <code>conc-kitchen-proof/SHAREPOINT_SETUP_CHECKLIST.md</code>.</li>
-        <li><b>Permission groups per file/folder:</b> <code>PROOF-Log</code> (managers only), <code>PROOF-Crew</code> &amp; <code>PROOF-Ledger</code> (director / admin / bookkeeper + kitchen lead), plus a kitchen-ops group. No org-wide access; no anonymous links.</li>
-        <li><b>Retention labels</b> per CONC policy: finance (LEDGER), HR (CREW), incident/legal (LOG).</li>
+  EXPO Outputs/  <span class="cm">← order sheets · driver manifests</span></pre></li>
+        <li><b>Permission groups</b>, applied per folder: <code>PROOF-Log</code> (managers), <code>PROOF-Crew</code> and <code>PROOF-Ledger</code> (director/admin/bookkeeper + kitchen lead), and a kitchen-ops group for <code>Kitchen Ops/</code>. No org-wide access; no anonymous links.</li>
+        <li><b>Retention labels</b> per CONC policy — finance (LEDGER), HR (CREW), incident/legal (LOG).</li>
         <li><b>Version history on</b> for the library.</li>
-        <li><b>OneDrive sync</b> of <code>PROOF Tier-2/Active</code> and <code>Kitchen Ops/</code> on the named kitchen machines (we'll supply the list).</li>
+        <li><b>OneDrive sync</b> of <code>PROOF Tier-2/Active</code> and <code>Kitchen Ops/</code> on the named kitchen machines (list supplied).</li>
       </ol>
+      <p>The three workbooks are prepared as templates with correct columns and dropdowns — they need uploading, not authoring. Full spec in <code>SHAREPOINT_SETUP_CHECKLIST.md</code>.</p>
     </div>
     <div class="panel">
       <h3>B · Entra app registration <span style="font-weight:500; font-size:0.78rem; color:var(--ink-faint);">(Stage 2)</span></h3>
       <ul>
-        <li><b>Platform:</b> single-page application.</li>
-        <li><b>Redirect URIs:</b> the app origins — currently the five <code>https://kennedyjasondavid-eng.github.io/conc-kitchen-*/</code> URLs; updated when hosting moves at Stage 5.</li>
-        <li><b>API permissions (delegated):</b> Microsoft Graph <code>User.Read</code>, <code>Files.ReadWrite.All</code>; optionally <code>Mail.Send</code> (one CODEX email-notify helper — skippable).</li>
+        <li><b>Platform:</b> single-page application. <em>Not</em> "Web" — that expects a server-side secret these apps do not and must not have.</li>
+        <li><b>Account types:</b> single tenant — this directory only.</li>
+        <li><b>Redirect URIs:</b> one per app, supplied by us once Stage 0 settles the addresses.</li>
+        <li><b>API permissions (delegated):</b> <code>User.Read</code> + <code>Sites.Selected</code> scoped to the Kitchen site. <code>Mail.Send</code>, mentioned in July, has been dropped.</li>
+        <li><b>Implicit grant:</b> both boxes unticked.</li>
+        <li><b>No client secret, no certificate, no service account.</b> Sign-in and tokens are handled by Microsoft's own library in the user's session.</li>
         <li><b>Admin consent</b> granted if CONC policy requires it.</li>
-        <li><b>No client secret, certificate, or service account</b> — the apps are browser-only; MSAL handles sign-in in the user's session, and every action is bounded by what that user can already access in SharePoint.</li>
-        <li><b>Deliverable back to us:</b> the Application (client) ID — and Tenant ID if tenant-restricted sign-in is required. Both are public identifiers, entered in each app's settings screen.</li>
       </ul>
-      <p style="font-size:0.86rem; color:var(--ink-faint); margin:0.8rem 0 0;">If CONC prefers tighter scoping than <code>Files.ReadWrite.All</code>, we're glad to work with <code>Sites.Selected</code> scoped to the Kitchen site instead — whichever fits your permission model.</p>
+      <p><b>Deliverable back to us:</b> the Application (client) ID, and the Directory (tenant) ID if tenant-restricted sign-in is required. Both are public identifiers, entered in each app's settings screen.</p>
     </div>
   </div>
 </section>
 
 <section>
-  <h2><span class="secnum">7</span>Decision points where we need IT's judgement</h2>
-  <ol class="qs measure">
-    <li><b>Canonical tenant/site</b> — <code>conctoronto</code> vs <code>conc</code>.</li>
-    <li><b>Permission scoping</b> — delegated <code>Files.ReadWrite.All</code> (simplest; user-bounded) vs <code>Sites.Selected</code> (tighter; slightly more setup).</li>
-    <li><b>Retention label names</b> — what CONC policy calls the finance / HR / incident-legal labels.</li>
-    <li><b>Shared kitchen tablets</b> — the HUB board is anonymous-read today by design. When runtime data moves (Stage 3+): keep the aggregate schedule feed public, or adopt a shared-device / kiosk sign-in pattern? What's CONC's stance on shared-device Entra sign-in?</li>
-    <li><b>Hosting target</b> (Stage 5, no urgency) — org GitHub organization vs Azure Static Web Apps vs existing org infrastructure.</li>
-  </ol>
+  <h2><span class="secnum">7</span>Why these settings</h2>
+  <div class="measure">
+    <p>We went looking for the weak points in our own proposal before asking IT to approve it.</p>
+    <p><b>Start from the baseline.</b> Signing in with Microsoft is a substantial improvement on what HOUSE does today. Access is currently a GitHub token pasted into a browser in plain text — long-lived, invisible to CONC, unrevocable by IT. Replacing that with Microsoft sign-in means short-lived tokens, central revocation, MFA, and an audit trail. The code already discards tokens when the tab closes and holds no secret of any kind. The question is not whether sign-in introduces risk — it removes a good deal. It is whether we introduce any <em>new</em> exposure while doing it. Two things would.</p>
+    <p><b>How much the apps can reach.</b> <code>Files.ReadWrite.All</code> sounds like "the kitchen's files." It means every file the signed-in person can reach anywhere in the tenant — so the reach is set by the most senior person who ever signs in. <code>Sites.Selected</code> confines the apps to the Kitchen site. We are asking for the narrower one. In fairness: it needs an extra administrative step, and our code currently requests the broad one, so choosing it means a small change on our side. We are volunteering that work, not pretending it is free.</p>
+    <p><b>Who controls the sign-in address.</b> After sign-in, Microsoft returns the user to an address listed in the registration. Today that address sits on a personal GitHub account.</p>
+    <p><b>Together these are the finding.</b> Separately each is tolerable. As things stand, a compromise of that account means a wrong dinner schedule on a tablet. Combine a broad permission with an address CONC does not control, and the same compromise means attacker-supplied code at a trusted sign-in address, using real staff sessions against tenant files. That is why Stage 0 moved to the front: the July brief had hosting last, reasoning that public static pages expose nothing sensitive — true then, and untrue the moment staff sign in.</p>
+    <p><b>If <code>Sites.Selected</code> proves awkward</b> in CONC's tenant, <code>Files.ReadWrite.All</code> <em>after</em> Stage 0 is a defensible interim. The dangerous combination is the broad permission together with the uncontrolled address, not the permission alone.</p>
+    <p><b>Two smaller disclosures.</b> The apps are hand-written HTML with no framework, so we do our own escaping of text that staff and the menu system put on screen; confining the permission is what limits the consequence, and is the second reason we ask for <code>Sites.Selected</code>. And the Microsoft sign-in library is a few versions behind (2.38.3, from Microsoft's own CDN) — no known exposure for our use, but we will bring it current as part of this work.</p>
+  </div>
 </section>
 
 <section>
-  <h2><span class="secnum">8</span>What we are <i>not</i> asking for</h2>
-  <ul class="nots">
-    <li>No servers, databases, or VMs to run or maintain</li>
-    <li>No new accounts or licences — all staff already have M365 credentials</li>
-    <li>No software purchases or vendor onboarding</li>
-    <li>No custom development from IT — the kitchen team writes and maintains the apps</li>
-    <li>No service accounts, stored secrets, or standing credentials</li>
-    <li>No migration of resident-identifying data — it stays on-device in DOOR unless a future stage is separately reviewed</li>
-  </ul>
-  <p class="measure" style="margin-top:1.2rem;">The division of labour we're proposing: <b>IT owns tenancy, identity, and governance; the kitchen team owns the apps.</b> Stages 1–2 are a few hours of standard M365 administration that unlock work the apps are already built for.</p>
+  <h2><span class="secnum">8</span>Decisions we need from IT</h2>
+  <ol class="qs measure">
+    <li><b>Canonical tenant/site</b> — <code>conctoronto</code> vs <code>conc</code> (§3).</li>
+    <li><b>Who creates the library, and by when</b> — a name and a date. Needs nothing from us.</li>
+    <li><b>Permission scoping</b> — <code>Sites.Selected</code> (preferred) vs <code>Files.ReadWrite.All</code>; is the narrower one workable in this tenant?</li>
+    <li><b>GitHub organization owner address</b> — ideally a CONC role mailbox, with two owners.</li>
+    <li><b>Retention label names</b> — what CONC policy calls the finance / HR / incident-legal labels.</li>
+    <li><b>Shared kitchen tablets</b> — our recommendation is the staff board stays sign-in-free, so no unattended device holds a session. Needed before Stage 3.</li>
+  </ol>
+  <div class="callout warn">
+    <p><span class="lead-in">One item is genuinely time-sensitive.</span> <code>LOG.xlsx</code> is an incident log, and an incident log is forward-only — incidents and near-misses from before the file exists cannot honestly be reconstructed. Roughly four months of that history has already gone unrecorded, and the kitchen's HACCP plan assumes an incident record exists. We cannot recover it; we can stop losing more. <b>If only one thing comes out of this, we would like it to be Stage 1, with a name and a date against it.</b></p>
+  </div>
 </section>
 
-<footer class="doc">
-  <p>Full detail, per-app inventories, and source references: <code>HOUSE_SHAREPOINT_IT_BRIEF_2026-07-07.md</code> in the <code>conc-kitchen-house</code> repository.<br>
-  Companion setup docs: <code>conc-kitchen-proof/SHAREPOINT_SETUP_CHECKLIST.md</code> · <code>conc-kitchen-proof/GOVERNANCE.md</code> · <code>conc-recipe-hub/docs/CODEX_U13_SHAREPOINT_CLIENT_ID_REQUEST_2026-06-20.md</code></p>
-</footer>
+<section>
+  <h2><span class="secnum">9</span>What we are not asking for</h2>
+  <ul class="nots measure">
+    <li>No servers, databases or VMs to stand up or maintain.</li>
+    <li>No new accounts or licences — every staff member already has Microsoft 365.</li>
+    <li>No software purchases, no vendor onboarding.</li>
+    <li>No custom development from IT — the kitchen team writes and maintains the apps.</li>
+    <li>No service accounts, stored secrets or standing credentials held by the apps.</li>
+    <li>No ongoing administrative burden — Stages 1 and 2 are set up once.</li>
+    <li>No migration of resident-identifying data. It stays in DOOR, on-device, unless a future stage is separately reviewed.</li>
+  </ul>
+  <div class="measure">
+    <p><b>IT owns tenancy, identity and governance. The kitchen team owns the apps.</b> We are not asking to blur that line — we are asking you to exercise your half of it so we can finish ours.</p>
+    <p style="color:var(--ink-faint); font-size:0.86rem;">Jason Kennedy, Kitchen Operations — jason@conc.ca. Happy to walk through any part of this, including sitting alongside whoever does the setup. A test procedure is already written: given a Client ID and a confirmed site, CODEX's recipe upload and HUB's profile sync can be verified end to end within a day.</p>
+  </div>
+</section>
 
 </div>
 </body>
