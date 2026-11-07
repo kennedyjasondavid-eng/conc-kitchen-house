@@ -203,14 +203,15 @@ This is why **HUB's freshness check compares menu _content_ slot-by-slot, never 
   the source of truth and are edited directly.
 - **Silent when it works, loud when it breaks** (Jason, 2026-11-07). The back end may be as capable as
   the job needs, as long as staff never see its workings. A break must reach someone who can act on it.
-  Proposed levels, not yet ruled:
+  Alarm levels (ruled by Jason, 2026-11-07):
   - **food safety** (an allergen or anaphylactic change didn't reach the plating sheet or EXPO): red, on
     the screen in use;
   - **operations** (stale counts, a computer that hasn't sent, a site offline): a quiet line for
     supervisors and a note to Jason;
   - **plumbing** (retries, skipped duplicates, slow deploys): a log only Jason reads.
 
-  The 2026-11-06 DOOR publish stop showed nowhere, which is the case this rule exists to prevent.
+  The 2026-11-06 DOOR publish stop showed nowhere, which is the case this rule exists to prevent. DOOR's
+  red reconnect banner and its journey check (DOOR #161, `v31-standard.51`) are its first application.
 - **Checks support, never obstruct** (Jason, 2026-11-07). Three kinds only:
   - kitchen-journey checks (an edit reaches EXPO and HUB);
   - contract checks at each seam between apps;
