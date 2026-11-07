@@ -201,5 +201,50 @@ This is why **HUB's freshness check compares menu _content_ slot-by-slot, never 
 - **Deprecated / do-not-regenerate:** HUB's component/Hub-Builder pipeline (`archive/`), EXPO's
   `reno`/`reno_rex` modes, DOOR's Alt-Menu / `menu_reno.json` edit path. The served single files are
   the source of truth and are edited directly.
+- **Silent when it works, loud when it breaks** (Jason, 2026-11-07). The back end may be as capable as
+  the job needs, as long as staff never see its workings. A break must reach someone who can act on it.
+  Proposed levels, not yet ruled:
+  - **food safety** (an allergen or anaphylactic change didn't reach the plating sheet or EXPO): red, on
+    the screen in use;
+  - **operations** (stale counts, a computer that hasn't sent, a site offline): a quiet line for
+    supervisors and a note to Jason;
+  - **plumbing** (retries, skipped duplicates, slow deploys): a log only Jason reads.
+
+  The 2026-11-06 DOOR publish stop showed nowhere, which is the case this rule exists to prevent.
+- **Checks support, never obstruct** (Jason, 2026-11-07). Three kinds only:
+  - kitchen-journey checks (an edit reaches EXPO and HUB);
+  - contract checks at each seam between apps;
+  - unit checks for genuinely tricky logic.
+
+  Every new check names the kitchen failure it prevents. A check never reads live menu or roster data
+  (DOOR C2a's lesson): use fixed examples. A flaky check is fixed or removed within a week, never
+  retried quietly.
+- **Keep the seams swappable** (direction 2026-11-07, below). Sign-in code lives only in each app's
+  credential seam (`PublishAuth` in DOOR; `HOUSE_PROVEN_SEAMS.md` rows 3–4). File reads and writes go
+  only through each app's reader and publisher. Add no new GitHub-specific machinery: no per-computer
+  GitHub keys, no GitHub Enterprise, no server.
+
+## Direction (Jason, 2026-11-07, long term; nothing built yet)
+- **Hosting:** the apps' code on GitHub Pages under a **CONC organization account**, not Jason's
+  personal one. The move changes every Pages address, so every cross-app feed address changes in the
+  same sitting. Planned once, before more sites are wired in.
+- **Sign-in:** **Entra / Microsoft 365** replaces the GitHub keys (PATs). Jason is talking with IT.
+  Questions for IT:
+  - an Entra app registration (single-page app) for the Pages addresses;
+  - SharePoint/Graph access for it;
+  - guest accounts for outside kitchens;
+  - shared kitchen tablets.
+
+  An Entra token can't write to GitHub, so the data moves too (next item). Sign-in needs the hosted
+  `https://` page; `file://` stays read-only.
+- **Data:** resident and menu data in **SharePoint through Microsoft Graph** (build-path phase 6), with
+  permissions per site. Private resident data then never sits on GitHub.
+- **Sites:** **kitchens that cook** (Bloor, Rex; contract kitchens later) and **sites where people eat**
+  (each with its own residents and probably its own menu). DOOR is the eating side, EXPO the cooking
+  side.
+  - Shelter kitchens may join later as a site that cooks for itself; nothing is designed for them now.
+  - Each site's data stays separate once outside kitchens join.
+  - Bloor/Rex is the focus now.
+  - Near term: DOOR's F4 count stamp gains an optional site field while it is still off (lean).
 
 ---
