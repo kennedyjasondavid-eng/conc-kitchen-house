@@ -246,6 +246,12 @@ This is why **HUB's freshness check compares menu _content_ slot-by-slot, never 
   - Shelter kitchens may join later as a site that cooks for itself; nothing is designed for them now.
   - Each site's data stays separate once outside kitchens join.
   - Bloor/Rex is the focus now.
-  - Near term: DOOR's F4 count stamp gains an optional site field while it is still off (lean).
+  - F4's count stamp already carries the site (checked 2026-11-07):
+    - required, and hashed into `inputRevision`;
+    - carried in `_meta.site` and in each `serviceRef`;
+    - matched by the consumer API (`houseFlowResolve({site,…})`);
+    - DOOR's `rexdale` is a `sites.json` key.
+
+    No change needed. One per-site gap remains: the private publication counter (`door_flow_publication.json`) is one file per repository. That is fine while each site has its own storage, which is the SharePoint direction.
 
 ---
