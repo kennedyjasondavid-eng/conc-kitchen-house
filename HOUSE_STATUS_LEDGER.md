@@ -98,6 +98,7 @@ reader of a DOOR file either reads one of these, or adds it to that list in a DO
 same change set.
 | `hub_schedule.json` (+ `hub_schedule_version.json` `{version, generated, source, mode}`) | EXPO `_buildHubSchedulePayload` | HUB `CONC_Production_Hub.html`; CODEX `_cxHubCycle` (Library browse LB4, ruling R11, Jason 2026-11-02: reads `_cycleStart` only, for the menu week; `_schemaVersion` 2 read, any other refused with a notice and no week guessed; keeps the date in `concHubCycleStart`) | `_schemaVersion` 2 | HUB re-projects dates at view time via `projectDates()`; dates in the feed are a snapshot. |
 | `sites.json` | HOUSE (`conc-kitchen-house`, contract `SITES.md`) | CODEX (RF4); EXPO (EX-16 #550, Settings only, read-only); HUB and DOOR next | `_meta.schemaVersion` 1 | The HOUSE site registry, ruled 2026-10-31 (S1–S4); validated by `tests/sites_registry_gate.mjs` (no key ever deleted). |
+| `_meta.flow` on DOOR's `menu_current`, `routing_by_meal`, `registry_summary` (public) and `menu_overlay`, `door_state` (private) | DOOR (#156, 2026-11-06) | EXPO, HUB: **not built yet** (menu-flow F4) | `_meta.flow.schema` 1; **switched off**: `DOOR_FLOW_ACTIVATION_EPOCH` / `_BASE` are empty, so nothing is stamped yet | The count stamp: one publication identity (epoch + sequence, `inputRevision`, per-input hashes) so EXPO and HUB can tell current counts from mixed or stale ones. Also adds exact-date routing inside `routing_by_meal.json`; the dated maps (`meal_swaps.json` etc.) get no `_meta`. Contract: `conc-kitchen-door/docs/F4_FLOW_CONTRACT_DRAFT_2026-11-06.md` (reviewed, with its counter and public-delivery amendments). Switched on only by a separate PR after the readers ship. |
 
 **Payload keys** `hub_schedule.json` (2026-10-31): `WEEKS, FRIDGE, MOVES, MEALS, RESOURCES, CONFLICTS,
 FROZEN_SERVES, _generated, _source, _mode, _menuSource, _doorMenu, _recipeData, _aliasTableHash, _codex,
@@ -124,6 +125,11 @@ This is why **HUB's freshness check compares menu _content_ slot-by-slot, never 
 
 ## Open cross-app lines
 
+- **DOOR menu flow (Astra, 2026-11-06; picked up 2026-11-07).** Owner: `conc-kitchen-door/docs/DOOR_MENU_FLOW_ACTION_PLAN_2026-11-06.md` §Status.
+  - Built: DOOR #153–#158, EXPO #564, HUB #56/#57. F1 (one-set publishing) is on.
+  - EXPO #565 (F3a) is on hold for review with EXPO's EX queue (#560–#563).
+  - Next: EXPO and HUB read the F4 count stamp (row above), then a separate PR switches it on.
+  - F3b and F5 wait until F4 has run about a week (Jason, 2026-11-07).
 - **CODEX refinement line (2026-10-31).** Owner: `conc-recipe-hub/docs/plans/CODEX_REFINEMENT_ACTION_PLAN_2026-10-31.md`
   (Jason's 12 rulings, batches RF1–RF10, HOUSE-1, EXPO-1). Cross-app pieces: v35 Coconut family
   (paired DOOR change, after a one-resident DOOR check), CODEX reading DOOR's `routing_by_meal.json`
