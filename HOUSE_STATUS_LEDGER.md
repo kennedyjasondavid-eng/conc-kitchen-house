@@ -125,6 +125,13 @@ This is why **HUB's freshness check compares menu _content_ slot-by-slot, never 
 
 ## Open cross-app lines
 
+- **Change it in-app, not in code (ruled 2026-11-08).** Owner: `conc-kitchen-expo/EXPO_IN_APP_ACTION_PLAN_2026-11-08.md` §6.
+  Jason ruled all 18 calls on the leans: kitchen changes (menus, recipes, production rules, shapes) are made in-app,
+  and a kitchen change that needs a PR is a bug in the plan (call 16 counts them monthly). Who reads what: DOOR owns
+  which recipe a dish is (the slot link), CODEX owns food facts, EXPO owns how a dish travels (F1); nothing relayed.
+  Cross-app pieces: R3 (EXPO reads CODEX's shared Library by DOOR's slot recipe ID; proposal to the CODEX session),
+  D1 (DOOR and HUB read `sites.json`; HUB says when counts didn't load) and D2 (DOOR allergen, routing and spelling
+  rules page; Jason and named leads only). Each ships paired or fails loudly. Standing rulings: `HOUSE_RULINGS_INDEX.md`.
 - **DOOR menu flow (Astra, 2026-11-06; picked up 2026-11-07).** Owner: `conc-kitchen-door/docs/DOOR_MENU_FLOW_ACTION_PLAN_2026-11-06.md` §Status.
   - Built: DOOR #153–#158, EXPO #564, HUB #56/#57. F1 (one-set publishing) is on.
   - EXPO #565 (F3a): **parked as a draft (Jason, 2026-11-08).** Claude rebased it, built Jason's feed rule (hold an unknown recipe ID only when the CODEX feed loaded) and fixed two real bugs found with the real menu plus feed; 19 gates still fail and need triage. To be re-planned as its own slices.
@@ -173,6 +180,8 @@ This is why **HUB's freshness check compares menu _content_ slot-by-slot, never 
 ---
 
 ## Design + knowledge owners (single owner per fact — point, don't restate)
+- **Standing rulings (an index, call 18 of the in-app plan):** `conc-kitchen-house/HOUSE_RULINGS_INDEX.md`.
+  One line and a link per ruling; each ruling's owner stays its plan.
 - **Cross-HOUSE design wisdom + lessons + telos:** `conc-kitchen-house/INSIGHTS.md`. **Read before any
   design pass.** App-specific grammar (EXPO's `EXPO_DESIGN_PRINCIPLES.md`, PROOF's `INSIGHTS.md`)
   points back to it.
