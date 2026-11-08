@@ -288,3 +288,17 @@ Closing an app-wide stored-XSS class in CODEX (a cook-log review finding that tu
   - the check never holds the action: the dialog opens at once and fills in when the read lands, and an unreadable destination says "Couldn't check" while Publish still works.
 
   DOOR's publish confirmations are the next place to apply it.
+
+## The bug lives where two real feeds meet — test with both, early (2026-11-08 — EXPO #565, recipe identity)
+
+EXPO #565 bound scheduled work to exact recipe IDs. Its seven new gates, its baseline migration and two independent reviews all passed, on synthetic fixtures. The first run of the one gate that boots real kitchen saves with DOOR's live menu **and** CODEX's feed together found two real bugs straight away:
+
+- **A deliberate refusal read as an absence.** EXPO keeps the menu's own recipe when DOOR links an unreviewed CODEX copy (#503). That refusal returns "no key", the same as a missing ID, and #565 branched on "no key". So nearly every vegan alternate became "doesn't resolve to a known dish": the work computer's "What the board needs" went from 1 row to 47, and shared moves came loose. Neither feed alone shows it; it takes DOOR's links meeting CODEX's records.
+- **A complete-looking empty value overwrote a real one.** A full set of zero cook times from CODEX replaced EXPO's values, and three marinades lost their hands-on minutes. A fixture with tidy numbers never triggers it.
+
+**The lessons:**
+
+- For any change to identity, merging or matching between apps, run the real-data cross-feed check (EXPO's `saved_changes_attached`) on the first build, not at the end.
+- Branch on *why* something came back empty, never just on whether it is empty.
+- An empty value from a feed never replaces a filled one.
+- "All my gates pass" is a statement about the fixtures. The question to ask is which real inputs those fixtures stand in for, and whether any gate feeds them in together.
