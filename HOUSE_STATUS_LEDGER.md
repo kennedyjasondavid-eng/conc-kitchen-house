@@ -134,7 +134,7 @@ This is why **HUB's freshness check compares menu _content_ slot-by-slot, never 
   rules page; Jason and named leads only; done 2026-11-10, DOOR #185 and #186). Each ships paired or fails loudly. Standing rulings: `HOUSE_RULINGS_INDEX.md`.
 - **DOOR menu flow (Astra, 2026-11-06; picked up 2026-11-07).** Owner: `conc-kitchen-door/docs/DOOR_MENU_FLOW_ACTION_PLAN_2026-11-06.md` §Status.
   - Built: DOOR #153–#158, EXPO #564, HUB #56/#57. F1 (one-set publishing) is on.
-  - EXPO #565 (F3a): **parked as a draft (Jason, 2026-11-08).** Claude rebased it, built Jason's feed rule (hold an unknown recipe ID only when the CODEX feed loaded) and fixed two real bugs found with the real menu plus feed; 19 gates still fail and need triage. To be re-planned as its own slices.
+  - EXPO #565 (F3a): **merged 2026-11-08** (`d0663f7`; the 'parked' note here was stale, found 2026-11-11). Its 19 once-failing gates pass on main. Follow-up: HUB #61, recipe links by recipe ID, a card warns only when its recipe is gone, HUB reads CODEX's Library (Jason's rulings 2026-11-11).
   - F4 done 2026-11-09: EXPO #580/#581 and HUB #58/#59 read the count stamp (independent review folded), DOOR #181 switched it on. Operational: publish from DOOR once more about 10 minutes after the first stamped publish, and every DOOR data edition goes through DOOR's stamped publish.
   - F3b and F5 wait until F4 has run about a week (Jason, 2026-11-07).
 - **CODEX refinement line (2026-10-31).** Owner: `conc-recipe-hub/docs/plans/CODEX_REFINEMENT_ACTION_PLAN_2026-10-31.md`
