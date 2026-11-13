@@ -6,7 +6,13 @@
 > for Jason, each with a lean.
 >
 > **Status:** draft for Jason to read. Nothing here is built or ruled. This doc owns the plan and its status;
-> each slice's receipt is added under "Slices" when it lands. Cross-app status stays in
+> each slice's receipt is added under "Slices" when it lands.
+>
+> **Reviewed 2026-11-13** against the live files. Fixed: cards are matched to meals by `serviceRefs`
+> (the first draft said cards carry a `recipeId` and couldn't tell the meal; they carry it inside
+> `serviceRefs`, with the meal); "on the board" compares DOOR's menu hash, not publish times (the draft
+> raised a false "publish from EXPO" on today's files); "done" no longer needs every slot linked (Week 4 has
+> 29 unlinked slots and is closed); each app lists only its own facts and links to the tracker. Cross-app status stays in
 > [`HOUSE_STATUS_LEDGER.md`](../HOUSE_STATUS_LEDGER.md).
 >
 > **Read for this plan** (2026-11-13, against each repo's `origin/main`):
@@ -52,21 +58,32 @@ week is finished.
 
 ## 3. The path, step by step
 
-One dish moves through five states. Every state can be read from a file already on Pages:
+Each dish slot (a meal's main, vegan, halal, sides) has five things to know. Every one can be read from a
+file already on Pages (each checked against the live files on 2026-11-13):
 
 | State | What it means | Read from (public, today) |
 |---|---|---|
-| 1. On the menu | Rex's dish is in DOOR's week | DOOR `menu_current.json`, `menu[wk][DAY]` |
-| 2. Linked | its slot names a CODEX recipe | the slot's `recipeId` in `<meal>_slots` (65 slots carry one, 2026-11-13) |
-| 3. Has kitchen facts | CODEX knows how long it cooks, on what | CODEX `library_public.json` record by `recipeId`, `production.sets` lists the cook fields; else the sealed `recipe_production.json` |
-| 4. Planned | EXPO makes cards for it, none "needs a plan" | HUB `hub_schedule.json`: cards carry `recipeId`; `needsPlan: true` marks a dish with no plan |
-| 5. On the board | the board was built from DOOR's latest menu | `hub_schedule.json` `_doorMenu.exported` against `menu_current.json` `_meta.exported` |
+| 1. On the menu | Rex's dish is in DOOR's week | DOOR `menu_current.json`, `menu[wk][DAY]` and its `<meal>_slots` |
+| 2. Linked | its slot names a CODEX recipe | the slot's `recipeId` (a `{manual}` slot has none). 65 of 197 slots carry one; Week 4: 20 of 49 |
+| 3. Has kitchen facts | CODEX knows how long it cooks, on what | CODEX `library_public.json` (57 records) by `recipeId`: `production.sets` lists `cookMin` (a listed 0 is a value: "no cook"); else the sealed `recipe_production.json` |
+| 4. Planned for this meal | a card on the board serves this exact meal, and none "needs a plan" | HUB `hub_schedule.json`: 538 of 542 cards carry `serviceRefs` `[{week, day, meal, component, recipeId, …}]`; `needsPlan: true` marks a dish with no plan (none on the board today) |
+| 5. On the board | the board was built from DOOR's current menu | HUB `_doorMenu.flow.components.menu` against DOOR `_meta.flow.components.menu` (the F4 menu hash). **Not** the two `exported` times: DOOR publishes count changes daily without changing the menu |
+
+**The states are not a chain.** Long-standing dishes are planned by EXPO's own recipes under their menu
+name, with no CODEX link: on Week 4, Pork Souvlaki, Fish Curry, Tandoori Pork and Beef lasagna are
+`{manual}` slots, and each is on the board. So a dish **needs something** only when:
+- no card serves its meal (state 4), or a card "needs a plan";
+- or it is linked to a CODEX recipe with no cook facts (state 3);
+- or the board was built from an older menu (state 5).
+
+"Not linked" alone is shown quietly, as a note, never as work left. Otherwise a closed week (Week 4: 29
+unlinked slots) would never read as done.
 
 The steps a novice takes, in order. "Absorbs" names the friction items each step's own fixes cover (§6).
 
 | # | The novice does | App | Done when | Absorbs |
 |---|---|---|---|---|
-| 0 | Rex emails the workbook. Nothing to prepare: no one-tab copy. | (outside) | — | Wk4 2 |
+| 0 | Rex emails the workbook. Nothing to prepare: no one-tab copy (once DOOR asks which tab, step 1; until then a one-tab copy may still be needed). | (outside) | — | Wk4 2 |
 | 1 | DOOR → Menu Config → **↑ Rex's week sheet**. Pick the file. DOOR names the week, the dates and the tab it read, in big type, and asks which tab when two match. | DOOR | the review opens on the right week | Wk4 1, 3 |
 | 2 | Go through the review, one meal at a time. For each new dish: pick the CODEX recipe DOOR proposes, search for another, or say **"Not in CODEX yet"**. Allergen "Take off" ticks start safe. | DOOR | every new dish is linked or marked "not in CODEX yet" | Wk4 4–12; Wk3 1–3 |
 | 3 | **Save.** DOOR publishes and shows **What's left for Week N** (§4). | DOOR | DOOR has published | Wk4 18, 19 |
@@ -81,20 +98,23 @@ weeks once the Library grows. Recipes may also come first (Week 3's order): step
 
 ## 4. What each app shows next: "What's left for Week N"
 
-Each app gets the same small list: one row per dish that isn't through, saying **what's missing, which app
-fixes it, and a link that opens that app on that dish.** Each app lists only what it can see from its own
-data and the public files it already reads. When nothing is left, the list is one quiet line.
+Each app gets the same small list: one row per dish that needs something, saying **what's missing and a
+link that opens the fix.** Each app lists **only the facts it owns**, and links to the tracker for the
+rest. The cross-app view is worked out in one place, the tracker, not re-derived in each app: a rule kept
+in each reader gets missed in one (INSIGHTS, 2026-10-16), and four lists in four wordings would disagree.
+When nothing is left, the list is one quiet line.
 
-| Where | Rows it shows | Reads | Link goes to |
+| Where | Rows it shows (its own facts only) | Reads | Link goes to |
 |---|---|---|---|
-| **DOOR**, after Save and on Menu Config | "Not linked: *Tacos al pastor* (Fri lunch)" · "Linked, but CODEX has no cook time: *Kimchi Fried Rice (Vegan)*" · "Next: EXPO" when the rest is clear | its own menu; CODEX's `library_public.json` (already read for the overlay) | CODEX `?recipe=<id>`; Edit Menu on that slot |
-| **CODEX**, Administration (beside "Menu dishes with no recipe") | "This week's recipes missing kitchen facts" for the week DOOR's menu names | DOOR `menu_current.json` (RF5a reader); its own Library | that recipe's kitchen questions |
+| **DOOR**, after Save and on Menu Config | "Not in CODEX yet: *Tacos al pastor* (Fri lunch)" (a review answer, step 2) · "See the whole week →" | its own menu | Edit Menu on that slot; CODEX's Start a recipe; the tracker on Week N |
+| **CODEX**, Administration (beside "Menu dishes with no recipe") | "Recipes on DOOR's Week N with no cook facts" | DOOR `menu_current.json` (RF5a reader); its own Library | that recipe's kitchen questions |
 | **EXPO**, What the board needs, grouped by menu week | one row per dish: "needs a plan: confirm the shape" · "CODEX's recipe has no cook time → CODEX" · "a side doesn't resolve: *Zucchini & Carrot*" (the piece named in the headline, the meal named as served: "cooked Sun for Tue lunch") | as today | the set-up wizard; CODEX `?recipe=<id>` |
 | **HUB** | nothing new. Staff see the board; the path stays out of their way. | — | — |
-| **HOUSE page**, a **Week tracker** | every dish on the chosen week, with its five states (§3) as a row of marks, and the one next step | the four public files in §3 | the owning app, on that dish |
+| **HOUSE page**, a **Week tracker** | every dish slot on the chosen week, with its five states (§3) as marks, and the one next step for a dish that needs something | the four public files in §3 | the owning app, on that dish |
 
 The tracker is the one place a novice can look to see the whole week, and the one place Jason can check a
-week is finished without opening three apps. It reads; it never writes.
+week is finished without opening three apps. It reads; it never writes. If the per-app lists later make it
+unused, it retires (question 1).
 
 ## 5. The smallest first slice: the Week tracker (HOUSE, read-only)
 
@@ -110,26 +130,32 @@ EXPO's planned "new menu week" journey check (in-app plan row 9; no gate of that
   HUB's `hub_schedule.json` from Pages, cache-busted (proven seams row 2).
 - It opens on the next menu week by the cycle anchor (`_cycleStart` 2026-06-07, read from HUB's file, never
   copied); a picker shows Weeks 1–4.
-- One row per dish slot (main, vegan, halal, sides that link a recipe), with five marks and one "Next:"
-  line naming the app and linking into it.
-- At the top, one line: "Week 4: 3 dishes left (2 in CODEX, 1 in EXPO)", or "Week 4 is on the board
-  (built from DOOR's menu of Nov 12, 3:19 pm)". When DOOR has published since the board was built, it
-  says so: "DOOR's menu changed after the board was built: publish from EXPO". (On 2026-11-13 this was true:
-  DOOR published at 15:11Z; the board is from DOOR's 2026-11-12 15:19Z menu.)
+- One row per dish slot, with its marks. A slot is matched to cards by `serviceRefs` (week, day, meal),
+  then by `recipeId` when the slot has one, else by the slot's words against `component`. A dish that needs
+  something gets one "Next:" line naming the app and linking into it.
+- At the top, one line: "Week 4: 3 dishes left (2 in CODEX, 1 in EXPO)", or "Week 4 is on the board".
+  When DOOR's menu hash differs from the one the board was built from, it says so: "DOOR's menu changed
+  after the board was built: publish from EXPO on a kitchen computer". (On 2026-11-13 the two hashes match:
+  DOOR's 15:11Z publish changed counts, not the menu, so no line shows.)
 - An unreadable file greys its column and says which file; the rest still shows.
 
 **What it doesn't do.** No allergen marks (DOOR's job and red). No writes, no keys, no local storage
 beyond the picked week. No resident data (DOOR's public files hold none).
 
-**Known limit.** State 4 asks "does any card on the board carry this recipe ID". It can't yet tell
-whether the card serves *this* meal; EXPO knows that. Good enough to show the path; slice 5 tightens it.
+**To check while building it:**
+- whether a `needsPlan` card carries `serviceRefs` (EXPO's schema example has none, and there are none on
+  today's board to look at). If not, it matches by its `item` words, or EXPO adds the refs in its own slice;
+- four sides Week 4 links have no card at all (Biryani Rice, Braised Cabbage, Peas and Carrot, Roasted
+  Yams), though the week is closed. Until question 7 is ruled, a linked side with no card is a quiet note,
+  not a dish left.
 
 **Check** (per "Checks support, never obstruct"): one gate, `tests/week_tracker_gate.mjs`, on **fixed**
-copies of the four files from 2026-11-12 (Week 4 just closed), never live data. It asserts that every
-Week 4 dish reads states 1–5, and that a planted break shows: a slot without `recipeId` reads "Not linked",
-a Library record without cook fields reads "no cook time → CODEX", a `needsPlan` card reads "needs a plan
-→ EXPO", an older `_doorMenu.exported` reads "publish from EXPO". Kitchen failure it prevents: a week that
-looks finished but isn't.
+copies of the four files from 2026-11-12 (Week 4 just closed), never live data. On those files Week 4 reads
+"on the board", with no dish left and its unlinked slots and card-less sides as quiet notes. Planted breaks
+must show: a meal no card serves reads "no plan → EXPO", a `needsPlan` card reads "needs a plan → EXPO", a
+linked Library record without `cookMin` in `sets` reads "no cook time → CODEX", a different menu hash
+reads "publish from EXPO", and a newer DOOR `exported` with the **same** hash reads nothing (the false alarm
+this review caught). Kitchen failure it prevents: a week that looks finished but isn't.
 
 **Size:** S, HOUSE only. Jason-gated merge as usual.
 
@@ -140,7 +166,7 @@ Each slice ships in its owning repo, through that app's own plan.
 | # | Slice | App | What changes for the novice |
 |---|---|---|---|
 | 1 | **Week tracker** (§5) | HOUSE | sees the whole week and the next step |
-| 2 | **DOOR's What's left**, after Save on Rex's week sheet and on Menu Config; "Not in CODEX yet" as a plain review answer | DOOR | knows what to do after the import |
+| 2 | **DOOR's What's left**, after Save on Rex's week sheet and on Menu Config: its own rows and a link to the tracker; "Not in CODEX yet" as a plain review answer | DOOR | knows what to do after the import |
 | 3 | **CODEX: this week's recipes, and the kitchen questions at save** (Wk3 log G: where made, how it travels, how long on what, hands-on, served with; engine words behind "Advanced") | CODEX | fills cook facts without engine words |
 | 4 | **DOOR offers the new recipe on its dish** once it's in the Library (confirm, never auto-link) | DOOR | step 5 becomes one confirm per dish |
 | 5 | **EXPO: one row per dish per week**, naming the piece and the owning app; Publish carries the stamp in one step; EXPO names its computer | EXPO | step 6 reads as a short list of confirms |
@@ -185,12 +211,18 @@ Every Week 4 item, and where it stands (checked 2026-11-13):
 5. **Must the EXPO step happen on a kitchen computer?** *Lean: yes, for now.* The browser-pane EXPO is a
    separate copy (Wk4 24). The tracker can show which computer built the board once EXPO names it (slice
    5); until then the path says "on a kitchen computer".
-6. **When is a week "done"?** *Lean:* every dish slot on the week is linked, its recipe has kitchen facts,
-   no card needs a plan, and the board was built from DOOR's latest menu. Allergen review is DOOR's and
-   happens in step 2; the tracker doesn't re-judge it.
-7. **Sides.** Plain sides (rice, salad) often have no CODEX recipe. *Lean:* a side counts only when DOOR
-   links it; an unlinked side is listed once, quietly, under "sides without a recipe", never as blocking.
-8. **Should slice 1 wait for the side session on friction item 3?** *Lean: no.* They don't touch the same
+6. **When is a week "done"?** *Lean:* a card serves every meal on the week, no card needs a plan, every
+   linked recipe has cook facts, and the board was built from DOOR's current menu (same menu hash). Being
+   linked is not required: EXPO plans long-standing dishes by name (Week 4 has 29 unlinked slots and is
+   closed). Allergen review is DOOR's and happens in step 2; the tracker doesn't re-judge it.
+7. **Sides with no card.** On Week 4, four linked sides (Biryani Rice, Braised Cabbage, Peas and Carrot,
+   Roasted Yams) have no card on the board, though the week is closed. Are they made at Rex on the day
+   with no card, or is a card missing? *Lean:* a side with no card is a quiet note, never a dish left,
+   until you say which sides should have a card.
+8. **Should the tracker know which dishes are new this week?** No public file says so (only DOOR's review
+   knows). *Lean: no.* It lists what needs something, new or not; a dish already on the board needs
+   nothing and stays quiet.
+9. **Should slice 1 wait for the side session on friction item 3?** *Lean: no.* They don't touch the same
    repo or files; the tracker reads DOOR's published file, not its upload screen.
 
 ## 8. Not in this plan
