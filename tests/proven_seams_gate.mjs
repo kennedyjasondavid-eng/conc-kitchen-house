@@ -97,15 +97,26 @@ async function getFile(repo, file) {
       out = existsSync(path) ? { status: 'ok', text: readFileSync(path, 'utf8') } : { status: 'absent' };
     }
   } else {
-    const url = `${PAGES_BASE}/${repo}/${file}?t=${Date.now()}`;
-    try {
-      const r = await fetch(url, { cache: 'no-store' });
-      if (r.ok) out = { status: 'ok', text: await r.text() };
-      else if (r.status === 404) out = { status: 'absent' };
-      else out = { status: 'error', detail: `HTTP ${r.status}` };
-    } catch (e) {
-      out = { status: 'error', detail: String(e && e.message || e) };
+    // GitHub Pages sometimes answers a MISSING path with 503 instead of 404 (seen 2026-11-13: EXPO's
+    // tests/all.mjs, absent since EX-9, failed the gate twice with 503; a probe got 503 on 2 of 6 random
+    // missing paths). So a 5xx or a network error is retried, a bounded few times, each retry logged; a
+    // 404 or a 2xx is final at once, and a 5xx that persists still fails loudly.
+    const TRIES = 4;
+    for (let attempt = 1; attempt <= TRIES; attempt++) {
+      const url = `${PAGES_BASE}/${repo}/${file}?t=${Date.now()}-${attempt}`;
+      try {
+        const r = await fetch(url, { cache: 'no-store' });
+        if (r.ok) out = { status: 'ok', text: await r.text() };
+        else if (r.status === 404) out = { status: 'absent' };
+        else out = { status: 'error', detail: `HTTP ${r.status}`, retry: r.status >= 500 };
+      } catch (e) {
+        out = { status: 'error', detail: String(e && e.message || e), retry: true };
+      }
+      if (!(out.status === 'error' && out.retry) || attempt === TRIES) break;
+      console.log(`RETRY — ${repo}/${file}: ${out.detail} (attempt ${attempt} of ${TRIES})`);
+      await new Promise((res) => setTimeout(res, 1500 * attempt));
     }
+    if (out.status === 'error') delete out.retry;
   }
   fileCache.set(key, out);
   return out;
