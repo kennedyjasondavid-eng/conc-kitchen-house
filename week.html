@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#16191d">
+<title>HOUSE Week tracker</title>
+<!--
+  HOUSE Week tracker (slice 1 of docs/HOUSE_NEW_WEEK_PATH_PLAN_2026-11-13.md; ruled by Jason 2026-11-13).
+  Read-only. It reads four public files and shows, for one menu week, what still needs doing and which app
+  does it. It stores nothing but the picked week, writes nothing, needs no key, and shows no allergens
+  (DOOR's job). The rules live in the "week-core" script below; tests/week_tracker_gate.mjs runs them on
+  fixed copies of the Week 4 files from 2026-11-12.
+-->
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #16191d; --card: #1c2026; --line: #2a3038; --text: #e8e8ed; --dim: #8b949e;
+    --green: #4ade80; --amber: #f5b14a; --red: #f87171; --radius: 12px;
+  }
+  @media (prefers-color-scheme: light) {
+    :root { --bg: #f6f7f9; --card: #ffffff; --line: #dfe3e8; --text: #1b1f24; --dim: #5d6670;
+            --green: #15803d; --amber: #a15c00; --red: #b91c1c; }
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg);
+         color: var(--text); padding: 24px 16px 48px; -webkit-font-smoothing: antialiased; line-height: 1.45; }
+  main { max-width: 860px; margin: 0 auto; }
+  header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; margin-bottom: 18px; }
+  h1 { font-size: 1.35rem; letter-spacing: .02em; }
+  header a { color: var(--dim); font-size: .9rem; }
+  .weeks { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; }
+  .weeks button { font: inherit; font-size: .9rem; min-height: 40px; min-width: 64px; padding: 0 12px; border-radius: 999px;
+                  border: 1px solid var(--line); background: transparent; color: var(--text); cursor: pointer; }
+  .weeks button[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: #0b1a10; font-weight: 600; }
+  .summary { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 16px; }
+  .summary .big { font-size: 1.1rem; font-weight: 600; }
+  .summary.done .big { color: var(--green); }
+  .summary .sub { color: var(--dim); font-size: .9rem; margin-top: 4px; }
+  .problem { color: var(--amber); font-size: .9rem; margin-top: 6px; }
+  h2 { font-size: .95rem; color: var(--dim); font-weight: 600; margin: 22px 0 8px; text-transform: uppercase; letter-spacing: .05em; }
+  ul.left { list-style: none; }
+  ul.left li { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--amber); border-radius: 8px;
+               padding: 10px 12px; margin-bottom: 8px; }
+  ul.left li .app { font-size: .8rem; font-weight: 700; color: var(--amber); margin-right: 6px; }
+  ul.left li a { color: inherit; }
+  .meal { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; }
+  .meal .head { display: flex; justify-content: space-between; gap: 8px; font-weight: 600; }
+  .meal .head .state { font-weight: 400; font-size: .85rem; color: var(--dim); }
+  .meal .head .state.ok { color: var(--green); }
+  .meal .head .state.bad { color: var(--amber); }
+  .slot { display: grid; grid-template-columns: 7.5em 1fr; gap: 2px 10px; font-size: .9rem; padding: 3px 0; border-top: 1px dashed var(--line); }
+  .slot:first-of-type { border-top: 0; }
+  .slot .kind { color: var(--dim); }
+  .slot .marks { grid-column: 2; color: var(--dim); font-size: .82rem; }
+  .notes { color: var(--dim); font-size: .88rem; }
+  .notes li { margin: 0 0 4px 18px; }
+  details summary { cursor: pointer; color: var(--dim); font-size: .9rem; min-height: 32px; }
+  footer { color: var(--dim); font-size: .8rem; margin-top: 28px; }
+  footer a, header a { color: var(--dim); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Week tracker</h1>
+    <a href="index.html">HOUSE</a>
+    <div class="weeks" id="weeks" role="group" aria-label="Menu week"></div>
+  </header>
+  <div id="out"><div class="summary"><div class="big">Reading DOOR, CODEX and HUB…</div></div></div>
+  <footer id="foot"></footer>
+</main>
+
+<script id="week-core">
+// ── week-core: pure rules, no page, no network. tests/week_tracker_gate.mjs loads this block. ──────────
+// Plan §3 and §7 (ruled 2026-11-13). A dish slot needs something only when:
+//   no card on the board serves its meal, or a card "needs a plan";
+//   or it links a CODEX recipe with no cook time that EXPO doesn't plan anyway;
+//   or the board was built from an older DOOR menu (the F4 menu hash, never the publish times).
+// Being linked is not required: EXPO plans long-standing dishes by their menu name.
+var WeekCore = (function () {
+  'use strict';
+  var DAYS = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+  var MEALS = ['breakfast', 'lunch', 'dinner'];
+  var SIDES = { starch: 1, vegside: 1 };
+  var SLOT_WORDS = { main: 'Main', mainalt: 'Halal', veganalt: 'Vegan', softalt: 'Soft', starch: 'Starch', vegside: 'Veg side' };
+  var FACT_FIELDS = ['cookMin', 'ovenMin', 'stoveMin', 'prepMin'];
+
+  function cap(s) { s = String(s || ''); return s.charAt(0) + s.slice(1).toLowerCase(); }
+  function short(day) { return cap(day).slice(0, 3); }
+
+  // Every card's service records, by "week|DAY|meal". Also the meals the board plans at all.
+  function indexBoard(hub) {
+    var byMeal = {}, boardMeals = {}, needsPlan = [];
+    var weeks = (hub && hub.WEEKS) || {};
+    Object.keys(weeks).forEach(function (wk) {
+      ((weeks[wk] && weeks[wk].days) || []).forEach(function (d) {
+        (d.sections || []).forEach(function (s) {
+          (s.items || []).forEach(function (it) {
+            var refs = Array.isArray(it.serviceRefs) ? it.serviceRefs : [];
+            refs.forEach(function (r) {
+              if (!r || !r.meal) return;
+              boardMeals[r.meal] = true;
+              var k = r.week + '|' + r.day + '|' + r.meal;
+              (byMeal[k] = byMeal[k] || []).push({ recipeId: r.recipeId || null, component: r.component || '', item: it.item || '' });
+            });
+            if (it.needsPlan) needsPlan.push({ item: it.item || '', sitsInWeek: wk, refs: refs });
+          });
+        });
+      });
+    });
+    return { byMeal: byMeal, boardMeals: boardMeals, needsPlan: needsPlan };
+  }
+
+  // CODEX's cook facts for a recipe ID: the shared Library first (a listed cookMin, 0 included), then the sealed feed.
+  function factsFor(id, lib, feed) {
+    var recs = (lib && Array.isArray(lib.recipes)) ? lib.recipes : [];
+    var name = null;
+    for (var i = 0; i < recs.length; i++) {
+      var r = recs[i];
+      if (!r || r.removed || r.recipeId !== id) continue;
+      name = r.recipeName || name;
+      var sets = (r.production && Array.isArray(r.production.sets)) ? r.production.sets : [];
+      if (sets.indexOf('cookMin') !== -1) return { from: 'library', name: name };
+    }
+    var fr = (feed && feed.recipes) || {};
+    var keys = Object.keys(fr);
+    for (var j = 0; j < keys.length; j++) {
+      var f = fr[keys[j]];
+      if (!f || f.recipeId !== id) continue;
+      name = name || keys[j];
+      if (FACT_FIELDS.some(function (k) { return Number(f[k]) > 0; })) return { from: 'feed', name: name };
+    }
+    return { from: 'none', name: name };
+  }
+
+  function menuHash(doc) { return doc && doc.flow && doc.flow.components && doc.flow.components.menu || null; }
+
+  // files: {menu, hub, library, feed}; any may be null (unreadable). wk: "1".."4".
+  function assess(files, wk) {
+    wk = String(wk);
+    var menu = files.menu, hub = files.hub;
+    var out = { week: wk, meals: [], left: [], notes: [], unreadable: [], menuMatch: null, done: false };
+    ['menu', 'hub', 'library', 'feed'].forEach(function (k) { if (!files[k]) out.unreadable.push(k); });
+    if (!menu || !menu.menu || !menu.menu[wk]) { out.notes.push('DOOR’s menu for Week ' + wk + ' couldn’t be read.'); return out; }
+    var board = hub ? indexBoard(hub) : null;
+
+    // State 5: the board was built from DOOR's current menu.
+    var a = menuHash(hub && hub._doorMenu), b = menuHash(menu._meta);
+    out.menuMatch = (a && b) ? (a === b) : null;
+    if (out.menuMatch === false) out.left.push({ app: 'EXPO', where: 'the board',
+      text: 'DOOR’s menu changed after the board was built. Publish from EXPO on a kitchen computer.' });
+
+    var skipped = {}, unlinked = 0;
+    DAYS.forEach(function (day) {
+      var dayMenu = menu.menu[wk][day];
+      if (!dayMenu) return;
+      MEALS.forEach(function (meal) {
+        var text = dayMenu[meal];
+        if (!text) return;
+        var where = short(day) + ' ' + meal;
+        var m = { day: day, meal: meal, where: where, text: text, onBoard: null, slots: [], left: [] };
+        out.meals.push(m);
+        if (board && !board.boardMeals[meal]) { skipped[meal] = true; return; }
+        var refs = board ? (board.byMeal[wk + '|' + day + '|' + meal] || []) : null;
+        if (refs) {
+          m.onBoard = refs.length > 0;
+          if (!m.onBoard) m.left.push({ app: 'EXPO', where: where,
+            text: 'No card on the board serves ' + where + ' (' + (dayMenu[meal + '_mainItem'] || text) + '). Plan it in EXPO.' });
+        }
+        var slots = dayMenu[meal + '_slots'] || {};
+        Object.keys(slots).forEach(function (key) {
+          var s = slots[key] || {};
+          var name = s.displayText || s.recipeName || s.manual || '';
+          var slot = { key: key, kind: SLOT_WORDS[key] || key, name: name, recipeId: s.recipeId || null, facts: null, card: null, note: null };
+          if (!slot.recipeId) { unlinked++; slot.note = 'not linked to a CODEX recipe'; }
+          else {
+            var f = factsFor(slot.recipeId, files.library, files.feed);
+            slot.facts = f.from; slot.recipeName = f.name || s.recipeName || name;
+            if (refs) slot.card = refs.some(function (r) { return r.recipeId === slot.recipeId; });
+            if (f.from === 'none' && files.library && files.feed) {
+              if (!refs) slot.note = 'CODEX has no cook time (the board couldn’t be read to see if EXPO plans it)';
+              else if (slot.card) slot.note = 'CODEX has no cook time; EXPO plans it anyway';
+              else m.left.push({ app: 'CODEX', where: where, recipe: slot.recipeName,
+                text: 'CODEX’s ' + slot.recipeName + ' has no cook time, so EXPO can’t plan it. Add it in CODEX.' });
+            } else if (refs && !slot.card) {
+              slot.note = SIDES[key] ? 'no card names this side (a note, not work left)' : 'no card names this recipe (EXPO may plan it by name)';
+            }
+          }
+          m.slots.push(slot);
+        });
+        out.left = out.left.concat(m.left);
+      });
+    });
+
+    if (board) board.needsPlan.forEach(function (n) {
+      var mine = n.refs.filter(function (r) { return String(r.week) === wk; });
+      if (mine.length) mine.forEach(function (r) { out.left.push({ app: 'EXPO', where: short(r.day) + ' ' + r.meal,
+        text: n.item + ' needs a plan. Confirm its shape in EXPO.' }); });
+      else if (!n.refs.length && String(n.sitsInWeek) === wk) out.left.push({ app: 'EXPO', where: 'Week ' + wk,
+        text: n.item + ' needs a plan (on the board in Week ' + wk + '). Confirm its shape in EXPO.' });
+    });
+
+    Object.keys(skipped).forEach(function (meal) { out.notes.push('The board has no ' + meal + ' cards, so ' + meal + ' isn’t checked.'); });
+    if (unlinked) out.notes.push(unlinked + ' dish' + (unlinked === 1 ? ' isn’t' : 'es aren’t') + ' linked to a CODEX recipe. That’s fine when EXPO plans them by name.');
+    out.done = !out.unreadable.length && out.menuMatch === true && out.left.length === 0;
+    return out;
+  }
+
+  // The menu week a date falls in, from the cycle anchor (HUB's _cycleStart; never a copy here).
+  function weekOf(cycleStart, date) {
+    var p = String(cycleStart || '').split('-').map(Number);
+    if (p.length !== 3 || p.some(isNaN)) return null;
+    var start = Date.UTC(p[0], p[1] - 1, p[2], 12);
+    var d = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 12);
+    var weeks = Math.floor(Math.round((d - start) / 86400000) / 7);
+    return ((weeks % 4) + 4) % 4 + 1;
+  }
+
+  // The next time menu week wk starts (a Sunday) on or after the Sunday of date's week.
+  function nextStart(cycleStart, wk, date) {
+    var cur = weekOf(cycleStart, date);
+    if (!cur) return null;
+    var sun = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay(), 12);
+    var ahead = ((Number(wk) - cur) % 4 + 4) % 4;
+    return new Date(sun.getFullYear(), sun.getMonth(), sun.getDate() + 7 * ahead, 12);
+  }
+
+  return { assess: assess, weekOf: weekOf, nextStart: nextStart, factsFor: factsFor, DAYS: DAYS };
+})();
+</script>
+
+<script>
+(function () {
+  'use strict';
+  var BASE = 'https://kennedyjasondavid-eng.github.io/';
+  var APPS = { DOOR: BASE + 'conc-kitchen-door/', CODEX: BASE + 'conc-recipe-hub/', EXPO: BASE + 'conc-kitchen-expo/', HUB: BASE + 'conc-kitchen-hub/' };
+  var FIX = 'tests/fixtures/week_tracker_2026-11-12/';
+  var fixture = /[?&]src=fixture\b/.test(location.search);
+  var SOURCES = {
+    menu:    fixture ? FIX + 'menu_current.json'      : BASE + 'conc-kitchen-door/menu_current.json',
+    hub:     fixture ? FIX + 'hub_schedule.json'      : BASE + 'conc-kitchen-hub/hub_schedule.json',
+    library: fixture ? FIX + 'library_public.json'    : BASE + 'conc-recipe-hub/library_public.json',
+    feed:    fixture ? FIX + 'recipe_production.json' : BASE + 'conc-recipe-hub/recipe_production.json'
+  };
+  var NAMES = { menu: 'DOOR’s menu', hub: 'HUB’s board', library: 'CODEX’s Library', feed: 'CODEX’s recipe feed' };
+  var out = document.getElementById('out'), weeksEl = document.getElementById('weeks'), foot = document.getElementById('foot');
+  var files = {}, picked = null;
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function store(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, v); } catch (e) { return null; } }
+  function fmt(d) { return d ? d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : ''; }
+
+  function load(key) {
+    var url = SOURCES[key] + (fixture ? '' : (SOURCES[key].indexOf('?') < 0 ? '?' : '&') + 't=' + Date.now());
+    return fetch(url, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (j) { files[key] = j; }, function () { files[key] = null; });
+  }
+
+  function linkFor(item) {
+    if (item.app === 'CODEX' && item.recipe) return APPS.CODEX + '?recipe=' + encodeURIComponent(item.recipe) + '&match=exact';
+    return APPS[item.app] || null;
+  }
+
+  function render() {
+    var cycle = files.hub && files.hub._cycleStart;
+    var today = new Date();
+    if (!picked) picked = store('house_week_tracker_week') || String(WeekCore.weekOf(cycle, new Date(today.getTime() + 7 * 86400000)) || 1);
+    weeksEl.textContent = '';
+    ['1', '2', '3', '4'].forEach(function (w) {
+      var b = el('button', null, 'Week ' + w);
+      b.type = 'button'; b.setAttribute('aria-pressed', String(w === picked));
+      b.onclick = function () { picked = w; store('house_week_tracker_week', w); render(); };
+      weeksEl.appendChild(b);
+    });
+
+    var r = WeekCore.assess(files, picked);
+    out.textContent = '';
+    var start = cycle ? WeekCore.nextStart(cycle, picked, today) : null;
+    var range = start ? ' (' + fmt(start) + ' to ' + fmt(new Date(start.getFullYear(), start.getMonth(), start.getDate() + 6, 12)) + ')' : '';
+    var sum = el('div', 'summary' + (r.done ? ' done' : ''));
+    var byApp = {};
+    r.left.forEach(function (x) { byApp[x.app] = (byApp[x.app] || 0) + 1; });
+    var parts = Object.keys(byApp).map(function (k) { return byApp[k] + ' in ' + k; });
+    sum.appendChild(el('div', 'big', r.done ? 'Week ' + picked + ' is on the board' + range + '.'
+      : r.left.length ? 'Week ' + picked + range + ': ' + r.left.length + ' thing' + (r.left.length === 1 ? '' : 's') + ' left (' + parts.join(', ') + ').'
+      : 'Week ' + picked + range + ': nothing left that the tracker can see.'));
+    if (files.hub && files.hub._generated) sum.appendChild(el('div', 'sub', 'Board published ' + new Date(files.hub._generated).toLocaleString()
+      + (r.menuMatch === true ? ', from DOOR’s current menu.' : '.')));
+    r.unreadable.forEach(function (k) { sum.appendChild(el('div', 'problem', 'Couldn’t read ' + NAMES[k] + '. What depends on it isn’t checked.')); });
+    if (r.menuMatch === null && files.hub && files.menu) sum.appendChild(el('div', 'problem', 'Couldn’t compare the board’s menu with DOOR’s (no menu hash on one side).'));
+    if (location.protocol === 'file:' && !fixture) sum.appendChild(el('div', 'problem', 'Opened from a file: the tracker can only read the apps from its web address.'));
+    out.appendChild(sum);
+
+    if (r.left.length) {
+      out.appendChild(el('h2', null, 'What’s left'));
+      var ul = el('ul', 'left');
+      r.left.forEach(function (x) {
+        var li = el('li');
+        li.appendChild(el('span', 'app', x.app));
+        li.appendChild(document.createTextNode(x.where + ': '));
+        var href = linkFor(x);
+        if (href) { var a = el('a', null, x.text); a.href = href; a.target = '_blank'; a.rel = 'noopener'; li.appendChild(a); }
+        else li.appendChild(document.createTextNode(x.text));
+        ul.appendChild(li);
+      });
+      out.appendChild(ul);
+    }
+
+    if (r.notes.length) {
+      out.appendChild(el('h2', null, 'Notes'));
+      var nl = el('ul', 'notes');
+      r.notes.forEach(function (n) { nl.appendChild(el('li', null, n)); });
+      out.appendChild(nl);
+    }
+
+    var det = el('details');
+    det.appendChild(el('summary', null, 'Every meal this week'));
+    r.meals.forEach(function (m) {
+      if (m.onBoard === null && files.hub) return; // a meal the board doesn't plan (breakfast): the note says so
+      var box = el('div', 'meal');
+      var head = el('div', 'head');
+      head.appendChild(el('span', null, cap(m.day) + ' ' + m.meal));
+      head.appendChild(el('span', 'state ' + (m.onBoard === true && !m.left.length ? 'ok' : m.left.length ? 'bad' : ''),
+        m.onBoard === null ? 'not checked' : m.left.length ? m.left.length + ' left' : 'on the board'));
+      box.appendChild(head);
+      m.slots.forEach(function (s) {
+        var row = el('div', 'slot');
+        row.appendChild(el('span', 'kind', s.kind));
+        row.appendChild(el('span', null, s.name));
+        var marks = [];
+        if (s.recipeId) marks.push('CODEX: ' + (s.recipeName || s.recipeId));
+        if (s.facts === 'library' || s.facts === 'feed') marks.push('cook time ✓');
+        if (s.card === true) marks.push('card ✓');
+        if (s.note) marks.push(s.note);
+        if (marks.length) row.appendChild(el('span', 'marks', marks.join(' · ')));
+        box.appendChild(row);
+      });
+      det.appendChild(box);
+    });
+    out.appendChild(det);
+
+    foot.textContent = '';
+    foot.appendChild(document.createTextNode('Read-only. Reads ' + Object.keys(NAMES).map(function (k) { return NAMES[k]; }).join(', ')
+      + (fixture ? ' from the fixed Week 4 copies of 2026-11-12.' : ' from their public addresses.')
+      + ' Allergens are DOOR’s, on DOOR’s screen. Plan: '));
+    var pl = el('a', null, 'the new-week path');
+    pl.href = 'docs/HOUSE_NEW_WEEK_PATH_PLAN_2026-11-13.md'; foot.appendChild(pl);
+    foot.appendChild(document.createTextNode('.'));
+  }
+
+  function cap(s) { s = String(s || ''); return s.charAt(0) + s.slice(1).toLowerCase(); }
+
+  Promise.all(Object.keys(SOURCES).map(load)).then(render, render);
+})();
+</script>
+</body>
+</html>

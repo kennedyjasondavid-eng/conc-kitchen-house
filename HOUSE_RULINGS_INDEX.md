@@ -32,6 +32,22 @@ Repository paths are on GitHub (`kennedyjasondavid-eng/<repo>`, `main`). `E` = c
 | Checks support, never obstruct | 2026-11-07 | Three kinds of check only (journeys, seam contracts, tricky logic); each names the failure it prevents; never read live data. | Same (Operating rules) |
 | Test edits reflect kitchen flow | 2026-09-20 | A gate is corrected only when it misdescribes real kitchen flow, never to clear CI. Refined by in-app call 15 (below). | Jason's working rule; in-app plan §1 call 15 |
 
+## New week path (2026-11-13, all on the leans)
+
+Owner of all 9: [H `docs/HOUSE_NEW_WEEK_PATH_PLAN_2026-11-13.md`](docs/HOUSE_NEW_WEEK_PATH_PLAN_2026-11-13.md) §7 (Jason: "Yes, on the leans").
+
+| Q | One line |
+|---|---|
+| 1 | A read-only Week tracker on the HOUSE page first; each app later lists only its own facts and links to it; retire it if unused. |
+| 2 | The novice is a Bloor supervisor with a DOOR sending key and a kitchen computer; Rex only sends the workbook. |
+| 3 | Menu first: import the week, mark "Not in CODEX yet", go to CODEX and back. Recipes first still works. |
+| 4 | DOOR offers a new CODEX recipe on its dish; a person confirms. Never a quiet link (allergens change). |
+| 5 | The EXPO step happens on a kitchen computer, for now. |
+| 6 | A week is done when a card serves every meal, none needs a plan, every linked recipe has cook facts, and the board's menu hash is DOOR's. Being linked is not required. |
+| 7 | A side with no card is a quiet note, never a dish left, until Jason says which sides should have a card. |
+| 8 | The tracker doesn't know which dishes are new; it lists what needs something. |
+| 9 | Slice 1 doesn't wait for the DOOR side session on friction item 3. |
+
 ## The in-app plan (2026-11-08, all on the leans)
 
 Owner of all 18: [E `EXPO_IN_APP_ACTION_PLAN_2026-11-08.md`](https://github.com/kennedyjasondavid-eng/conc-kitchen-expo/blob/main/EXPO_IN_APP_ACTION_PLAN_2026-11-08.md) §1.
