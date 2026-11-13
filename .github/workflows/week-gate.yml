@@ -1,0 +1,26 @@
+# HOUSE Week tracker gate: week.html's rules on fixed copies of the Week 4 files (2026-11-12), never live data.
+# Plan docs/HOUSE_NEW_WEEK_PATH_PLAN_2026-11-13.md (ruled 2026-11-13). Plain Node, no dependencies, a few seconds.
+name: week-gate
+
+on:
+  push:
+    branches: [main]
+    paths: ['week.html', 'tests/week_tracker_gate.mjs', 'tests/fixtures/week_tracker_2026-11-12/**', '.github/workflows/week-gate.yml']
+  pull_request:
+    branches: [main]
+    paths: ['week.html', 'tests/week_tracker_gate.mjs', 'tests/fixtures/week_tracker_2026-11-12/**', '.github/workflows/week-gate.yml']
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - name: Week tracker rules
+        run: node tests/week_tracker_gate.mjs

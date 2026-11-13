@@ -5,15 +5,16 @@
 > it, what each app shows next ("what's left for this week"), the smallest first slice, and open questions
 > for Jason, each with a lean.
 >
-> **Status:** draft for Jason to read. Nothing here is built or ruled. This doc owns the plan and its status;
-> each slice's receipt is added under "Slices" when it lands.
+> **Status:** merged 2026-11-13 (#90). **All 9 questions in §7 ruled on the leans** (Jason, 2026-11-13:
+> "Yes, on the leans"). Slice 1, the Week tracker, is being built. This doc owns the plan and its status;
+> each slice's receipt is added under §6 when it lands. Cross-app status stays in
+> [`HOUSE_STATUS_LEDGER.md`](../HOUSE_STATUS_LEDGER.md).
 >
 > **Reviewed 2026-11-13** against the live files. Fixed: cards are matched to meals by `serviceRefs`
 > (the first draft said cards carry a `recipeId` and couldn't tell the meal; they carry it inside
 > `serviceRefs`, with the meal); "on the board" compares DOOR's menu hash, not publish times (the draft
 > raised a false "publish from EXPO" on today's files); "done" no longer needs every slot linked (Week 4 has
-> 29 unlinked slots and is closed); each app lists only its own facts and links to the tracker. Cross-app status stays in
-> [`HOUSE_STATUS_LEDGER.md`](../HOUSE_STATUS_LEDGER.md).
+> 29 unlinked slots and is closed); each app lists only its own facts and links to the tracker.
 >
 > **Read for this plan** (2026-11-13, against each repo's `origin/main`):
 > - the friction logs `Week4_Setup_Friction_Notes_2026-11-11.md` and
@@ -165,7 +166,7 @@ Each slice ships in its owning repo, through that app's own plan.
 
 | # | Slice | App | What changes for the novice |
 |---|---|---|---|
-| 1 | **Week tracker** (§5) | HOUSE | sees the whole week and the next step |
+| 1 | **Week tracker** (§5) | HOUSE | sees the whole week and the next step. **Built 2026-11-13** (`week.html`, linked from the HOUSE page footer; gate `tests/week_tracker_gate.mjs`, 36 checks, in `week-gate.yml`). On the 2026-11-12 files and on the live files of 2026-11-13, all four weeks read "on the board". One reading of ruling 6 found while building, for Jason to confirm: a linked recipe with no cook time in CODEX is work left only when no card carries that recipe for its meal. When EXPO already plans it (Vegan White Chili, pulled from the chicken pot), it is a note, or closed Week 4 would never read done. |
 | 2 | **DOOR's What's left**, after Save on Rex's week sheet and on Menu Config: its own rows and a link to the tracker; "Not in CODEX yet" as a plain review answer | DOOR | knows what to do after the import |
 | 3 | **CODEX: this week's recipes, and the kitchen questions at save** (Wk3 log G: where made, how it travels, how long on what, hands-on, served with; engine words behind "Advanced") | CODEX | fills cook facts without engine words |
 | 4 | **DOOR offers the new recipe on its dish** once it's in the Library (confirm, never auto-link) | DOOR | step 5 becomes one confirm per dish |
@@ -194,7 +195,10 @@ Every Week 4 item, and where it stands (checked 2026-11-13):
 | 27 (vegan unknown on mushrooms) | CODEX | on branch `claude/codex-vegan-mushroom-kinds`, waiting on Jason |
 | 28 | HOUSE | this plan |
 
-## 7. Open questions for Jason (each with a lean)
+## 7. Questions for Jason (each with a lean): **all ruled on the leans, 2026-11-13**
+
+Jason, 2026-11-13: "Yes, on the leans." Each lean below is now the ruling. Index line:
+[`HOUSE_RULINGS_INDEX.md`](../HOUSE_RULINGS_INDEX.md), "New week path".
 
 1. **Where does the whole-week view live?** A HOUSE page, or only inside each app?
    *Lean: both.* The tracker first (it's the smallest and touches no app); each app's own list after,
