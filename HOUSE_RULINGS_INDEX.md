@@ -32,6 +32,14 @@ Repository paths are on GitHub (`kennedyjasondavid-eng/<repo>`, `main`). `E` = c
 | Checks support, never obstruct | 2026-11-07 | Three kinds of check only (journeys, seam contracts, tricky logic); each names the failure it prevents; never read live data. | Same (Operating rules) |
 | Test edits reflect kitchen flow | 2026-09-20 | A gate is corrected only when it misdescribes real kitchen flow, never to clear CI. Refined by in-app call 15 (below). | Jason's working rule; in-app plan §1 call 15 |
 
+## Screens and paper
+
+| Ruling | Date | One line | Owner |
+|---|---|---|---|
+| K14 / K15 | 2026-10-17 | Dark mode: three readable greys (#b8bfc7, #a3aab2, #8b939c) and one text-only green (#52a877); forest fills keep white text; no mint in dark. | [C `docs/plans/CODEX_RECIPE_CREATION_UX_AUDIT_2026-10-17.md`](https://github.com/kennedyjasondavid-eng/conc-recipe-hub/blob/main/docs/plans/CODEX_RECIPE_CREATION_UX_AUDIT_2026-10-17.md) (K14, K15; C7) |
+| CODEX call 12 | 2026-10-21 | A cook's paper is a white page in any theme. | [C `docs/plans/CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md`](https://github.com/kennedyjasondavid-eng/conc-recipe-hub/blob/main/docs/plans/CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md) (call 12) |
+| DOOR readable themes | 2026-11-13 | DOOR follows K14 / K15 and call 12: every text piece reads at WCAG AA in both themes, and a dark-mode print is the paper sheet. | [D `CLAUDE.md`](https://github.com/kennedyjasondavid-eng/conc-kitchen-door/blob/main/CLAUDE.md) (Recent, `v31-standard.72`) |
+
 ## New week path (2026-11-13, all on the leans)
 
 Owner of all 9: [H `docs/HOUSE_NEW_WEEK_PATH_PLAN_2026-11-13.md`](docs/HOUSE_NEW_WEEK_PATH_PLAN_2026-11-13.md) §7 (Jason: "Yes, on the leans").
