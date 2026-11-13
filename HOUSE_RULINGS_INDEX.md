@@ -43,7 +43,7 @@ Owner of all 9: [H `docs/HOUSE_NEW_WEEK_PATH_PLAN_2026-11-13.md`](docs/HOUSE_NEW
 | 3 | Menu first: import the week, mark "Not in CODEX yet", go to CODEX and back. Recipes first still works. |
 | 4 | DOOR offers a new CODEX recipe on its dish; a person confirms. Never a quiet link (allergens change). |
 | 5 | The EXPO step happens on a kitchen computer, for now. |
-| 6 | A week is done when a card serves every meal, none needs a plan, every linked recipe has cook facts, and the board's menu hash is DOOR's. Being linked is not required. |
+| 6 | A week is done when a card serves every meal, none needs a plan, every linked recipe has cook facts, and the board's menu hash is DOOR's. Being linked is not required. A linked recipe with no cook time is only a note when EXPO already plans its dish (Jason, 2026-11-13: "Yes, a note"). |
 | 7 | A side with no card is a quiet note, never a dish left, until Jason says which sides should have a card. |
 | 8 | The tracker doesn't know which dishes are new; it lists what needs something. |
 | 9 | Slice 1 doesn't wait for the DOOR side session on friction item 3. |
