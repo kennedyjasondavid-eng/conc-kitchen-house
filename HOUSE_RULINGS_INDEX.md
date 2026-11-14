@@ -20,6 +20,7 @@ Repository paths are on GitHub (`kennedyjasondavid-eng/<repo>`, `main`). `E` = c
 | Staff call 17 | 2026-10-31 | CODEX owns the food-safety holds; EXPO shows them read-only and keeps no copy. | [E `EXPO_STAFF_ROLLOUT_ACTION_PLAN_2026-10-31.md`](https://github.com/kennedyjasondavid-eng/conc-kitchen-expo/blob/main/EXPO_STAFF_ROLLOUT_ACTION_PLAN_2026-10-31.md) §1 |
 | Staff call 15 | 2026-10-31 | Each computer has a home kitchen; served sites come from the HOUSE registry's "cooked by". It sets defaults only, never permissions. | Same plan §1 |
 | Staff call 7 | 2026-10-31 | Anyone with a key may change budgets and a dish's stream, with who and when and Undo. | Same plan §1 |
+| Decisions travel | 2026-11-14 | A Library update choice made at Bloor is a correction to the record, not a one-time deviation; it syncs to every device. (Site versions planned; Microsoft 365 sign-in a later update.) | [C `docs/plans/CODEX_RECIPE_DECISIONS_AND_SITE_VERSIONS_PLAN_2026-11-14.md`](https://github.com/kennedyjasondavid-eng/conc-recipe-hub/blob/main/docs/plans/CODEX_RECIPE_DECISIONS_AND_SITE_VERSIONS_PLAN_2026-11-14.md) §1 |
 
 ## Sites and data seams
 
