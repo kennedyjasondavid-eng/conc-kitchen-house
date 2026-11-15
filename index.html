@@ -116,6 +116,34 @@
             line-height: 1.4;
         }
 
+        /* App-name expansions appear without moving the card layout. */
+        .card__expansion {
+            position: absolute;
+            bottom: calc(100% + 0.65rem);
+            left: 0;
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--green);
+            border-radius: var(--radius);
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-weight: 500;
+            letter-spacing: normal;
+            text-transform: none;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .card:hover, .card:focus-visible { z-index: 2; }
+        .card:hover .card__expansion, .card:focus-visible .card__expansion {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .card.expansion-dismissed .card__expansion { opacity: 0; visibility: hidden; }
+
         /* Lock icon */
         .card__lock {
             position: absolute;
@@ -287,39 +315,43 @@
 
 <main>
     <div class="grid">
-        <div class="card" id="door-card" role="button" tabindex="0" aria-label="Open DOOR (staff check)">
+        <div class="card" id="door-card" aria-describedby="door-expansion" role="button" tabindex="0" aria-label="Open DOOR (staff check)">
             <svg class="card__lock" id="door-lock-icon" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2"/>
                 <path id="door-lock-shackle" d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
             <div class="card__name">DOOR</div>
+            <span class="card__expansion" id="door-expansion" role="tooltip">Data Operations, Outcomes &amp; Reporting</span>
             <div class="card__desc">Intake, Active Menu, Plating Sheets, and Reporting</div>
         </div>
 
-        <div class="card" id="codex-card" role="button" tabindex="0" aria-label="Open CODEX (staff check)">
+        <div class="card" id="codex-card" aria-describedby="codex-expansion" role="button" tabindex="0" aria-label="Open CODEX (staff check)">
             <svg class="card__lock" id="codex-lock-icon" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2"/>
                 <path id="codex-lock-shackle" d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
             <div class="card__name">CODEX</div>
+            <span class="card__expansion" id="codex-expansion" role="tooltip">Cuisine-Organized Database and EXchange</span>
             <div class="card__desc">Recipe Library and Creation Engine</div>
         </div>
 
         <a href="https://kennedyjasondavid-eng.github.io/conc-kitchen-hub/"
-           class="card" target="_blank" rel="noopener">
+           class="card" aria-describedby="hub-expansion" target="_blank" rel="noopener">
             <div class="card__name">HUB</div>
+            <span class="card__expansion" id="hub-expansion" role="tooltip">Hosted Unified Board</span>
             <div class="card__desc">Unified Kitchen Whiteboard</div>
         </a>
 
-        <div class="card" id="expo-card" role="button" tabindex="0" aria-label="Open EXPO (staff check)">
+        <div class="card" id="expo-card" aria-describedby="expo-expansion" role="button" tabindex="0" aria-label="Open EXPO (staff check)">
             <svg class="card__lock" id="lock-icon" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2"/>
                 <path id="lock-shackle" d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
             <div class="card__name">EXPO</div>
+            <span class="card__expansion" id="expo-expansion" role="tooltip">EXecution and Production Orchestrator</span>
             <div class="card__desc">Production and Logistics Engine</div>
         </div>
     </div>
@@ -514,6 +546,16 @@
 
     overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
     document.getElementById('pin-cancel').addEventListener('click', closeModal);
+
+    // Escape dismisses an app expansion until hover or focus ends.
+    document.querySelectorAll('.card').forEach(function (card) {
+        card.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') card.classList.add('expansion-dismissed');
+        });
+        ['mouseleave', 'blur'].forEach(function (type) {
+            card.addEventListener(type, function () { card.classList.remove('expansion-dismissed'); });
+        });
+    });
 
     syncLock();
 })();
