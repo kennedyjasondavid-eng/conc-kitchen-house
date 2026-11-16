@@ -144,8 +144,8 @@ This is why **HUB's freshness check compares menu _content_ slot-by-slot, never 
   - Two sessions sharing one browser pane must not save in CODEX at the same time (Batch A, CODEX row).
 - **EXPO job panel field test (2026-11-14).** Owner: `conc-kitchen-expo/EXPO_JOB_PANEL_FIELD_TEST_ACTION_PLAN_2026-11-14.md` §6.
   Calls F1–F12 ruled 2026-11-14. All slices merged by #632 (2026-11-16, v9.49.127) except X3, the final regression round.
-  Deferred calls ruled 2026-11-16: DC2, 3, 5, 6, 8, 9 kept as built; DC4, 10, 12, 13, 22 to be built in EXPO; DC14, 15, 21
-  under discussion with Jason. Cross-app pieces, ruled 2026-11-16 "open both pairs now": **DC18** (DOOR publishes no
+  Deferred calls ruled 2026-11-16: DC2, 3, 5, 6, 8, 9 kept as built; DC4, 10, 12, 13, 14, 15, 21, 22 to be built in EXPO
+  (DC15: raw drumsticks 4 van pans, broccoli 6 but not insulated, a big send day flagged quietly). Cross-app pieces, ruled 2026-11-16 "open both pairs now": **DC18** (DOOR publishes no
   `anaphylactic_trigger_flags` in `registry_summary.json`, so EXPO's resident check reads zero residents; paired DOOR
   change) and **DC19** (a just-this-time value on HUB carries no date; EXPO payload plus a paired HUB change).
 - **Change it in-app, not in code (ruled 2026-11-08).** Owner: `conc-kitchen-expo/EXPO_IN_APP_ACTION_PLAN_2026-11-08.md` §6.
