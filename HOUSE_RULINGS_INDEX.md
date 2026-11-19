@@ -34,6 +34,8 @@ Repository paths are on GitHub (`kennedyjasondavid-eng/<repo>`, `main`). `E` = c
 | Silent when it works, loud when it breaks | 2026-11-07 | Three alarm levels: food safety (red, on screen), operations (quiet line plus a note to Jason), plumbing (log only). | [H `HOUSE_STATUS_LEDGER.md`](HOUSE_STATUS_LEDGER.md) (Operating rules) |
 | Checks support, never obstruct | 2026-11-07 | Three kinds of check only (journeys, seam contracts, tricky logic); each names the failure it prevents; never read live data. | Same (Operating rules) |
 | Test edits reflect kitchen flow | 2026-09-20 | A gate is corrected only when it misdescribes real kitchen flow, never to clear CI. Refined by in-app call 15 (below). | Jason's working rule; in-app plan §1 call 15 |
+| DOOR redesign D1 | 2026-11-19 | A meal changed "just on" its next date is a whole-meal one-date entry in `meal_swaps.json`, which EXPO and HUB read as a swap; breakfast and a date already holding a swap or special meal are refused. | [D `docs/DOOR_MENU_EDIT_REDESIGN_PLAN_2026-11-19.md`](https://github.com/kennedyjasondavid-eng/conc-kitchen-door/blob/main/docs/DOOR_MENU_EDIT_REDESIGN_PLAN_2026-11-19.md) §5 |
+| DOOR redesign D4 | 2026-11-19 | A real Edit Menu save keeps the menu words it didn't change (EXPO, HUB and the sheets read those words); only the changed dish's words are rewritten. | Same §5 |
 
 ## Screens and paper
 
@@ -42,6 +44,7 @@ Repository paths are on GitHub (`kennedyjasondavid-eng/<repo>`, `main`). `E` = c
 | K14 / K15 | 2026-10-17 | Dark mode: three readable greys (#b8bfc7, #a3aab2, #8b939c) and one text-only green (#52a877); forest fills keep white text; no mint in dark. | [C `docs/plans/CODEX_RECIPE_CREATION_UX_AUDIT_2026-10-17.md`](https://github.com/kennedyjasondavid-eng/conc-recipe-hub/blob/main/docs/plans/CODEX_RECIPE_CREATION_UX_AUDIT_2026-10-17.md) (K14, K15; C7) |
 | CODEX call 12 | 2026-10-21 | A cook's paper is a white page in any theme. | [C `docs/plans/CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md`](https://github.com/kennedyjasondavid-eng/conc-recipe-hub/blob/main/docs/plans/CODEX_UX_WALKTHROUGH_ACTION_PLAN_2026-10-21.md) (call 12) |
 | DOOR readable themes | 2026-11-13 | DOOR follows K14 / K15 and call 12: every text piece reads at WCAG AA in both themes, and a dark-mode print is the paper sheet. | [D `CLAUDE.md`](https://github.com/kennedyjasondavid-eng/conc-kitchen-door/blob/main/CLAUDE.md) (Recent, `v31-standard.72`) |
+| DOOR redesign D3 | 2026-11-19 | Edit Menu's Save stops only for halal meat that changed, an allergen coming off (kept by default) and a new anaphylactic conflict (red); everything else is a line in What changes. | [D `docs/DOOR_MENU_EDIT_REDESIGN_PLAN_2026-11-19.md`](https://github.com/kennedyjasondavid-eng/conc-kitchen-door/blob/main/docs/DOOR_MENU_EDIT_REDESIGN_PLAN_2026-11-19.md) §5 |
 
 ## New week path (2026-11-13, all on the leans)
 
