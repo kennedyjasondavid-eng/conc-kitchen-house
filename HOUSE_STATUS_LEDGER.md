@@ -216,6 +216,25 @@ This is why **HUB's freshness check compares menu _content_ slot-by-slot, never 
 
 ---
 
+## Staff-facing dish details (Jason, 2026-11-16)
+
+Approved direction: **Facts → Do next → Details** for HUB dish subtexts, following
+[the reviewed plan](https://github.com/kennedyjasondavid-eng/conc-kitchen-hub/pull/74).
+Cooks need the quantity, labelled work durations and the relevant next action;
+supervisors can open the complete source note and planning context. Essential
+handling, dietary separation, sequence, and warnings remain visible. Custom or
+unclassified text is preserved in full; do not shorten arbitrary notes with a
+word cap, regex cleanup, or an automatic summary. Long printed instructions
+continue at readable size rather than being shrunk or clipped to one page.
+
+EXPO owns generated wording, duration/step meaning and service/dependency timing;
+HUB owns its shared screen/print presenter. The exact additive contract and its
+stamp belong to [EXPO's HUB schedule schema](https://github.com/kennedyjasondavid-eng/conc-kitchen-expo/blob/main/schemas/HUB_SCHEDULE_SCHEMA.md).
+Correct misleading source templates before presenting concise text. New wording
+must be audited across the whole generated board and checked against the legacy
+feed, both themes, mobile, and print. This is an approved presentation decision,
+not a statement that a new feed has been published.
+
 ## Operating rules that hold across every app
 - **Single-file HTML is non-negotiable.** No build tools, no npm, no frameworks. Every app must
   degrade gracefully from `file://`.
