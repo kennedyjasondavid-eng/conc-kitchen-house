@@ -184,5 +184,5 @@ slice lands producer and consumer together.
 |---|---|---|
 | This plan | written 2026-11-18 | this file |
 | Calls M1–M8 | waiting for Jason | §8 |
-| G1 (DOOR guard) | not started | |
+| G1 (DOOR guard) | built 2026-11-19 (`v31-standard.108`): with another site picked, DOOR refuses every write to the menu, resident list, routing, swaps, special meals and rules, and every send (skip reason `other_site`, the outbox keeps the work); review in progress | conc-kitchen-door #248 |
 | R1–X1 | not started | |
