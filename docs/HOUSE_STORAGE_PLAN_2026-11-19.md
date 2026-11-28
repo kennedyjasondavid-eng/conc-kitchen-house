@@ -6,11 +6,11 @@ Jason, 2026-11-19: CODEX gave "storage is full" errors; "do the storage fix when
 
 | Slice | What | Repo | State |
 | --- | --- | --- | --- |
-| S1-H | This plan; proven-seams row 1 extended (re-fetchable caches are expendable everywhere) | HOUSE | In progress |
-| S1-C | CODEX: `setItemSafe` frees re-fetchable caches and retries once; Administration → Storage used (read-only) | CODEX | Built, reviewed (SHIP); PR after its full suite |
-| S1-D | DOOR: `DOOR_EXPENDABLE_KEYS` gains its re-fetchable caches; the dead reno menu cache goes | DOOR | PR conc-kitchen-door#263 |
-| S1-E | EXPO: the same in `ensureStorageHeadroom`; carries the tests-only CI change | EXPO | After EXPO #670 |
-| S1-U | HUB: bare cache writes go through a quota-safe writer with the same rule | HUB | PR conc-kitchen-hub#82 |
+| S1-H | This plan; proven-seams row 1 extended (re-fetchable caches are expendable everywhere) | HOUSE | Done (#122) |
+| S1-C | CODEX: `setItemSafe` frees re-fetchable caches and retries once; Administration → Storage used (read-only) | CODEX | Merged, CODEX #393 (2026-11-20) |
+| S1-D | DOOR: `DOOR_EXPENDABLE_KEYS` gains its re-fetchable caches; the dead reno menu cache goes | DOOR | Merged, DOOR #263 (2026-11-19) |
+| S1-E | EXPO: the same in `ensureStorageHeadroom`; carries the tests-only CI change | EXPO | Merged, EXPO #671 (2026-11-20, v9.49.158) |
+| S1-U | HUB: bare cache writes go through a quota-safe writer with the same rule | HUB | Merged, HUB #82 (2026-11-19) |
 | S2 | One kept copy per published file shared by every app; caches move to IndexedDB | all | Later |
 
 ## 1. What was measured
